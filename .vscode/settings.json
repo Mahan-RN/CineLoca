@@ -1,5 +1,6 @@
 {
     "java.project.sourcePaths": [
-        "CineLoca/src"
+        "CineLoca/src",
+        "lib"
     ]
 }
