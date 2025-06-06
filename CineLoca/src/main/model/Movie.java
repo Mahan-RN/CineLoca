@@ -1,8 +1,9 @@
-package main;
+package main.model;
 
 import java.util.List;
 import java.util.ArrayList;
 
+// Represents a Movie
 public class Movie {
     private String imdbID;
     private String title;

@@ -1,16 +1,17 @@
-package tests;
+package test.model;
 
-import main.Movie;
-
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import main.model.Movie;
 
 public class TestMovie {
     private Movie testMovie;
 
     @BeforeEach
-    void setup() {
+    
+    void runBefore() {
         testMovie = new Movie("tt1392190", "Mad Max: Fury Road");
     }
 
