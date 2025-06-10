@@ -1,10 +1,8 @@
-package test.model;
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.model.Movie;
+import model.Movie;
 
 public class TestMovie {
     private Movie testMovie;

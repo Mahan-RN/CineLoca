@@ -2,5 +2,6 @@
     "java.project.sourcePaths": [
         "CineLoca/src",
         "lib"
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
