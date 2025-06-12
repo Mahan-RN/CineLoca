@@ -96,7 +96,8 @@ public class MovieCSVReader {
 
     // EFFECTS: creats a file reader with the given path.
     // Throws FileNotFoundException if there is no file at the given path
-    private FileReader createFileReader(String filePathName) throws FileNotFoundException {
+    private FileReader createFileReader(String filePathName)
+            throws FileNotFoundException {
         csvFile = new File(filePathName);
         if (!csvFile.exists()) {
             throw new FileNotFoundException("File not found: "
