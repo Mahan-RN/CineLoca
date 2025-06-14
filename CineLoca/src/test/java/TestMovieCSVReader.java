@@ -18,6 +18,19 @@ public class TestMovieCSVReader {
     private MovieCSVReader testReader;
     private String path;
 
+    @Test
+    void testCSVFileNotPresent() {
+        try {
+            path = "C:\\Users\\mahan\\OneDrive - UBC\\Desktop\\CineLoca\\"
+                    + "CineLoca\\CineLoca\\src\\test\\resources\\csv\\"
+                    + "SampleMovieDataCSV8888.csv";
+            testReader = new MovieCSVReader(path);
+            fail("FileNotFoundException was not thrown!");
+        } catch (FileNotFoundException e) {
+            // Expected
+        }
+    }
+
     // Test class for the SampleMovieData1.csv test file
     @Nested
     class FirstNestedClass {
