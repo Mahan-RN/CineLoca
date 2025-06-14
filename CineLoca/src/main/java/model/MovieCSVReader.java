@@ -3,6 +3,7 @@ package model;
 import java.io.FileReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,6 +12,7 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -21,14 +23,12 @@ public class MovieCSVReader {
 
     private CSVReader csvReader;
     private File csvFile;
-    private String filePathName;
     private FileReader fileReader;
     private ArrayList<String> parsedRow;
 
     // EFFECTS: creates a CSV reader to read the CSV file at the given file path
     // throws FileNotFoundException if the provided file path doesn't exist
     public MovieCSVReader(String filePathName) throws FileNotFoundException {
-        this.filePathName = filePathName;
         this.fileReader = createFileReader(filePathName);
         this.csvReader = createCSVReader(fileReader);
     }
@@ -36,8 +36,12 @@ public class MovieCSVReader {
     // MODIFIES: MovieCollection
     // EFFECTS: reads each row of the CSV file and stores it as a Movie in the
     // MovieCollection
-    public void loadMoviesFromCSV() {
-        // TODO
+    public void loadMoviesFromCSV() throws IOException, CsvValidationException {
+        String[] row = null;
+        while ((row = csvReader.readNext()) != null) {
+            parsedRow = new ArrayList<>(Arrays.asList(row));
+            rowToMovie(parsedRow);
+        }
     }
 
     // =====================
@@ -77,6 +81,7 @@ public class MovieCSVReader {
         }
         if (!length.isBlank() && isValidNum(length)) {
             int movieLength = Integer.parseInt(length);
+            movie.setLengthMinutes(movieLength);
         }
         if (!countary.isBlank()) {
             movie.setCountary(countary);
