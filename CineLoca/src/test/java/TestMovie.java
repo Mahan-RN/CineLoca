@@ -103,4 +103,11 @@ public class TestMovie {
         assertEquals(path, testMovie.getFilePath());
     }
 
+    @Test
+    void testEquals() {
+        Movie movie1 = new Movie("tt0372784", "Batman");
+        Movie movie2 = new Movie("tt0372784", "Dune");
+        assertTrue(movie1.equals(movie2));
+    }
+
 }
