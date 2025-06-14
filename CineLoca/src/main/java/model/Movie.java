@@ -29,15 +29,14 @@ public class Movie {
     // Converts the input to all upper case and then uses replaceAll to remove
     // all whitespaces
     public void setID(String imdbID) {
-        String trimmed = imdbID.replaceAll("\\s", "").toUpperCase();
-        this.imdbID = trimmed;
+        this.imdbID = imdbID;
     }
 
     // MODIFIES: this
     // EFFECTS: sets title of this movie
     // Strips leading and trailing whitespaces
     public void setTitle(String title) {
-        this.title = trimString(title);
+        this.title = title;
     }
 
     // MODIFIES: this
@@ -50,7 +49,7 @@ public class Movie {
     // EFFECTS: sets the given director as the director of this movie
     // Strips leading and trailing whitespaces
     public void setDirector(String director) {
-        this.director = trimString(director);
+        this.director = director;
     }
 
     // MODIFIES: this
@@ -63,7 +62,7 @@ public class Movie {
     // EFFECTS: sets the countary of this movie
     // Strips leading and trailing whitespaces
     public void setCountary(String countary) {
-        this.countary = trimString(countary);
+        this.countary = countary;
     }
 
     // MODIFIES: this
@@ -71,7 +70,7 @@ public class Movie {
     // Strips leading and trailing whitespaces
     public boolean addActor(String actor) {
         if (!actors.contains(actor)) {
-            return this.actors.add(trimString(actor));
+            return this.actors.add(actor);
         } else {
             return false;
         }
@@ -87,14 +86,14 @@ public class Movie {
     // EFFECTS: sets the relative path to the image of the poster of this movie
     // Strips leading and trailing whitespacs
     public void setImagePath(String imagePath) {
-        this.imagePath = trimString(imagePath);
+        this.imagePath = imagePath;
     }
 
     // MODIFIES: this
     // EFFECTS: sets the relative path to video file of this movie
     // Strips leading and trailing whitespacs
     public void setFilePath(String filePath) {
-        this.filePath = trimString(filePath);
+        this.filePath = filePath;
     }
 
     @Override
@@ -122,12 +121,6 @@ public class Movie {
         } else if (!imdbID.equals(other.imdbID))
             return false;
         return true;
-    }
-
-    // EFFECTS: private helper method for removing
-    // leading and trailing whitespaces of a string
-    private String trimString(String str) {
-        return str.strip();
     }
 
     // getters

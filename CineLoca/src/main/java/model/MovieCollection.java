@@ -43,4 +43,9 @@ public class MovieCollection {
         return duplicateIDs;
     }
 
+    //getter
+    public Map<String, Movie> getMovieMap() {
+        return movieMap;
+    }
+
 }

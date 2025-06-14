@@ -25,12 +25,14 @@ public class MovieCSVReader {
     private File csvFile;
     private FileReader fileReader;
     private ArrayList<String> parsedRow;
+    private MovieCollection collection;
 
     // EFFECTS: creates a CSV reader to read the CSV file at the given file path
     // throws FileNotFoundException if the provided file path doesn't exist
     public MovieCSVReader(String filePathName) throws FileNotFoundException {
         this.fileReader = createFileReader(filePathName);
         this.csvReader = createCSVReader(fileReader);
+        collection = new MovieCollection();
     }
 
     // MODIFIES: MovieCollection
@@ -40,7 +42,8 @@ public class MovieCSVReader {
         String[] row = null;
         while ((row = csvReader.readNext()) != null) {
             parsedRow = new ArrayList<>(Arrays.asList(row));
-            rowToMovie(parsedRow);
+            Movie movie = rowToMovie(parsedRow);
+            collection.addMovie(movie);
         }
     }
 
@@ -66,7 +69,7 @@ public class MovieCSVReader {
         String length = trimMovieData(strings.get(4));
         String countary = trimMovieData(strings.get(5));
         String actors = trimMovieData(strings.get(6));
-        String englishSub = trimMovieData(strings.get(7));
+        String englishSub = trimMovieData(strings.get(7)).toLowerCase();
         if (title.isBlank() || imdbID.isBlank()) {
             return null;
         } else {
@@ -92,11 +95,16 @@ public class MovieCSVReader {
                 movie.addActor(trimMovieData(actor));
             }
         }
-        if (englishSub == "true" || englishSub == "false") {
+        if (englishSub.equals("true") || englishSub.equals("false")) {
             boolean b = Boolean.parseBoolean(englishSub);
             movie.setEnglishSubs(b);
         }
         return movie;
+    }
+
+    // getter
+    public MovieCollection getMovieCollection() {
+        return this.collection;
     }
 
     // EFFECTS: creats a file reader with the given path.

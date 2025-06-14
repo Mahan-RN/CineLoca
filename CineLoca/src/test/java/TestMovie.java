@@ -15,7 +15,7 @@ public class TestMovie {
 
     @Test
     void testConstructor() {
-        assertEquals("TT1392190", testMovie.getImdbID());
+        assertEquals("tt1392190", testMovie.getImdbID());
         assertEquals("Mad Max: Fury Road", testMovie.getTitle());
         assertEquals(0, testMovie.getLengthMinutes());
         assertEquals(null, testMovie.getDirector());
@@ -29,7 +29,7 @@ public class TestMovie {
     @Test
     void testSetID() {
         testMovie.setID("tt0372784");
-        assertEquals("TT0372784", testMovie.getImdbID());
+        assertEquals("tt0372784", testMovie.getImdbID());
     }
 
     @Test
