@@ -43,7 +43,9 @@ public class MovieCSVReader {
         while ((row = csvReader.readNext()) != null) {
             parsedRow = new ArrayList<>(Arrays.asList(row));
             Movie movie = rowToMovie(parsedRow);
-            collection.addMovie(movie);
+            if (movie != null) {
+                collection.addMovie(movie);
+            }
         }
     }
 

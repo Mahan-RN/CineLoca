@@ -31,8 +31,8 @@ public class TestMovieCollection {
         assertTrue(testCollection.addMovie(testMovie1));
         assertTrue(testCollection.addMovie(testMovie2));
         assertEquals(2, testCollection.getAllMovieIDs().size());
-        assertTrue(testCollection.getAllMovieIDs().contains("TT1160419"));
-        assertTrue(testCollection.getAllMovieIDs().contains("TT15239678"));
+        assertTrue(testCollection.getAllMovieIDs().contains("tt1160419"));
+        assertTrue(testCollection.getAllMovieIDs().contains("tt15239678"));
         assertEquals(0, testCollection.getDuplicateIDs().size());
     }
 
@@ -43,11 +43,11 @@ public class TestMovieCollection {
         assertFalse(testCollection.addMovie(testMovie1));
         assertFalse(testCollection.addMovie(testMovie2));
         assertEquals(2, testCollection.getAllMovieIDs().size());
-        assertTrue(testCollection.getAllMovieIDs().contains("TT1160419"));
-        assertTrue(testCollection.getAllMovieIDs().contains("TT15239678"));
+        assertTrue(testCollection.getAllMovieIDs().contains("tt1160419"));
+        assertTrue(testCollection.getAllMovieIDs().contains("tt15239678"));
         assertEquals(2, testCollection.getDuplicateIDs().size());
-        assertEquals("TT1160419", testCollection.getDuplicateIDs().get(0));
-        assertEquals("TT15239678", testCollection.getDuplicateIDs().get(1));
+        assertEquals("tt1160419", testCollection.getDuplicateIDs().get(0));
+        assertEquals("tt15239678", testCollection.getDuplicateIDs().get(1));
     }
 
 }

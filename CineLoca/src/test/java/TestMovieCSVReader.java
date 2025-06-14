@@ -18,8 +18,10 @@ public class TestMovieCSVReader {
     private MovieCSVReader testReader;
     private String path;
 
+    // Test class for the SampleMovieData1.csv test file
     @Nested
     class FirstNestedClass {
+
         @BeforeEach
         void setup() {
             try {
@@ -87,7 +89,7 @@ public class TestMovieCSVReader {
             assertFalse(m.hasEnglishSubtitle());
         }
 
-        private void testMovie3 (Movie m) {
+        private void testMovie3(Movie m) {
             assertEquals("tt0110413", m.getImdbID());
             assertEquals("Léon: The Professional", m.getTitle());
             assertEquals(1994, m.getReleaseYear());
@@ -102,6 +104,89 @@ public class TestMovieCSVReader {
             assertTrue(m.hasEnglishSubtitle());
         }
 
+    }
+
+    // Test class for the SampleMovieData2.csv test file
+    @Nested
+    class SecondNestedClass {
+
+        @BeforeEach
+        void setup() {
+            try {
+                path = "C:\\Users\\mahan\\OneDrive - UBC\\Desktop\\CineLoca\\"
+                        + "CineLoca\\CineLoca\\src\\test\\resources\\csv\\"
+                        + "SampleMovieDataCSV2.csv";
+                testReader = new MovieCSVReader(path);
+            } catch (FileNotFoundException e) {
+                fail("FileNotFoundException should not be thrown!");
+            }
+        }
+
+        @Test
+        void testLoadMoviesFromCSV() {
+            try {
+                testReader.loadMoviesFromCSV();
+            } catch (IOException e) {
+                fail("IOException should not be thrown!");
+            } catch (CsvValidationException e) {
+                fail("CsvValidationException should not be thrown!");
+            }
+            MovieCollection testCollection = testReader.getMovieCollection();
+            Set<String> allMovieIDs = testCollection.getAllMovieIDs();
+            assertEquals(3, allMovieIDs.size());
+            assertTrue(allMovieIDs.contains("tt1877830"));
+            assertTrue(allMovieIDs.contains("tt1160419"));
+            assertTrue(allMovieIDs.contains("tt0110413"));
+            Movie firstMovie = testCollection.getMovieMap().get("tt1877830");
+            Movie secondMovie = testCollection.getMovieMap().get("tt1160419");
+            Movie thirdMovie = testCollection.getMovieMap().get("tt0110413");
+            testMovie1(firstMovie);
+            testMovie2(secondMovie);
+            testMovie3(thirdMovie);
+
+        }
+
+        private void testMovie1(Movie m) {
+            assertEquals("tt1877830", m.getImdbID());
+            assertEquals("The Batman", m.getTitle());
+            assertEquals(0, m.getReleaseYear());
+            assertEquals(null, m.getDirector());
+            assertEquals(0, m.getLengthMinutes());
+            assertEquals(null, m.getCountary());
+            List<String> actors = m.getActors();
+            assertEquals(0, actors.size());
+            assertFalse(m.hasEnglishSubtitle());
+        }
+
+        private void testMovie2(Movie m) {
+            assertEquals("tt1160419", m.getImdbID());
+            assertEquals("Dune: Part One", m.getTitle());
+            assertEquals(0, m.getReleaseYear());
+            assertEquals("Denis Villeneuve", m.getDirector());
+            assertEquals(0, m.getLengthMinutes());
+            assertEquals("USA", m.getCountary());
+            List<String> actors = m.getActors();
+            assertEquals(3, actors.size());
+            assertEquals("Timothée Chalamet", actors.get(0));
+            assertEquals("Rebecca Ferguson", actors.get(1));
+            assertEquals("Zendaya", actors.get(2));
+            assertFalse(m.hasEnglishSubtitle());
+        }
+
+        private void testMovie3(Movie m) {
+            assertEquals("tt0110413", m.getImdbID());
+            assertEquals("Léon: The Professional", m.getTitle());
+            assertEquals(1994, m.getReleaseYear());
+            assertEquals("Luc Besson", m.getDirector());
+            assertEquals(110, m.getLengthMinutes());
+            assertEquals("France", m.getCountary());
+            List<String> actors = m.getActors();
+            assertEquals(3, actors.size());
+            assertEquals("Jean Reno", actors.get(0));
+            assertEquals("Gary Oldman", actors.get(1));
+            assertEquals("Natalie Portman", actors.get(2));
+            assertTrue(m.hasEnglishSubtitle());
+        }
     }
 
 }
