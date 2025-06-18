@@ -8,10 +8,12 @@ import java.util.List;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+// Represents a file reader to read files from the OS
 public class FileReader {
     private String pathName;
     private File directory;
     private ArrayList<File> files;
+    private MovieCollection collection = MovieCollection.getInstance();
 
     // EFFECTS: creates a file reader
     // Throws FileNotFoundException if the provided file path is invalid
@@ -23,8 +25,10 @@ public class FileReader {
     // MODIFIES: this, Movie, MovieCollection
     // EFFECTS: adds the path of each file in the directory to the corresponding
     // movie object in the collection based on the movie id in the file name
+    // images parameter is used to indicate whether files correspond to movie
+    // posters (if set to true) or actual movie files (if set to false)
     // Throws IOException if getCannoicalPath fails
-    public void addMoviePaths(List<File> files, MovieCollection collection)
+    public void addFilePathsToCollection(List<File> files, boolean images)
             throws IOException {
         for (File file : files) {
             if (file.isDirectory()) {
@@ -34,7 +38,11 @@ public class FileReader {
                 if (!id.isBlank()) {
                     Movie movie = collection.getMovieMap().get(id);
                     if (movie != null) {
-                        movie.setFilePath(file.getCanonicalPath());
+                        if (images) {
+                            movie.setFilePath(file.getCanonicalPath());
+                        } else {
+                            movie.setImagePath(file.getCanonicalPath());
+                        }
                     }
                 }
             }
