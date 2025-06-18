@@ -15,7 +15,8 @@ public class TestMovieCollection {
 
     @BeforeEach
     void setup() {
-        testCollection = new MovieCollection();
+        MovieCollection.resetSingleton();
+        testCollection = MovieCollection.getInstance();
         testMovie1 = new Movie("tt1160419", "Dune: Part One");
         testMovie2 = new Movie("tt15239678", "Dune: Part Two");
     }

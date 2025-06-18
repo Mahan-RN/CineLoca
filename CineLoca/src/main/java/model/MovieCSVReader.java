@@ -32,7 +32,7 @@ public class MovieCSVReader {
     public MovieCSVReader(String filePathName) throws FileNotFoundException {
         this.fileReader = createFileReader(filePathName);
         this.csvReader = createCSVReader(fileReader);
-        collection = new MovieCollection();
+        collection = MovieCollection.getInstance();
     }
 
     // MODIFIES: MovieCollection

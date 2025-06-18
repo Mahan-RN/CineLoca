@@ -38,6 +38,7 @@ public class TestMovieCSVReader {
         @BeforeEach
         void setup() {
             try {
+                MovieCollection.resetSingleton();
                 path = "C:\\Users\\mahan\\OneDrive - UBC\\Desktop\\CineLoca\\"
                         + "CineLoca\\CineLoca\\src\\test\\resources\\csv\\"
                         + "SampleMovieDataCSV1.csv";
@@ -126,6 +127,7 @@ public class TestMovieCSVReader {
         @BeforeEach
         void setup() {
             try {
+                MovieCollection.resetSingleton();
                 path = "C:\\Users\\mahan\\OneDrive - UBC\\Desktop\\CineLoca\\"
                         + "CineLoca\\CineLoca\\src\\test\\resources\\csv\\"
                         + "SampleMovieDataCSV2.csv";

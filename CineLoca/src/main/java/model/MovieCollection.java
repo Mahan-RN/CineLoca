@@ -9,13 +9,23 @@ import java.util.ArrayList;
 // Represents a collection of movies
 public class MovieCollection {
 
+    private static MovieCollection movieCollection;
     private Map<String, Movie> movieMap;
     private List<String> duplicateIDs;
 
-    // EFFECTS: creats a movie collection
-    public MovieCollection() {
+    // EFFECTS: creats a private movie collection
+    private MovieCollection() {
         movieMap = new HashMap<>();
         duplicateIDs = new ArrayList<>();
+    }
+
+    // EFFECTS: returns the single instance of MovieCollection for singleton
+    // pattern
+    public static MovieCollection getInstance() {
+        if (movieCollection == null) {
+            movieCollection = new MovieCollection();
+        }
+        return movieCollection;
     }
 
     // MODIFIES: this
@@ -33,7 +43,7 @@ public class MovieCollection {
         }
     }
 
-    //EFFECTS: returns the set of all movie IDs in the collection
+    // EFFECTS: returns the set of all movie IDs in the collection
     public Set<String> getAllMovieIDs() {
         return movieMap.keySet();
     }
@@ -43,9 +53,15 @@ public class MovieCollection {
         return duplicateIDs;
     }
 
-    //getter
+    // getter
     public Map<String, Movie> getMovieMap() {
         return movieMap;
+    }
+
+    // TEST-ONLY method to prevent test pollution
+    // created due to singleton pattern
+    public static void resetSingleton() {
+        movieCollection = null;
     }
 
 }
