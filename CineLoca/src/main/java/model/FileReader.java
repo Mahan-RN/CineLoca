@@ -3,7 +3,6 @@ package model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,21 +27,23 @@ public class FileReader {
     // images parameter is used to indicate whether files correspond to movie
     // posters (if set to true) or actual movie files (if set to false)
     // Throws IOException if getCannoicalPath fails
-    public void addFilePathsToCollection(List<File> files, boolean images)
-            throws IOException {
-        for (File file : files) {
+    public void addFilePathsToCollection(boolean images) throws IOException {
+        String id;
+        for (File file : this.files) {
             if (file.isDirectory()) {
                 continue;
             } else {
-                String id = fileNameToMovieID(file.getName());
-                if (!id.isBlank()) {
-                    Movie movie = collection.getMovieMap().get(id);
-                    if (movie != null) {
-                        if (images) {
-                            movie.setFilePath(file.getCanonicalPath());
-                        } else {
-                            movie.setImagePath(file.getCanonicalPath());
-                        }
+                if (null == fileNameToMovieID(file.getName())) {
+                    continue;
+                } else {
+                    id = fileNameToMovieID(file.getName());
+                }
+                Movie movie = collection.getMovieMap().get(id);
+                if (movie != null) {
+                    if (images) {
+                        movie.setImagePath(file.getPath());
+                    } else {
+                        movie.setFilePath(file.getPath());
                     }
                 }
             }
@@ -69,10 +70,19 @@ public class FileReader {
 
     // EFFECTS: gets the substring flanked by the first [] in the file name.
     // Example: given "[tt1234]My_Movie", should return "tt1234"
-    private String fileNameToMovieID(String fileName) {
-        String id = fileName.substring(fileName.indexOf("[") + 1,
-                fileName.indexOf("]") + 1);
-        return id;
+    public String fileNameToMovieID(String fileName) {
+        if (!fileName.contains("[") || !fileName.contains("]")) {
+            return null;
+        } else if (fileName.length() < 4) {
+            return null;
+        } else if (null == fileName.substring(fileName.indexOf("[") + 1,
+                fileName.indexOf("]"))) {
+            return null;
+        } else {
+            String id = fileName.substring(fileName.indexOf("[") + 1,
+                    fileName.indexOf("]"));
+            return id.toLowerCase();
+        }
     }
 
     // getters
@@ -81,7 +91,7 @@ public class FileReader {
         return pathName;
     }
 
-    public List<File> getFiles() {
+    public ArrayList<File> getFiles() {
         return this.files;
     }
 }
