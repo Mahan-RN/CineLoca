@@ -5,9 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
@@ -64,27 +61,28 @@ public class MovieCSVReader {
     // and contains only numerical values
     private Movie rowToMovie(List<String> strings) {
         Movie movie;
-        String imdbID = trimMovieID(strings.get(0));
-        String title = trimMovieData(strings.get(1));
-        String release = trimMovieData(strings.get(2));
-        String director = trimMovieData(strings.get(3));
-        String length = trimMovieData(strings.get(4));
-        String countary = trimMovieData(strings.get(5));
-        String actors = trimMovieData(strings.get(6));
-        String englishSub = trimMovieData(strings.get(7)).toLowerCase();
+        String imdbID = ParsingUtilities.trimMovieID(strings.get(0));
+        String title = ParsingUtilities.trimMovieData(strings.get(1));
+        String release = ParsingUtilities.trimMovieData(strings.get(2));
+        String director = ParsingUtilities.trimMovieData(strings.get(3));
+        String length = ParsingUtilities.trimMovieData(strings.get(4));
+        String countary = ParsingUtilities.trimMovieData(strings.get(5));
+        String actors = ParsingUtilities.trimMovieData(strings.get(6));
+        String englishSub = ParsingUtilities.trimMovieData(strings.get(7)).toLowerCase();
+
         if (title.isBlank() || imdbID.isBlank()) {
             return null;
         } else {
             movie = new Movie(imdbID, title);
         }
-        if (!release.isBlank() && isValidNum(release)) {
+        if (!release.isBlank() && ParsingUtilities.isValidNum(release)) {
             int releaseYear = Integer.parseInt(release);
             movie.setReleaseYear(releaseYear);
         }
         if (!director.isBlank()) {
             movie.setDirector(director);
         }
-        if (!length.isBlank() && isValidNum(length)) {
+        if (!length.isBlank() && ParsingUtilities.isValidNum(length)) {
             int movieLength = Integer.parseInt(length);
             movie.setLengthMinutes(movieLength);
         }
@@ -92,9 +90,9 @@ public class MovieCSVReader {
             movie.setCountary(countary);
         }
         if (!actors.isBlank()) {
-            List<String> actorsList = actorsToList(actors);
+            List<String> actorsList = ParsingUtilities.actorsToList(actors);
             for (String actor : actorsList) {
-                movie.addActor(trimMovieData(actor));
+                movie.addActor(ParsingUtilities.trimMovieData(actor));
             }
         }
         if (englishSub.equals("true") || englishSub.equals("false")) {
@@ -139,31 +137,4 @@ public class MovieCSVReader {
                 .build(); // takes a CSVReaderBuilder and returns a CSVReader
         return csvReader;
     }
-
-    // EFFECTS: removes leading and trailing whitespaces of the given string
-    private String trimMovieData(String s) {
-        return s.strip();
-    }
-
-    // EFFECTS: removes ALL whitespaces in the given string. Converts the string
-    // into all lower case
-    private String trimMovieID(String s) {
-        return s.replaceAll("\\s+", " ").toLowerCase();
-    }
-
-    // EFFECTS: takes a string and splits it by ";" into a list of strings
-    private List<String> actorsToList(String actors) {
-        String[] tempList = actors.split(";");
-        ArrayList<String> actorsList = new ArrayList<>(Arrays.asList(tempList));
-        return actorsList;
-    }
-
-    // EFFECTS: returns true if the given string contains only numbers
-    private boolean isValidNum(String s) {
-        Pattern pattern = Pattern.compile("[^0-9]", Pattern.CASE_INSENSITIVE);
-        Matcher match = pattern.matcher(s);
-        boolean matchFound = match.find();
-        return !matchFound;
-    }
-
 }
