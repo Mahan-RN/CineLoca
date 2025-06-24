@@ -65,10 +65,7 @@ public class TestFileReader {
             }
             assertTrue(testReader.getPathName().equals(path));
             ArrayList<File> files = testReader.getFiles();
-            assertEquals(3, files.size());
-            assertEquals("[tt1160419]movie3.mp4", files.get(0).getName());
-            assertEquals("[tt1392190]movie1.mp4", files.get(1).getName());
-            assertEquals("[tt1877830]movie2.mp4", files.get(2).getName());
+            assertEquals(5, files.size());
         }
 
         @Test

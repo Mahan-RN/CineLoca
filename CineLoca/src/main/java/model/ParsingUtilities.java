@@ -37,4 +37,21 @@ public final class ParsingUtilities {
         return !matchFound;
     }
 
+    // EFFECTS: gets the substring flanked by the first [] in the file name.
+    // Example: given "[tt1234]My_Movie", should return "tt1234"
+    public static String fileNameToMovieID(String fileName) {
+        if (!fileName.contains("[") || !fileName.contains("]")) {
+            return null;
+        } else if (fileName.length() < 4) {
+            return null;
+        } else if (null == fileName.substring(fileName.indexOf("[") + 1,
+                fileName.indexOf("]"))) {
+            return null;
+        } else {
+            String id = fileName.substring(fileName.indexOf("[") + 1,
+                    fileName.indexOf("]"));
+            return trimMovieID(id);
+        }
+    }
+
 }

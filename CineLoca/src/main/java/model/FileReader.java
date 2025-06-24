@@ -33,10 +33,10 @@ public class FileReader {
             if (file.isDirectory()) {
                 continue;
             } else {
-                if (null == fileNameToMovieID(file.getName())) {
+                if (null == ParsingUtilities.fileNameToMovieID(file.getName())) {
                     continue;
                 } else {
-                    id = fileNameToMovieID(file.getName());
+                    id = ParsingUtilities.fileNameToMovieID(file.getName());
                 }
                 Movie movie = collection.getMovieMap().get(id);
                 if (movie != null) {
@@ -66,23 +66,6 @@ public class FileReader {
                     + pathName);
         }
         this.files = new ArrayList<>(Arrays.asList(directory.listFiles()));
-    }
-
-    // EFFECTS: gets the substring flanked by the first [] in the file name.
-    // Example: given "[tt1234]My_Movie", should return "tt1234"
-    public String fileNameToMovieID(String fileName) {
-        if (!fileName.contains("[") || !fileName.contains("]")) {
-            return null;
-        } else if (fileName.length() < 4) {
-            return null;
-        } else if (null == fileName.substring(fileName.indexOf("[") + 1,
-                fileName.indexOf("]"))) {
-            return null;
-        } else {
-            String id = fileName.substring(fileName.indexOf("[") + 1,
-                    fileName.indexOf("]"));
-            return id.toLowerCase();
-        }
     }
 
     // getters

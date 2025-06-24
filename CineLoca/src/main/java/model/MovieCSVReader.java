@@ -68,7 +68,8 @@ public class MovieCSVReader {
         String length = ParsingUtilities.trimMovieData(strings.get(4));
         String countary = ParsingUtilities.trimMovieData(strings.get(5));
         String actors = ParsingUtilities.trimMovieData(strings.get(6));
-        String englishSub = ParsingUtilities.trimMovieData(strings.get(7)).toLowerCase();
+        String englishSub = ParsingUtilities
+                .trimMovieData(strings.get(7)).toLowerCase();
 
         if (title.isBlank() || imdbID.isBlank()) {
             return null;
