@@ -21,9 +21,7 @@ public class TestMovieCSVReader {
     @Test
     void testCSVFileNotPresent() {
         try {
-            path = "C:\\Users\\mahan\\OneDrive - UBC\\Desktop\\CineLoca\\"
-                    + "CineLoca\\CineLoca\\src\\test\\resources\\csv\\"
-                    + "SampleMovieDataCSV8888.csv";
+            path = "src//test//resources//csv//SampleMovieDataCSV9999.csv";
             testReader = new MovieCSVReader(path);
             fail("FileNotFoundException was not thrown!");
         } catch (FileNotFoundException e) {
@@ -39,9 +37,7 @@ public class TestMovieCSVReader {
         void setup() {
             try {
                 MovieCollection.resetSingleton();
-                path = "C:\\Users\\mahan\\OneDrive - UBC\\Desktop\\CineLoca\\"
-                        + "CineLoca\\CineLoca\\src\\test\\resources\\csv\\"
-                        + "SampleMovieDataCSV1.csv";
+                path = "src//test//resources//csv//SampleMovieDataCSV1.csv";
                 testReader = new MovieCSVReader(path);
             } catch (FileNotFoundException e) {
                 fail("FileNotFoundException should not be thrown!");
@@ -128,9 +124,7 @@ public class TestMovieCSVReader {
         void setup() {
             try {
                 MovieCollection.resetSingleton();
-                path = "C:\\Users\\mahan\\OneDrive - UBC\\Desktop\\CineLoca\\"
-                        + "CineLoca\\CineLoca\\src\\test\\resources\\csv\\"
-                        + "SampleMovieDataCSV2.csv";
+                path = "src//test//resources//csv//SampleMovieDataCSV2.csv";
                 testReader = new MovieCSVReader(path);
             } catch (FileNotFoundException e) {
                 fail("FileNotFoundException should not be thrown!");
