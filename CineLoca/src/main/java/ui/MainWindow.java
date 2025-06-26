@@ -16,13 +16,13 @@ public class MainWindow {
     // EFFECTS: private set up method for the JFrame of the main window
     // - Sets "CineLoca" as the name displayed on the main window
     // - Makes the "X" button on top left to close the application
-    // - Sets the initial size of the window
+    // - Sets the window size to full screen
     // - Sets the relative location of the window at the center of the device
     // screen
     private void initialize() {
         this.window = new JFrame("CineLoca");
         this.window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.window.setSize(800, 500);
+        this.window.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.window.setLocationRelativeTo(null);
     }
 
