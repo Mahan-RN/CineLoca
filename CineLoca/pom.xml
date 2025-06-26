@@ -71,6 +71,13 @@
             </exclusion>
         </exclusions>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf -->
+    <dependency>
+        <groupId>com.formdev</groupId>
+        <artifactId>flatlaf</artifactId>
+        <version>3.6</version>
+    </dependency>
   </dependencies>
 
   <build>
