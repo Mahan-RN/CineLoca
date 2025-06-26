@@ -75,7 +75,7 @@ public class TestFileReader {
             collection.addMovie(movie3);
             try {
                 testReader = new FileReader(path);
-                testReader.addFilePathsToCollection(false);
+                testReader.addPathsToCollection(false);
             } catch (FileNotFoundException e) {
                 fail("FileNotFoundException should've not been thrown!");
             } catch (IOException e) {
@@ -97,7 +97,7 @@ public class TestFileReader {
             collection.addMovie(movie1);
             try {
                 testReader = new FileReader(path);
-                testReader.addFilePathsToCollection(false);
+                testReader.addPathsToCollection(false);
             } catch (FileNotFoundException e) {
                 fail("FileNotFoundException should've not been thrown!");
             } catch (IOException e) {
@@ -116,13 +116,29 @@ public class TestFileReader {
             collection.addMovie(movie4);
             try {
                 testReader = new FileReader(path);
-                testReader.addFilePathsToCollection(false);
+                testReader.addPathsToCollection(false);
             } catch (FileNotFoundException e) {
                 fail("FileNotFoundException should've not been thrown!");
             } catch (IOException e) {
                 fail("IOException should've not been thrown!");
             }
             assertTrue(null == movie4.getFilePath());
+        }
+
+        @Test
+        void testAddImagePathToCollectionValid() {
+            collection.addMovie(movie1);
+            path = "src\\test\\resources\\images\\testDirectory1";
+            try {
+                testReader = new FileReader(path);
+                testReader.addPathsToCollection(true);
+            } catch (FileNotFoundException e) {
+                fail("FileNotFoundException should've not been thrown!");
+            } catch (IOException e) {
+                fail("IOException should've not been thrown!");
+            }
+            String movie1ImagePath = "src\\test\\resources\\images\\testDirectory1\\[tt1160419]image1.jpg";
+            assertEquals(movie1ImagePath, movie1.getImagePath());
         }
 
     }

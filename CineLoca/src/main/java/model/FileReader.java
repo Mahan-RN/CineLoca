@@ -24,10 +24,8 @@ public class FileReader {
     // MODIFIES: this, Movie, MovieCollection
     // EFFECTS: adds the path of each file in the directory to the corresponding
     // movie object in the collection based on the movie id in the file name
-    // images parameter is used to indicate whether files correspond to movie
-    // posters (if set to true) or actual movie files (if set to false)
     // Throws IOException if getCannoicalPath fails
-    public void addFilePathsToCollection(boolean images) throws IOException {
+    public void addPathsToCollection(boolean image) throws IOException {
         String id;
         for (File file : this.files) {
             if (file.isDirectory()) {
@@ -40,7 +38,7 @@ public class FileReader {
                 }
                 Movie movie = collection.getMovieMap().get(id);
                 if (movie != null) {
-                    if (images) {
+                    if (image) {
                         movie.setImagePath(file.getPath());
                     } else {
                         movie.setFilePath(file.getPath());
