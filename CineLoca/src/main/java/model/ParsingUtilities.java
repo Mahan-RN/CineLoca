@@ -19,7 +19,7 @@ public final class ParsingUtilities {
     // EFFECTS: removes ALL whitespaces in the given string. Converts the string
     // into all lower case
     public static String trimMovieID(String s) {
-        return s.replaceAll("\\s+", " ").toLowerCase();
+        return s.replaceAll("\\s+", "").toLowerCase();
     }
 
     // EFFECTS: takes a string and splits it by ";" into a list of strings
@@ -29,12 +29,17 @@ public final class ParsingUtilities {
         return actorsList;
     }
 
-    // EFFECTS: returns true if the given string contains only numbers
+    // EFFECTS: returns true if the given string is not empty and
+    // contains only numbers
     public static boolean isValidNum(String s) {
-        Pattern pattern = Pattern.compile("[^0-9]", Pattern.CASE_INSENSITIVE);
-        Matcher match = pattern.matcher(s);
-        boolean matchFound = match.find();
-        return !matchFound;
+        if (s.isEmpty()) {
+            return false;
+        } else {
+            Pattern pattern = Pattern.compile("[^0-9]", Pattern.CASE_INSENSITIVE);
+            Matcher match = pattern.matcher(s);
+            boolean matchFound = match.find();
+            return !matchFound;
+        }
     }
 
     // EFFECTS: gets the substring flanked by the first [] in the file name.
@@ -44,8 +49,8 @@ public final class ParsingUtilities {
             return null;
         } else if (fileName.length() < 4) {
             return null;
-        } else if (null == fileName.substring(fileName.indexOf("[") + 1,
-                fileName.indexOf("]"))) {
+        } else if (fileName.substring(fileName.indexOf("[") + 1,
+                fileName.indexOf("]")).isEmpty()) {
             return null;
         } else {
             String id = fileName.substring(fileName.indexOf("[") + 1,
@@ -53,5 +58,4 @@ public final class ParsingUtilities {
             return trimMovieID(id);
         }
     }
-
 }
