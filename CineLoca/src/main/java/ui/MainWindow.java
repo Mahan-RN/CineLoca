@@ -65,13 +65,16 @@ public class MainWindow {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a JPanel with flowlayout at the center of the main frame
+    // EFFECTS: creates a vertically scrollable JPanel with grid layout at
+    // the center of the main frame.
+    // - Grid layout has unlimied rows (0), 5 columns, 10 pixel hgap, and
+    // 15 pixel vgap
     private void setCenterPanel() {
         centerPanel = new JPanel();
         scrollPane = new JScrollPane(centerPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        centerPanel.setLayout(new GridLayout(0, 5));
+        centerPanel.setLayout(new GridLayout(0, 5, 10, 15));
         frame.add(scrollPane, BorderLayout.CENTER);
     }
 
