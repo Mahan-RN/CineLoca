@@ -50,14 +50,14 @@ public class MainWindow {
     // the main frame. Adds a settings button at the right of the JPanel
     private void setTopPanel() {
         this.topPanel = new JPanel();
-        this.topPanel.setLayout(new BorderLayout());
+        this.topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 15));
         this.frame.add(topPanel, BorderLayout.NORTH);
         createSettingsButton();
         createInformationButton();
         createTotalMoviesCounterLabel();
-        topPanel.add(settingsButton, BorderLayout.EAST);
-        topPanel.add(informationButton, BorderLayout.WEST);
-        topPanel.add(totalMoviesCounter, BorderLayout.CENTER);
+        topPanel.add(settingsButton);
+        topPanel.add(informationButton);
+        topPanel.add(totalMoviesCounter);
     }
 
     // MODIFIES: this
