@@ -1,7 +1,11 @@
 package ui;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import model.MovieCollection;
+
 import javax.swing.JButton;
 
 import java.awt.BorderLayout;
@@ -10,14 +14,18 @@ import java.awt.FlowLayout;
 // Represents the main window of the program's UI
 public class MainWindow {
 
+    private MovieCollection movieCollection;
     private JFrame frame;
     private JPanel topPanel;
     private JPanel centerPanel;
     private JButton settingsButton;
+    private JButton informationButton;
+    private JLabel totalMoviesCounter;
 
     // EFFECTS: initializes the main window JFrame
     public MainWindow() {
-        initialize();
+        movieCollection = MovieCollection.getInstance();
+        initializeMainFrame();
     }
 
     // MODIFIES: this
@@ -27,7 +35,7 @@ public class MainWindow {
     // - Sets the window size to full screen
     // - Sets the relative location of the window at the center of the device
     // screen
-    private void initialize() {
+    private void initializeMainFrame() {
         this.frame = new JFrame("CineLoca");
         this.frame.setLayout(new BorderLayout());
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -44,8 +52,12 @@ public class MainWindow {
         this.topPanel = new JPanel();
         this.topPanel.setLayout(new BorderLayout());
         this.frame.add(topPanel, BorderLayout.NORTH);
-        settingsButton = new JButton("Settings");
+        createSettingsButton();
+        createInformationButton();
+        createTotalMoviesCounterLabel();
         topPanel.add(settingsButton, BorderLayout.EAST);
+        topPanel.add(informationButton, BorderLayout.WEST);
+        topPanel.add(totalMoviesCounter, BorderLayout.CENTER);
     }
 
     // MODIFIES: this
@@ -54,6 +66,23 @@ public class MainWindow {
         centerPanel = new JPanel();
         centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
         frame.add(centerPanel, BorderLayout.CENTER);
+    }
+
+    // EFFECTS: creates a JButton with label "Settings"
+    private void createSettingsButton() {
+        settingsButton = new JButton("Settings");
+    }
+
+    // EFFECTS: creates a JButton with label "Session Information"
+    private void createInformationButton() {
+        informationButton = new JButton("Session Information");
+    }
+
+    // EFFECTS: creates a JLabel that shows total number of movies in collection
+    private void createTotalMoviesCounterLabel() {
+        int moviesNum = movieCollection.getAllMovieIDs().size();
+        totalMoviesCounter = new JLabel("Total Movies in Collection: "
+                + moviesNum, JLabel.CENTER);
     }
 
     // MODIFIES: this
