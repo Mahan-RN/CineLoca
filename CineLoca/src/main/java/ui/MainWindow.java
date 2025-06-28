@@ -2,11 +2,11 @@ package ui;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import model.MovieCollection;
-
-import javax.swing.JButton;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -18,6 +18,7 @@ public class MainWindow {
     private JFrame frame;
     private JPanel topPanel;
     private JPanel centerPanel;
+    private JScrollPane scrollPane;
     private JButton settingsButton;
     private JButton informationButton;
     private JLabel totalMoviesCounter;
@@ -64,6 +65,9 @@ public class MainWindow {
     // EFFECTS: creates a JPanel with flowlayout at the center of the main frame
     private void setCenterPanel() {
         centerPanel = new JPanel();
+        scrollPane = new JScrollPane(centerPanel,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
         frame.add(centerPanel, BorderLayout.CENTER);
     }
