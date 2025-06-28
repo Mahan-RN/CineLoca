@@ -10,6 +10,7 @@ import model.MovieCollection;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 // Represents the main window of the program's UI
 public class MainWindow {
@@ -70,8 +71,8 @@ public class MainWindow {
         scrollPane = new JScrollPane(centerPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        frame.add(centerPanel, BorderLayout.CENTER);
+        centerPanel.setLayout(new GridLayout(0, 5));
+        frame.add(scrollPane, BorderLayout.CENTER);
     }
 
     // EFFECTS: creates a JButton with label "Settings"
