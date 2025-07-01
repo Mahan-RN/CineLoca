@@ -1,7 +1,7 @@
 import javax.swing.SwingUtilities;
 import com.formdev.flatlaf.FlatDarkLaf;
 
-import ui.MainWindow;
+import view.MainWindow;
 
 public class Main {
     public static void main(String[] args) throws Exception {

@@ -1,7 +1,8 @@
-package ui;
+package view;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -10,6 +11,7 @@ import model.MovieCollection;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 // Represents the main window of the program's UI
@@ -80,12 +82,20 @@ public class MainWindow {
 
     // EFFECTS: creates a JButton with label "Settings"
     private void createSettingsButton() {
-        settingsButton = new JButton("Settings");
+        settingsButton = new JButton();
+        ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\settingsButton.png");
+        settingsButton.setIcon(icon);
+        settingsButton.setFocusable(false);
+        settingsButton.setToolTipText("Settings: set path to application resources");
     }
 
     // EFFECTS: creates a JButton with label "Session Information"
     private void createInformationButton() {
-        informationButton = new JButton("Session Information");
+        informationButton = new JButton();
+        ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\informationButton.png");
+        informationButton.setIcon(icon);
+        informationButton.setFocusable(false);
+        informationButton.setToolTipText("Information: current session information and about this app");
     }
 
     // EFFECTS: creates a JLabel that shows total number of movies in collection
@@ -93,6 +103,7 @@ public class MainWindow {
         int moviesNum = movieCollection.getAllMovieIDs().size();
         totalMoviesCounter = new JLabel("Total Movies in Collection: "
                 + moviesNum, JLabel.CENTER);
+        totalMoviesCounter.setFont(new Font("Arial", Font.PLAIN, 16));
     }
 
     // MODIFIES: this
