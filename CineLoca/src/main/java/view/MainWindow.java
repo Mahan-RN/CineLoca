@@ -13,6 +13,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 // Represents the main window of the program's UI
 public class MainWindow {
@@ -87,6 +89,14 @@ public class MainWindow {
         settingsButton.setIcon(icon);
         settingsButton.setFocusable(false);
         settingsButton.setToolTipText("Settings: set path to application resources");
+        settingsButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SettingsWindow(frame);
+            }
+            
+        });
     }
 
     // EFFECTS: creates a JButton with label "Session Information"
