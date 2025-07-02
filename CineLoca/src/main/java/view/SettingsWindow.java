@@ -28,7 +28,6 @@ public class SettingsWindow {
     private String movieDirectoryPath;
     private String imageDirectoryPath;
     private JDialog settingsDialog;
-    private JFileChooser csvFileChooser;
     private JFileChooser movieDirectoryChooser;
     private JFileChooser imageDirectoryChooser;
     private JButton csvButton;
@@ -94,12 +93,7 @@ public class SettingsWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                csvFileChooser = new JFileChooser();
-                csvFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV file",
-                        "csv");
-                csvFileChooser.addChoosableFileFilter(filter);
-                csvFileChooser.setFileFilter(filter);
+                JFileChooser csvFileChooser = csvChooser();
                 int response = csvFileChooser.showOpenDialog(null);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     csvPath = csvFileChooser.getSelectedFile().getAbsolutePath();
@@ -142,13 +136,10 @@ public class SettingsWindow {
                     movieDirectoryPathLabel.setText("Movie Directory: "
                             + movieDirectoryPath);
                 } else {
-                    JOptionPane.showMessageDialog(null,
-                            "No Movie Directory Selected",
-                            "Movie Directory Warning",
-                            JOptionPane.WARNING_MESSAGE);
+                    warningPopUp("Movie Directory Warning",
+                            "No Movie Directory Selected");
                 }
             }
-
         });
     }
 
@@ -179,16 +170,20 @@ public class SettingsWindow {
                     imageDirectoryPathLabel.setText("Image Directory: "
                             + imageDirectoryPath);
                 } else {
-                    JOptionPane.showMessageDialog(null,
-                            "No Image Directory Selected",
-                            "Image Directory Warning",
-                            JOptionPane.WARNING_MESSAGE);
+                    warningPopUp("Image Directory Warning",
+                            "No Image Directory Selected");
                 }
             }
-
         });
     }
 
+    // MODIFIES: MovieCollection, Movie(s)
+    // EFFECTS: creates a JButton to laod movies from CSV metadata file, movie
+    // directory, and image directory selected by the user.
+    // - Produces a pop-up error message if user has not selected the required
+    // resources
+    // - Produces pop-up error messages corresponding to exceptions that might
+    // be thrown
     private void createLoadButton() {
         loadButton = new JButton("Load Movies to Collection");
         loadButton.setFocusable(false);
@@ -198,11 +193,14 @@ public class SettingsWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (csvPath == null) {
-                    errorPopUp("CSV Error", "No CSV File Selected");
+                    errorPopUp("CSV Error",
+                            "No CSV File Selected");
                 } else if (movieDirectoryPath == null) {
-                    errorPopUp("Movie Directory Error", "No Movie Directory Selected");
+                    errorPopUp("Movie Directory Error",
+                            "No Movie Directory Selected");
                 } else if (imageDirectoryPath == null) {
-                    errorPopUp("Image Directory Error", "No Image Directory Selected");
+                    errorPopUp("Image Directory Error",
+                            "No Image Directory Selected");
                 } else {
                     try {
                         csvReader = new MovieCSVReader(csvPath);
@@ -212,21 +210,45 @@ public class SettingsWindow {
                         imageFileReader = new FileReader(imageDirectoryPath);
                         imageFileReader.addPathsToCollection(true);
                     } catch (FileNotFoundException ex) {
-                        errorPopUp("FileNotFound Exception", ex.getMessage());
+                        errorPopUp("FileNotFound Exception",
+                                ex.getMessage());
                     } catch (IOException ex) {
-                        errorPopUp("IO Exception", ex.getMessage());
+                        errorPopUp("IO Exception",
+                                ex.getMessage());
                     } catch (CsvValidationException ex) {
-                        errorPopUp("CsvValidation Exception", ex.getMessage());
+                        errorPopUp("CsvValidation Exception",
+                                ex.getMessage());
                     }
                 }
             }
         });
     }
 
+    // EFFECTS: shows a pop-up error message with the given title and error msg
     private void errorPopUp(String title, String msg) {
         JOptionPane.showMessageDialog(null,
                 "An error occurred:\n" + msg,
                 title,
                 JOptionPane.ERROR_MESSAGE);
+    }
+
+    // EFFECTS: shows a pop-up warning message with the given title and error msg
+    private void warningPopUp(String title, String msg) {
+        JOptionPane.showMessageDialog(null,
+                "Warning:\n" + msg,
+                title,
+                JOptionPane.WARNING_MESSAGE);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a JFileChooser that filters to only display csv files
+    public JFileChooser csvChooser() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV file",
+                "csv");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        return chooser;
     }
 }
