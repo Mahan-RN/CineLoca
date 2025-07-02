@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 // Represents the settings menue of the UI
 public class SettingsWindow {
@@ -62,7 +64,7 @@ public class SettingsWindow {
 
     // EFFECTS: creates a CSV button that upon being clicked on will open
     // a JFileChooser for the user to select the desired movie metadata CSV
-    // file.
+    // file. JFileChooser only allows selection of CSV files
     // The text of the CSVPathLabel will change to the absolute path of the
     // selected file.
     private void createCSVButton() {
@@ -75,10 +77,19 @@ public class SettingsWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 csvFileChooser = new JFileChooser();
+                csvFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV file", "csv");
+                csvFileChooser.addChoosableFileFilter(filter);
+                csvFileChooser.setFileFilter(filter);
                 int response = csvFileChooser.showOpenDialog(null);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     csvPath = csvFileChooser.getSelectedFile().getAbsolutePath();
                     csvPathLabel.setText("CSV File: " + csvPath);
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "No CSV File Selected",
+                            "CSV Warning",
+                            JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
