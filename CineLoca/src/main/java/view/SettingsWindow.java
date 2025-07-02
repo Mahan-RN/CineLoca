@@ -3,6 +3,8 @@ package view;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -12,8 +14,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.opencsv.exceptions.CsvValidationException;
+
+import model.FileReader;
+import model.MovieCSVReader;
+
 // Represents the settings menue of the UI
 public class SettingsWindow {
+    private MovieCSVReader csvReader;
+    private FileReader movieFileReader;
+    private FileReader imageFileReader;
     private String csvPath;
     private String movieDirectoryPath;
     private String imageDirectoryPath;
@@ -24,6 +34,7 @@ public class SettingsWindow {
     private JButton csvButton;
     private JButton movieDirectoryButton;
     private JButton imageDirectoryButton;
+    private JButton loadButton;
     private JLabel csvPathLabel;
     private JLabel movieDirectoryPathLabel;
     private JLabel imageDirectoryPathLabel;
@@ -57,6 +68,8 @@ public class SettingsWindow {
         settingsDialog.add(imageDirectoryPathLabel);
         createImageDirectoryButton();
         settingsDialog.add(imageDirectoryButton);
+        createLoadButton();
+        settingsDialog.add(loadButton);
     }
 
     // EFFECTS: creates a JLabel to display the path to the CSV file contaning
@@ -83,7 +96,8 @@ public class SettingsWindow {
             public void actionPerformed(ActionEvent e) {
                 csvFileChooser = new JFileChooser();
                 csvFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV file", "csv");
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV file",
+                        "csv");
                 csvFileChooser.addChoosableFileFilter(filter);
                 csvFileChooser.setFileFilter(filter);
                 int response = csvFileChooser.showOpenDialog(null);
@@ -123,7 +137,8 @@ public class SettingsWindow {
                 movieDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 int response = movieDirectoryChooser.showOpenDialog(null);
                 if (response == JFileChooser.APPROVE_OPTION) {
-                    movieDirectoryPath = movieDirectoryChooser.getSelectedFile().getAbsolutePath();
+                    movieDirectoryPath = movieDirectoryChooser.getSelectedFile()
+                            .getAbsolutePath();
                     movieDirectoryPathLabel.setText("Movie Directory: "
                             + movieDirectoryPath);
                 } else {
@@ -159,7 +174,8 @@ public class SettingsWindow {
                 imageDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 int response = imageDirectoryChooser.showOpenDialog(null);
                 if (response == JFileChooser.APPROVE_OPTION) {
-                    imageDirectoryPath = imageDirectoryChooser.getSelectedFile().getAbsolutePath();
+                    imageDirectoryPath = imageDirectoryChooser.getSelectedFile()
+                            .getAbsolutePath();
                     imageDirectoryPathLabel.setText("Image Directory: "
                             + imageDirectoryPath);
                 } else {
@@ -171,5 +187,46 @@ public class SettingsWindow {
             }
 
         });
+    }
+
+    private void createLoadButton() {
+        loadButton = new JButton("Load Movies to Collection");
+        loadButton.setFocusable(false);
+        loadButton.setToolTipText("Load movies from selected resources");
+        loadButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (csvPath == null) {
+                    errorPopUp("CSV Error", "No CSV File Selected");
+                } else if (movieDirectoryPath == null) {
+                    errorPopUp("Movie Directory Error", "No Movie Directory Selected");
+                } else if (imageDirectoryPath == null) {
+                    errorPopUp("Image Directory Error", "No Image Directory Selected");
+                } else {
+                    try {
+                        csvReader = new MovieCSVReader(csvPath);
+                        csvReader.loadMoviesFromCSV();
+                        movieFileReader = new FileReader(movieDirectoryPath);
+                        movieFileReader.addPathsToCollection(false);
+                        imageFileReader = new FileReader(imageDirectoryPath);
+                        imageFileReader.addPathsToCollection(true);
+                    } catch (FileNotFoundException ex) {
+                        errorPopUp("FileNotFound Exception", ex.getMessage());
+                    } catch (IOException ex) {
+                        errorPopUp("IO Exception", ex.getMessage());
+                    } catch (CsvValidationException ex) {
+                        errorPopUp("CsvValidation Exception", ex.getMessage());
+                    }
+                }
+            }
+        });
+    }
+
+    private void errorPopUp(String title, String msg) {
+        JOptionPane.showMessageDialog(null,
+                "An error occurred:\n" + msg,
+                title,
+                JOptionPane.ERROR_MESSAGE);
     }
 }
