@@ -28,8 +28,6 @@ public class SettingsWindow {
     private String movieDirectoryPath;
     private String imageDirectoryPath;
     private JDialog settingsDialog;
-    private JFileChooser movieDirectoryChooser;
-    private JFileChooser imageDirectoryChooser;
     private JButton csvButton;
     private JButton movieDirectoryButton;
     private JButton imageDirectoryButton;
@@ -55,27 +53,21 @@ public class SettingsWindow {
         settingsDialog.setSize(888, 480);
         settingsDialog.setLocationRelativeTo(null);
         settingsDialog.setLayout(new GridLayout(0, 2));
-        createCSVPathLabel();
-        settingsDialog.add(csvPathLabel);
-        createCSVButton();
-        settingsDialog.add(csvButton);
-        createMovieDirectoryPathLabel();
-        settingsDialog.add(movieDirectoryPathLabel);
-        createMovieDirectoryButton();
-        settingsDialog.add(movieDirectoryButton);
-        createImageDirectoryPathLabel();
-        settingsDialog.add(imageDirectoryPathLabel);
-        createImageDirectoryButton();
-        settingsDialog.add(imageDirectoryButton);
-        createLoadButton();
-        settingsDialog.add(loadButton);
+        settingsDialog.add(createCSVPathLabel());
+        settingsDialog.add(createCSVButton());
+        settingsDialog.add(createMovieDirectoryPathLabel());
+        settingsDialog.add(createMovieDirectoryButton());
+        settingsDialog.add(createImageDirectoryPathLabel());
+        settingsDialog.add(createImageDirectoryButton());
+        settingsDialog.add(createLoadButton());
     }
 
     // EFFECTS: creates a JLabel to display the path to the CSV file contaning
     // movie metadata as choosen by the user. Displays "No CSV file selected"
     // when user hasn't chosen anything yet
-    private void createCSVPathLabel() {
+    private JLabel createCSVPathLabel() {
         csvPathLabel = new JLabel("No CSV file selected");
+        return csvPathLabel;
     }
 
     // EFFECTS: creates a CSV button that upon being clicked on will open
@@ -85,7 +77,7 @@ public class SettingsWindow {
     // selected file.
     // If no file is selected, a warning message will be displayed to inform
     // the user
-    private void createCSVButton() {
+    private JButton createCSVButton() {
         csvButton = new JButton("Choose CSV File");
         csvButton.setFocusable(false);
         csvButton.setToolTipText("Select movie metadata CSV file");
@@ -106,20 +98,22 @@ public class SettingsWindow {
                 }
             }
         });
+        return csvButton;
     }
 
     // EFFECTS: creates a JLabel to display the absolute path to the movie
     // directory selected by the user. If no directory selected, displays "No
     // Directory Selected"
-    private void createMovieDirectoryPathLabel() {
+    private JLabel createMovieDirectoryPathLabel() {
         movieDirectoryPathLabel = new JLabel("No Directory Selected");
+        return movieDirectoryPathLabel;
     }
 
     // EFFECTS: creteas a JButton that when user clicks on it will open a
     // JFileChooser to selected the directory containing movies. When directory
     // is selected, the text of hte MovieDirectoryPathLabel changes to display
     // the absolute path to the directory
-    private void createMovieDirectoryButton() {
+    private JButton createMovieDirectoryButton() {
         movieDirectoryButton = new JButton("Choose Movie Directory");
         movieDirectoryButton.setFocusable(false);
         movieDirectoryButton.setToolTipText("Select path to movie directory");
@@ -127,8 +121,7 @@ public class SettingsWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                movieDirectoryChooser = new JFileChooser();
-                movieDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                JFileChooser movieDirectoryChooser = directoryChooser();
                 int response = movieDirectoryChooser.showOpenDialog(null);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     movieDirectoryPath = movieDirectoryChooser.getSelectedFile()
@@ -141,19 +134,21 @@ public class SettingsWindow {
                 }
             }
         });
+        return movieDirectoryButton;
     }
 
     // EFFECTS: creates a JLabel to display the absolute path to the directory
     // containing movie poster images as selected by the user
-    private void createImageDirectoryPathLabel() {
+    private JLabel createImageDirectoryPathLabel() {
         imageDirectoryPathLabel = new JLabel("No Directory Selected");
+        return imageDirectoryPathLabel;
     }
 
     // EFFECTS: creates a JButton that when the user clicks on it will open a
     // JFileChooser to select the directory containing movie poster images.
     // Upon selection, the text of the ImageDirectoryPathLabel changes to the
     // absolute path of the selected directory
-    private void createImageDirectoryButton() {
+    private JButton createImageDirectoryButton() {
         imageDirectoryButton = new JButton("Choose Image Directory");
         imageDirectoryButton.setFocusable(false);
         imageDirectoryButton.setToolTipText("Select path to image directory");
@@ -161,8 +156,7 @@ public class SettingsWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                imageDirectoryChooser = new JFileChooser();
-                imageDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                JFileChooser imageDirectoryChooser = directoryChooser();
                 int response = imageDirectoryChooser.showOpenDialog(null);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     imageDirectoryPath = imageDirectoryChooser.getSelectedFile()
@@ -175,6 +169,7 @@ public class SettingsWindow {
                 }
             }
         });
+        return imageDirectoryButton;
     }
 
     // MODIFIES: MovieCollection, Movie(s)
@@ -184,7 +179,7 @@ public class SettingsWindow {
     // resources
     // - Produces pop-up error messages corresponding to exceptions that might
     // be thrown
-    private void createLoadButton() {
+    private JButton createLoadButton() {
         loadButton = new JButton("Load Movies to Collection");
         loadButton.setFocusable(false);
         loadButton.setToolTipText("Load movies from selected resources");
@@ -222,6 +217,7 @@ public class SettingsWindow {
                 }
             }
         });
+        return loadButton;
     }
 
     // EFFECTS: shows a pop-up error message with the given title and error msg
@@ -241,7 +237,7 @@ public class SettingsWindow {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a JFileChooser that filters to only display csv files
+    // EFFECTS: returns a JFileChooser that filters to only display csv files
     public JFileChooser csvChooser() {
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -249,6 +245,14 @@ public class SettingsWindow {
                 "csv");
         chooser.addChoosableFileFilter(filter);
         chooser.setFileFilter(filter);
+        return chooser;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: returns a JFileChooser that filters to only display directories
+    public JFileChooser directoryChooser() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         return chooser;
     }
 }
