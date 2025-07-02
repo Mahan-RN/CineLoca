@@ -14,8 +14,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 // Represents the settings menue of the UI
 public class SettingsWindow {
     private String csvPath;
+    private String movieDirectoryPath;
     private JDialog settingsDialog;
     private JFileChooser csvFileChooser;
+    private JFileChooser movieDirectoryChooser;
     private JButton csvButton;
     private JButton movieDirectoryButton;
     private JButton imageDirectoryButton;
@@ -67,6 +69,8 @@ public class SettingsWindow {
     // file. JFileChooser only allows selection of CSV files
     // The text of the CSVPathLabel will change to the absolute path of the
     // selected file.
+    // If no file is selected, a warning message will be displayed to inform
+    // the user
     private void createCSVButton() {
         csvButton = new JButton("Choose CSV File");
         csvButton.setFocusable(false);
@@ -112,6 +116,25 @@ public class SettingsWindow {
         movieDirectoryButton.setFocusable(false);
         movieDirectoryButton.setToolTipText("Select path to movie directory");
         movieDirectoryButton.setBounds(610, 165, 230, 39);
+        movieDirectoryButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                movieDirectoryChooser = new JFileChooser();
+                movieDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int response = movieDirectoryChooser.showOpenDialog(null);
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    movieDirectoryPath = movieDirectoryChooser.getSelectedFile().getAbsolutePath();
+                    movieDirectoryPathLabel.setText("CSV File: " + csvPath);
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "No Movie Directory Selected",
+                            "Movie Directory Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+        });
     }
 
     // EFFECTS: creates a JLabel to display the absolute path to the directory
