@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -43,7 +44,7 @@ public class SettingsWindow {
         settingsDialog = new JDialog(frame, "Settings", true);
         settingsDialog.setSize(888, 480);
         settingsDialog.setLocationRelativeTo(null);
-        settingsDialog.setLayout(null);
+        settingsDialog.setLayout(new GridLayout(0, 2));
         createCSVPathLabel();
         settingsDialog.add(csvPathLabel);
         createCSVButton();
@@ -63,7 +64,6 @@ public class SettingsWindow {
     // when user hasn't chosen anything yet
     private void createCSVPathLabel() {
         csvPathLabel = new JLabel("No CSV file selected");
-        csvPathLabel.setBounds(210, 65, 144, 27);
     }
 
     // EFFECTS: creates a CSV button that upon being clicked on will open
@@ -77,7 +77,6 @@ public class SettingsWindow {
         csvButton = new JButton("Choose CSV File");
         csvButton.setFocusable(false);
         csvButton.setToolTipText("Select movie metadata CSV file");
-        csvButton.setBounds(610, 65, 230, 36);
         csvButton.addActionListener(new ActionListener() {
 
             @Override
@@ -106,7 +105,6 @@ public class SettingsWindow {
     // Directory Selected"
     private void createMovieDirectoryPathLabel() {
         movieDirectoryPathLabel = new JLabel("No Directory Selected");
-        movieDirectoryPathLabel.setBounds(210, 165, 211, 29);
     }
 
     // EFFECTS: creteas a JButton that when user clicks on it will open a
@@ -117,7 +115,6 @@ public class SettingsWindow {
         movieDirectoryButton = new JButton("Choose Movie Directory");
         movieDirectoryButton.setFocusable(false);
         movieDirectoryButton.setToolTipText("Select path to movie directory");
-        movieDirectoryButton.setBounds(610, 165, 230, 39);
         movieDirectoryButton.addActionListener(new ActionListener() {
 
             @Override
@@ -144,7 +141,6 @@ public class SettingsWindow {
     // containing movie poster images as selected by the user
     private void createImageDirectoryPathLabel() {
         imageDirectoryPathLabel = new JLabel("No Directory Selected");
-        imageDirectoryPathLabel.setBounds(210, 265, 197, 35);
     }
 
     // EFFECTS: creates a JButton that when the user clicks on it will open a
@@ -155,7 +151,6 @@ public class SettingsWindow {
         imageDirectoryButton = new JButton("Choose Image Directory");
         imageDirectoryButton.setFocusable(false);
         imageDirectoryButton.setToolTipText("Select path to image directory");
-        imageDirectoryButton.setBounds(610, 265, 230, 64);
         imageDirectoryButton.addActionListener(new ActionListener() {
 
             @Override
