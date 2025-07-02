@@ -62,6 +62,13 @@ public class SettingsWindow {
         settingsDialog.add(createLoadButton());
     }
 
+    // =====================
+    // Private Helper Methods
+    // =====================
+
+    // --- JLabels:
+
+    // MODIFIES: this
     // EFFECTS: creates a JLabel to display the path to the CSV file contaning
     // movie metadata as choosen by the user. Displays "No CSV file selected"
     // when user hasn't chosen anything yet
@@ -70,6 +77,26 @@ public class SettingsWindow {
         return csvPathLabel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a JLabel to display the absolute path to the movie
+    // directory selected by the user. If no directory selected, displays "No
+    // Directory Selected"
+    private JLabel createMovieDirectoryPathLabel() {
+        movieDirectoryPathLabel = new JLabel("No Directory Selected");
+        return movieDirectoryPathLabel;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a JLabel to display the absolute path to the directory
+    // containing movie poster images as selected by the user
+    private JLabel createImageDirectoryPathLabel() {
+        imageDirectoryPathLabel = new JLabel("No Directory Selected");
+        return imageDirectoryPathLabel;
+    }
+
+    // --- JButtons:
+
+    // MODIFIES: this
     // EFFECTS: creates a CSV button that upon being clicked on will open
     // a JFileChooser for the user to select the desired movie metadata CSV
     // file. JFileChooser only allows selection of CSV files
@@ -101,14 +128,7 @@ public class SettingsWindow {
         return csvButton;
     }
 
-    // EFFECTS: creates a JLabel to display the absolute path to the movie
-    // directory selected by the user. If no directory selected, displays "No
-    // Directory Selected"
-    private JLabel createMovieDirectoryPathLabel() {
-        movieDirectoryPathLabel = new JLabel("No Directory Selected");
-        return movieDirectoryPathLabel;
-    }
-
+    // MODIFIES: this
     // EFFECTS: creteas a JButton that when user clicks on it will open a
     // JFileChooser to selected the directory containing movies. When directory
     // is selected, the text of hte MovieDirectoryPathLabel changes to display
@@ -137,13 +157,7 @@ public class SettingsWindow {
         return movieDirectoryButton;
     }
 
-    // EFFECTS: creates a JLabel to display the absolute path to the directory
-    // containing movie poster images as selected by the user
-    private JLabel createImageDirectoryPathLabel() {
-        imageDirectoryPathLabel = new JLabel("No Directory Selected");
-        return imageDirectoryPathLabel;
-    }
-
+    // MODFIES: this
     // EFFECTS: creates a JButton that when the user clicks on it will open a
     // JFileChooser to select the directory containing movie poster images.
     // Upon selection, the text of the ImageDirectoryPathLabel changes to the
@@ -172,7 +186,7 @@ public class SettingsWindow {
         return imageDirectoryButton;
     }
 
-    // MODIFIES: MovieCollection, Movie(s)
+    // MODIFIES: this, MovieCollection, Movie(s)
     // EFFECTS: creates a JButton to laod movies from CSV metadata file, movie
     // directory, and image directory selected by the user.
     // - Produces a pop-up error message if user has not selected the required
@@ -220,6 +234,8 @@ public class SettingsWindow {
         return loadButton;
     }
 
+    // --- JOptionPane pop-up window helpers:
+
     // EFFECTS: shows a pop-up error message with the given title and error msg
     private void errorPopUp(String title, String msg) {
         JOptionPane.showMessageDialog(null,
@@ -235,6 +251,8 @@ public class SettingsWindow {
                 title,
                 JOptionPane.WARNING_MESSAGE);
     }
+
+    // --- JFileChooser helpers:
 
     // MODIFIES: this
     // EFFECTS: returns a JFileChooser that filters to only display csv files
