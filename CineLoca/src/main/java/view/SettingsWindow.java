@@ -15,9 +15,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class SettingsWindow {
     private String csvPath;
     private String movieDirectoryPath;
+    private String imageDirectoryPath;
     private JDialog settingsDialog;
     private JFileChooser csvFileChooser;
     private JFileChooser movieDirectoryChooser;
+    private JFileChooser imageDirectoryChooser;
     private JButton csvButton;
     private JButton movieDirectoryButton;
     private JButton imageDirectoryButton;
@@ -125,7 +127,8 @@ public class SettingsWindow {
                 int response = movieDirectoryChooser.showOpenDialog(null);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     movieDirectoryPath = movieDirectoryChooser.getSelectedFile().getAbsolutePath();
-                    movieDirectoryPathLabel.setText("CSV File: " + csvPath);
+                    movieDirectoryPathLabel.setText("Movie Directory: "
+                            + movieDirectoryPath);
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "No Movie Directory Selected",
@@ -153,5 +156,25 @@ public class SettingsWindow {
         imageDirectoryButton.setFocusable(false);
         imageDirectoryButton.setToolTipText("Select path to image directory");
         imageDirectoryButton.setBounds(610, 265, 230, 64);
+        imageDirectoryButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imageDirectoryChooser = new JFileChooser();
+                imageDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int response = imageDirectoryChooser.showOpenDialog(null);
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    imageDirectoryPath = imageDirectoryChooser.getSelectedFile().getAbsolutePath();
+                    imageDirectoryPathLabel.setText("Image Directory: "
+                            + imageDirectoryPath);
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "No Image Directory Selected",
+                            "Image Directory Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+        });
     }
 }
