@@ -9,6 +9,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+// Represents the settings menue of the UI
 public class SettingsWindow {
     private String csvPath;
     private JDialog settingsDialog;
@@ -20,11 +21,18 @@ public class SettingsWindow {
     private JLabel movieDirectoryPathLabel;
     private JLabel imageDirectoryPathLabel;
 
+    // EFFECTS: initializes the settings menue and its associated components
     public SettingsWindow(JFrame frame) {
         initialize(frame);
         settingsDialog.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: takes a parent container (JFrame of the MainWindow) and creates
+    // a JDialog on top of it. Adds buttons and labels to the JDialog.
+    // The JDialog:
+    // - Is modal (when opened, user can't click on the main page)
+    // - Has no layout manager to allow for custome positioning of components
     private void initialize(JFrame frame) {
         settingsDialog = new JDialog(frame, "Settings", true);
         settingsDialog.setSize(888, 480);
@@ -44,11 +52,19 @@ public class SettingsWindow {
         settingsDialog.add(imageDirectoryButton);
     }
 
+    // EFFECTS: creates a JLabel to display the path to the CSV file contaning
+    // movie metadata as choosen by the user. Displays "No CSV file selected"
+    // when user hasn't chosen anything yet
     private void createCSVPathLabel() {
         csvPathLabel = new JLabel("No CSV file selected");
         csvPathLabel.setBounds(210, 65, 144, 27);
     }
 
+    // EFFECTS: creates a CSV button that upon being clicked on will open
+    // a JFileChooser for the user to select the desired movie metadata CSV
+    // file.
+    // The text of the CSVPathLabel will change to the absolute path of the
+    // selected file.
     private void createCSVButton() {
         csvButton = new JButton("Choose CSV File");
         csvButton.setFocusable(false);
@@ -63,19 +79,23 @@ public class SettingsWindow {
                 if (response == JFileChooser.APPROVE_OPTION) {
                     csvPath = csvFileChooser.getSelectedFile().getAbsolutePath();
                     csvPathLabel.setText("CSV File: " + csvPath);
-                } else {
-                    csvPathLabel.setText("No CSV file selected");
                 }
             }
-
         });
     }
 
+    // EFFECTS: creates a JLabel to display the absolute path to the movie
+    // directory selected by the user. If no directory selected, displays "No
+    // Directory Selected"
     private void createMovieDirectoryPathLabel() {
         movieDirectoryPathLabel = new JLabel("No Directory Selected");
         movieDirectoryPathLabel.setBounds(210, 165, 211, 29);
     }
 
+    // EFFECTS: creteas a JButton that when user clicks on it will open a
+    // JFileChooser to selected the directory containing movies. When directory
+    // is selected, the text of hte MovieDirectoryPathLabel changes to display
+    // the absolute path to the directory
     private void createMovieDirectoryButton() {
         movieDirectoryButton = new JButton("Choose Movie Directory");
         movieDirectoryButton.setFocusable(false);
@@ -83,11 +103,17 @@ public class SettingsWindow {
         movieDirectoryButton.setBounds(610, 165, 230, 39);
     }
 
+    // EFFECTS: creates a JLabel to display the absolute path to the directory
+    // containing movie poster images as selected by the user
     private void createImageDirectoryPathLabel() {
         imageDirectoryPathLabel = new JLabel("No Directory Selected");
         imageDirectoryPathLabel.setBounds(210, 265, 197, 35);
     }
 
+    // EFFECTS: creates a JButton that when the user clicks on it will open a
+    // JFileChooser to select the directory containing movie poster images.
+    // Upon selection, the text of the ImageDirectoryPathLabel changes to the
+    // absolute path of the selected directory
     private void createImageDirectoryButton() {
         imageDirectoryButton = new JButton("Choose Image Directory");
         imageDirectoryButton.setFocusable(false);
