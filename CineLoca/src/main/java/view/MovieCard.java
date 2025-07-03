@@ -32,6 +32,7 @@ public class MovieCard {
         panel = new JPanel(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setSize(200, 400);
         panel.add(createPoster());
+        panel.add(createTitleAndDate());
     }
 
     // EFFECTS: creates a JLabel containing scaled movie poster
@@ -40,6 +41,14 @@ public class MovieCard {
         icon = new ImageIcon(path);
         JLabel label = new JLabel(scaleImage(icon, 100, 200));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return label;
+    }
+
+    // EFFECTS: creates a JPanel with "Movie (Year)" text
+    private JLabel createTitleAndDate() {
+        String title = movie.getTitle();
+        int year = movie.getReleaseYear();
+        JLabel label = new JLabel(title + " (" + year + ")");
         return label;
     }
 
