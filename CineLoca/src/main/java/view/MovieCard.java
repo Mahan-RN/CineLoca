@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -15,6 +16,7 @@ public class MovieCard {
     private Movie movie;
     private JPanel panel;
     private ImageIcon icon;
+    private JButton viewButton;
 
     // EFFECTS: creates a movie card to represent the given movie
     public MovieCard(Movie movie) {
@@ -33,6 +35,7 @@ public class MovieCard {
         panel.setSize(200, 400);
         panel.add(createPoster());
         panel.add(createTitleAndDate());
+        panel.add(createViewButton());
     }
 
     // EFFECTS: creates a JLabel containing scaled movie poster
@@ -52,6 +55,16 @@ public class MovieCard {
         return label;
     }
 
+    // EFFECTS: creates a button that can be clicked to open dedicated page to
+    // to the movie
+    private JButton createViewButton() {
+        viewButton = new JButton("View");
+        viewButton.setFocusable(false);
+        viewButton.setToolTipText("View detailed movie page");
+        // TODO add action listener
+        return viewButton;
+    }
+
     // EFFECTS: scales a given ImageIcon to the desired width and height
     // while maintaining the aspect ratio
     // Based on User "Unmitigated" response from
@@ -59,17 +72,14 @@ public class MovieCard {
     private ImageIcon scaleImage(ImageIcon icon, int w, int h) {
         int nw = icon.getIconWidth();
         int nh = icon.getIconHeight();
-
         if (icon.getIconWidth() > w) {
             nw = w;
             nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
         }
-
         if (nh > h) {
             nh = h;
             nw = (icon.getIconWidth() * nh) / icon.getIconHeight();
         }
-
         return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_SMOOTH));
     }
 }
