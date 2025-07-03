@@ -33,7 +33,7 @@ public class MovieCard {
     private void initialize() {
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setSize(400, 600);
+        panel.setSize(301, 500);
         panel.add(createPoster());
         panel.add(createTitleAndDate());
         panel.add(createLengthLabel());
@@ -44,7 +44,7 @@ public class MovieCard {
     private JLabel createPoster() {
         String path = movie.getImagePath();
         icon = new ImageIcon(path);
-        JLabel label = new JLabel(scaleImage(icon, 200, 400));
+        JLabel label = new JLabel(scaleImage(icon, 300, 450));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         return label;
     }
@@ -54,6 +54,7 @@ public class MovieCard {
         String title = movie.getTitle();
         int year = movie.getReleaseYear();
         JLabel label = new JLabel(title + " (" + year + ")");
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
         return label;
     }
 
@@ -62,6 +63,7 @@ public class MovieCard {
         int hours = length / 60;
         int minutes = length % 60;
         JLabel label = new JLabel(hours + "hr" + minutes + "min");
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
         return label;
     }
 
@@ -71,26 +73,16 @@ public class MovieCard {
         viewButton = new JButton("View");
         viewButton.setFocusable(false);
         viewButton.setToolTipText("View detailed movie page");
+        viewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         // TODO add action listener
         return viewButton;
     }
 
     // EFFECTS: scales a given ImageIcon to the desired width and height
-    // while maintaining the aspect ratio
-    // Based on User "Unmitigated" response from
-    // https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
     private ImageIcon scaleImage(ImageIcon icon, int w, int h) {
-        int nw = icon.getIconWidth();
-        int nh = icon.getIconHeight();
-        if (icon.getIconWidth() > w) {
-            nw = w;
-            nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
-        }
-        if (nh > h) {
-            nh = h;
-            nw = (icon.getIconWidth() * nh) / icon.getIconHeight();
-        }
-        return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_SMOOTH));
+        Image image = icon.getImage(); // transform it
+        Image newimg = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way
+        return new ImageIcon(newimg); // transform it back
     }
 
     public JPanel getPanel() {
