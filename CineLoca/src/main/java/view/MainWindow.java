@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import model.Movie;
 import model.MovieCollection;
 
 import java.awt.BorderLayout;
@@ -25,6 +26,7 @@ public class MainWindow {
     private JPanel centerPanel;
     private JScrollPane scrollPane;
     private JButton settingsButton;
+    private JButton loadMoviesButton;
     private JButton informationButton;
     private JLabel totalMoviesCounter;
 
@@ -63,7 +65,9 @@ public class MainWindow {
         createSettingsButton();
         createInformationButton();
         createTotalMoviesCounterLabel();
+        createLoadMoviesButton();
         topPanel.add(settingsButton);
+        topPanel.add(loadMoviesButton);
         topPanel.add(informationButton);
         topPanel.add(totalMoviesCounter);
     }
@@ -95,7 +99,24 @@ public class MainWindow {
             public void actionPerformed(ActionEvent e) {
                 new SettingsWindow(frame);
             }
-            
+
+        });
+    }
+
+    // EFFECTS: creates a JButton with label "Load Movies"
+    public void createLoadMoviesButton() {
+        loadMoviesButton = new JButton("Load Movies");
+        loadMoviesButton.setFocusable(false);
+        settingsButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Movie movie : movieCollection.getMovieMap().values()) {
+                    MovieCard card = new MovieCard(movie);
+                    JPanel cardPanel = card.getPanel();
+                    scrollPane.add(cardPanel);
+                }
+            }
         });
     }
 

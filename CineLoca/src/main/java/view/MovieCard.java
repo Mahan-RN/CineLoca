@@ -91,4 +91,8 @@ public class MovieCard {
         }
         return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_SMOOTH));
     }
+
+    public JPanel getPanel() {
+        return panel;
+    }
 }
