@@ -82,7 +82,7 @@ public class MainWindow {
         scrollPane = new JScrollPane(centerPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        centerPanel.setLayout(new GridLayout(0, 5, 10, 15));
+        centerPanel.setLayout(new GridLayout(0, 5, 10, 10));
         frame.add(scrollPane, BorderLayout.CENTER);
     }
 
@@ -107,15 +107,19 @@ public class MainWindow {
     public void createLoadMoviesButton() {
         loadMoviesButton = new JButton("Load Movies");
         loadMoviesButton.setFocusable(false);
-        settingsButton.addActionListener(new ActionListener() {
+        loadMoviesButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Movie movie : movieCollection.getMovieMap().values()) {
                     MovieCard card = new MovieCard(movie);
                     JPanel cardPanel = card.getPanel();
-                    scrollPane.add(cardPanel);
+                    centerPanel.add(cardPanel);
                 }
+                totalMoviesCounter.setText("Total Movies in Collection: "
+                        + movieCollection.getAllMovieIDs().size());
+                centerPanel.revalidate();
+                centerPanel.repaint();
             }
         });
     }

@@ -31,8 +31,9 @@ public class MovieCard {
     // - Movie length (in min)
     // - View button
     private void initialize() {
-        panel = new JPanel(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setSize(200, 400);
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setSize(400, 600);
         panel.add(createPoster());
         panel.add(createTitleAndDate());
         panel.add(createLengthLabel());
@@ -43,7 +44,7 @@ public class MovieCard {
     private JLabel createPoster() {
         String path = movie.getImagePath();
         icon = new ImageIcon(path);
-        JLabel label = new JLabel(scaleImage(icon, 100, 200));
+        JLabel label = new JLabel(scaleImage(icon, 200, 400));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         return label;
     }
