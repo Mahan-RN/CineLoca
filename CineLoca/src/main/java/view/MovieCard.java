@@ -35,6 +35,7 @@ public class MovieCard {
         panel.setSize(200, 400);
         panel.add(createPoster());
         panel.add(createTitleAndDate());
+        panel.add(createLengthLabel());
         panel.add(createViewButton());
     }
 
@@ -52,6 +53,14 @@ public class MovieCard {
         String title = movie.getTitle();
         int year = movie.getReleaseYear();
         JLabel label = new JLabel(title + " (" + year + ")");
+        return label;
+    }
+
+    private JLabel createLengthLabel() {
+        int length = movie.getLengthMinutes();
+        int hours = length / 60;
+        int minutes = length % 60;
+        JLabel label = new JLabel(hours + "hr" + minutes + "min");
         return label;
     }
 
