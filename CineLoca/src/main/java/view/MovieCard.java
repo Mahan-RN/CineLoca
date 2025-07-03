@@ -30,7 +30,8 @@ public class MovieCard {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a 200x400 JPanel with vertical box layout and adds to it:
+    // EFFECTS: creates a 200x400 JPanel with vertical box layout and
+    // adds to it:
     // - Movie Poster
     // - Movie Title and release date
     // - Movie length (in min)
@@ -49,7 +50,7 @@ public class MovieCard {
     private JLabel createPoster() {
         String path = movie.getImagePath();
         icon = new ImageIcon(path);
-        JLabel label = new JLabel(scaleImage(icon, 300, 450));
+        JLabel label = new JLabel(scaleImage(icon, 300, 450)); // 2:3 ratio
         return label;
     }
 
@@ -85,7 +86,8 @@ public class MovieCard {
     // EFFECTS: scales a given ImageIcon to the desired width and height
     private ImageIcon scaleImage(ImageIcon icon, int w, int h) {
         Image image = icon.getImage(); // transform it
-        Image newimg = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way
+        // scale it the smooth way
+        Image newimg = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
         return new ImageIcon(newimg); // transform it back
     }
 }
