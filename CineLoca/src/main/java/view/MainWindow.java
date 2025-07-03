@@ -11,6 +11,7 @@ import model.Movie;
 import model.MovieCollection;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -93,6 +94,7 @@ public class MainWindow {
         settingsButton.setIcon(icon);
         settingsButton.setFocusable(false);
         settingsButton.setToolTipText("Settings: set path to application resources");
+        settingsButton.setBackground(Color.GRAY);
         settingsButton.addActionListener(new ActionListener() {
 
             @Override
@@ -105,8 +107,11 @@ public class MainWindow {
 
     // EFFECTS: creates a JButton with label "Load Movies"
     public void createLoadMoviesButton() {
-        loadMoviesButton = new JButton("Load Movies");
+        loadMoviesButton = new JButton();
+        ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\refreshButton.png");
+        loadMoviesButton.setIcon(icon);
         loadMoviesButton.setFocusable(false);
+        loadMoviesButton.setToolTipText("Refresh window");
         loadMoviesButton.addActionListener(new ActionListener() {
 
             @Override
