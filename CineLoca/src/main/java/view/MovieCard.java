@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Image;
 
 import model.Movie;
@@ -22,6 +22,11 @@ public class MovieCard {
     public MovieCard(Movie movie) {
         this.movie = movie;
         initialize();
+    }
+
+    // getter
+    public JPanel getPanel() {
+        return panel;
     }
 
     // MODIFIES: this
@@ -45,7 +50,6 @@ public class MovieCard {
         String path = movie.getImagePath();
         icon = new ImageIcon(path);
         JLabel label = new JLabel(scaleImage(icon, 300, 450));
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
         return label;
     }
 
@@ -54,16 +58,17 @@ public class MovieCard {
         String title = movie.getTitle();
         int year = movie.getReleaseYear();
         JLabel label = new JLabel(title + " (" + year + ")");
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
+        label.setMinimumSize(new Dimension(200, 10));
         return label;
     }
 
+    // EFFECTS: creates a JLabel to show the length of the movie in hour-min
+    // format
     private JLabel createLengthLabel() {
         int length = movie.getLengthMinutes();
         int hours = length / 60;
         int minutes = length % 60;
         JLabel label = new JLabel(hours + "hr" + minutes + "min");
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
         return label;
     }
 
@@ -73,7 +78,6 @@ public class MovieCard {
         viewButton = new JButton("View");
         viewButton.setFocusable(false);
         viewButton.setToolTipText("View detailed movie page");
-        viewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         // TODO add action listener
         return viewButton;
     }
@@ -83,9 +87,5 @@ public class MovieCard {
         Image image = icon.getImage(); // transform it
         Image newimg = image.getScaledInstance(w, h, Image.SCALE_SMOOTH); // scale it the smooth way
         return new ImageIcon(newimg); // transform it back
-    }
-
-    public JPanel getPanel() {
-        return panel;
     }
 }
