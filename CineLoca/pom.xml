@@ -78,6 +78,13 @@
         <artifactId>flatlaf</artifactId>
         <version>3.6</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.miglayout/miglayout-swing -->
+    <dependency>
+        <groupId>com.miglayout</groupId>
+        <artifactId>miglayout-swing</artifactId>
+        <version>11.4.2</version>
+    </dependency>
   </dependencies>
 
   <build>

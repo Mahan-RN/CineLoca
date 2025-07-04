@@ -1,18 +1,17 @@
 package view;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 
 import model.Movie;
+import net.miginfocom.swing.MigLayout;
 
 // Represents an individual movie card in the MainWindow
 public class MovieCard {
@@ -20,6 +19,7 @@ public class MovieCard {
     private JPanel panel;
     private ImageIcon icon;
     private JButton viewButton;
+    private MigLayout mgl;
 
     // EFFECTS: creates a movie card to represent the given movie
     public MovieCard(Movie movie) {
@@ -41,12 +41,13 @@ public class MovieCard {
     // - View button
     private void initialize() {
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        MigLayout mgl = new MigLayout("wrap, insets 10", "[]", "[]5[]5[]10[]");
+        panel.setLayout(mgl);
         panel.setSize(301, 500);
-        panel.add(createPoster());
-        panel.add(createTitleAndDate());
-        panel.add(createLengthLabel());
-        panel.add(createViewButton());
+        panel.add(createPoster(), "center");
+        panel.add(createTitleAndDate(), "left");
+        panel.add(createLengthLabel(), "left");
+        panel.add(createViewButton(), "center, grow");
     }
 
     // EFFECTS: creates a JLabel containing scaled movie poster
@@ -85,7 +86,6 @@ public class MovieCard {
         viewButton.setFocusable(false);
         viewButton.setToolTipText("View detailed movie page");
         viewButton.setFont(new Font("Montserrat", Font.BOLD, 12));
-        viewButton.setBorder(BorderFactory.createLineBorder(Color.black));
         // TODO add action listener
         return viewButton;
     }
