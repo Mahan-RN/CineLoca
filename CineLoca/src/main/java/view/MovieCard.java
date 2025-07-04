@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -41,7 +40,9 @@ public class MovieCard {
     // - View button
     private void initialize() {
         panel = new JPanel();
-        MigLayout mgl = new MigLayout("wrap, insets 10", "[]", "[]5[]5[]10[]");
+        mgl = new MigLayout("wrap, insets 10",
+                "[]",
+                "[]5[]5[]10[]");
         panel.setLayout(mgl);
         panel.setSize(301, 500);
         panel.add(createPoster(), "center");

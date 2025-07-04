@@ -10,10 +10,10 @@ import javax.swing.JScrollPane;
 
 import model.Movie;
 import model.MovieCollection;
+import net.miginfocom.swing.MigLayout;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -31,6 +31,7 @@ public class MainWindow {
     private JButton loadMoviesButton;
     private JButton informationButton;
     private JLabel totalMoviesCounter;
+    private MigLayout mgl;
 
     // EFFECTS: initializes the main window JFrame
     public MainWindow() {
@@ -62,16 +63,19 @@ public class MainWindow {
     // the main frame. Adds a settings button at the right of the JPanel
     private void setTopPanel() {
         this.topPanel = new JPanel();
-        this.topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 15));
+        mgl = new MigLayout("insets 10, fillx",
+                "",
+                "[][grow][]");
+        this.topPanel.setLayout(mgl);
         this.frame.add(topPanel, BorderLayout.NORTH);
         createSettingsButton();
         createInformationButton();
         createTotalMoviesCounterLabel();
         createLoadMoviesButton();
-        topPanel.add(settingsButton);
+        topPanel.add(settingsButton, "split 2, left, gapx 5");
         topPanel.add(loadMoviesButton);
-        topPanel.add(informationButton);
-        topPanel.add(totalMoviesCounter);
+        topPanel.add(totalMoviesCounter, "center");
+        topPanel.add(informationButton, "right");
     }
 
     // MODIFIES: this
