@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -80,6 +81,7 @@ public class MainWindow {
     // 15 pixel vgap
     private void setCenterPanel() {
         centerPanel = new JPanel();
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         scrollPane = new JScrollPane(centerPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
