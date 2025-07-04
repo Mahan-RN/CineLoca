@@ -124,7 +124,7 @@ public class SettingsWindow {
                             + csvPath
                             + "</html>");
                 } else {
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(settingsDialog,
                             "No CSV File Selected",
                             "CSV Warning",
                             JOptionPane.WARNING_MESSAGE);
@@ -226,6 +226,12 @@ public class SettingsWindow {
                         movieFileReader.addPathsToCollection(false);
                         imageFileReader = new FileReader(imageDirectoryPath);
                         imageFileReader.addPathsToCollection(true);
+                        JOptionPane.showMessageDialog(settingsDialog,
+                                "Data was loaded successfully! "
+                                        + "Refresh the main window.",
+                                "Success!",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        settingsDialog.dispose();
                     } catch (FileNotFoundException ex) {
                         errorPopUp("FileNotFound Exception",
                                 ex.getMessage());
@@ -246,7 +252,7 @@ public class SettingsWindow {
 
     // EFFECTS: shows a pop-up error message with the given title and error msg
     private void errorPopUp(String title, String msg) {
-        JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(settingsDialog,
                 "An error occurred:\n" + msg,
                 title,
                 JOptionPane.ERROR_MESSAGE);
@@ -254,7 +260,7 @@ public class SettingsWindow {
 
     // EFFECTS: shows a pop-up warning message with the given title and error msg
     private void warningPopUp(String title, String msg) {
-        JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(settingsDialog,
                 "Warning:\n" + msg,
                 title,
                 JOptionPane.WARNING_MESSAGE);
