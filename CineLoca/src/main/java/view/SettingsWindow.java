@@ -52,7 +52,7 @@ public class SettingsWindow {
     private void initialize(JFrame frame) {
         settingsDialog = new JDialog(frame, "Settings", true);
         settingsDialog.setSize(900, 600);
-        settingsDialog.setLocationRelativeTo(null);
+        settingsDialog.setLocationRelativeTo(frame);
         mgl = new MigLayout("insets 20, wrap, fillx",
                 "[]100[]",
                 "[]100[]100[]200[]");
@@ -117,7 +117,7 @@ public class SettingsWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser csvFileChooser = csvChooser();
-                int response = csvFileChooser.showOpenDialog(null);
+                int response = csvFileChooser.showOpenDialog(settingsDialog);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     csvPath = csvFileChooser.getSelectedFile().getAbsolutePath();
                     csvPathLabel.setText("<html>CSV File:<br>"
@@ -148,7 +148,7 @@ public class SettingsWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser movieDirectoryChooser = directoryChooser();
-                int response = movieDirectoryChooser.showOpenDialog(null);
+                int response = movieDirectoryChooser.showOpenDialog(settingsDialog);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     movieDirectoryPath = movieDirectoryChooser.getSelectedFile()
                             .getAbsolutePath();
@@ -178,7 +178,7 @@ public class SettingsWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser imageDirectoryChooser = directoryChooser();
-                int response = imageDirectoryChooser.showOpenDialog(null);
+                int response = imageDirectoryChooser.showOpenDialog(settingsDialog);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     imageDirectoryPath = imageDirectoryChooser.getSelectedFile()
                             .getAbsolutePath();
