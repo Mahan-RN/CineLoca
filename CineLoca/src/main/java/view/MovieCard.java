@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 
 import model.Movie;
@@ -60,6 +61,7 @@ public class MovieCard {
         int year = movie.getReleaseYear();
         JLabel label = new JLabel(title + " (" + year + ")");
         label.setMinimumSize(new Dimension(200, 10));
+        label.setFont(new Font("Montserrat", Font.BOLD, 16));
         return label;
     }
 
@@ -70,6 +72,7 @@ public class MovieCard {
         int hours = length / 60;
         int minutes = length % 60;
         JLabel label = new JLabel(hours + "hr" + minutes + "min");
+        label.setFont(new Font("Montserrat", Font.PLAIN, 12));
         return label;
     }
 
@@ -79,6 +82,7 @@ public class MovieCard {
         viewButton = new JButton("View");
         viewButton.setFocusable(false);
         viewButton.setToolTipText("View detailed movie page");
+        viewButton.setFont(new Font("Montserrat", Font.BOLD, 12));
         // TODO add action listener
         return viewButton;
     }
