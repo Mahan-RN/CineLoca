@@ -85,7 +85,7 @@ public class MainWindow {
         scrollPane = new JScrollPane(centerPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        centerPanel.setLayout(new GridLayout(0, 5, 10, 10));
+        centerPanel.setLayout(new GridLayout(0, 4, 10, 10));
         frame.add(scrollPane, BorderLayout.CENTER);
     }
 
