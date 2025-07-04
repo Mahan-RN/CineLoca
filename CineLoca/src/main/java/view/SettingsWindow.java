@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -18,6 +17,7 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import model.FileReader;
 import model.MovieCSVReader;
+import net.miginfocom.swing.MigLayout;
 
 // Represents the settings menue of the UI
 public class SettingsWindow {
@@ -28,6 +28,7 @@ public class SettingsWindow {
     private String movieDirectoryPath;
     private String imageDirectoryPath;
     private JDialog settingsDialog;
+    private MigLayout mgl;
     private JButton csvButton;
     private JButton movieDirectoryButton;
     private JButton imageDirectoryButton;
@@ -50,16 +51,19 @@ public class SettingsWindow {
     // - Has no layout manager to allow for custome positioning of components
     private void initialize(JFrame frame) {
         settingsDialog = new JDialog(frame, "Settings", true);
-        settingsDialog.setSize(888, 480);
+        settingsDialog.setSize(900, 600);
         settingsDialog.setLocationRelativeTo(null);
-        settingsDialog.setLayout(new GridLayout(0, 2));
+        mgl = new MigLayout("insets 20, wrap, fillx",
+                "[]100[]",
+                "[]100[]100[]200[]");
+        settingsDialog.setLayout(mgl);
         settingsDialog.add(createCSVPathLabel());
-        settingsDialog.add(createCSVButton());
+        settingsDialog.add(createCSVButton(), "center");
         settingsDialog.add(createMovieDirectoryPathLabel());
-        settingsDialog.add(createMovieDirectoryButton());
+        settingsDialog.add(createMovieDirectoryButton(), "center");
         settingsDialog.add(createImageDirectoryPathLabel());
-        settingsDialog.add(createImageDirectoryButton());
-        settingsDialog.add(createLoadButton());
+        settingsDialog.add(createImageDirectoryButton(), "center");
+        settingsDialog.add(createLoadButton(), "span, grow");
     }
 
     // =====================
@@ -116,7 +120,9 @@ public class SettingsWindow {
                 int response = csvFileChooser.showOpenDialog(null);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     csvPath = csvFileChooser.getSelectedFile().getAbsolutePath();
-                    csvPathLabel.setText("CSV File: " + csvPath);
+                    csvPathLabel.setText("<html>CSV File:<br>"
+                            + csvPath
+                            + "</html>");
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "No CSV File Selected",
@@ -146,8 +152,9 @@ public class SettingsWindow {
                 if (response == JFileChooser.APPROVE_OPTION) {
                     movieDirectoryPath = movieDirectoryChooser.getSelectedFile()
                             .getAbsolutePath();
-                    movieDirectoryPathLabel.setText("Movie Directory: "
-                            + movieDirectoryPath);
+                    movieDirectoryPathLabel.setText("<html>Movie Directory:<br>"
+                            + movieDirectoryPath
+                            + "</html>");
                 } else {
                     warningPopUp("Movie Directory Warning",
                             "No Movie Directory Selected");
@@ -175,8 +182,9 @@ public class SettingsWindow {
                 if (response == JFileChooser.APPROVE_OPTION) {
                     imageDirectoryPath = imageDirectoryChooser.getSelectedFile()
                             .getAbsolutePath();
-                    imageDirectoryPathLabel.setText("Image Directory: "
-                            + imageDirectoryPath);
+                    imageDirectoryPathLabel.setText("<html>Image Directory:<br>"
+                            + imageDirectoryPath
+                            + "</html>");
                 } else {
                     warningPopUp("Image Directory Warning",
                             "No Image Directory Selected");
