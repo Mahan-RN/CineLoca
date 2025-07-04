@@ -1,11 +1,13 @@
 package view;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -83,6 +85,7 @@ public class MovieCard {
         viewButton.setFocusable(false);
         viewButton.setToolTipText("View detailed movie page");
         viewButton.setFont(new Font("Montserrat", Font.BOLD, 12));
+        viewButton.setBorder(BorderFactory.createLineBorder(Color.black));
         // TODO add action listener
         return viewButton;
     }
