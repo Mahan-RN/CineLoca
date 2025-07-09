@@ -19,6 +19,7 @@ public class MovieWindow {
     private JDialog window;
     private MigLayout mgl;
     private JButton playButton;
+    private JLabel posterLabel;
     private JLabel directorLabel;
     private JLabel actorsLabel;
     private JLabel lengthLabel;
@@ -47,8 +48,8 @@ public class MovieWindow {
     private JLabel createPoster() {
         String path = movie.getImagePath();
         icon = new ImageIcon(path);
-        JLabel label = new JLabel(scaleImage(icon, 300, 450)); // 2:3 ratio
-        return label;
+        posterLabel = new JLabel(scaleImage(icon, 300, 450)); // 2:3 ratio
+        return posterLabel;
     }
 
     // EFFECTS: creates a JPanel with "Movie (Year)" text
@@ -67,9 +68,30 @@ public class MovieWindow {
         int length = movie.getLengthMinutes();
         int hours = length / 60;
         int minutes = length % 60;
-        JLabel label = new JLabel(hours + " h " + minutes + " min");
-        label.setFont(new Font("Montserrat", Font.PLAIN, 12));
-        return label;
+        lengthLabel = new JLabel(hours + " h " + minutes + " min");
+        lengthLabel.setFont(new Font("Montserrat", Font.PLAIN, 12));
+        return lengthLabel;
+    }
+
+    private JLabel createDirectorLabel() {
+        String director = movie.getDirector();
+        directorLabel = new JLabel("Directed by: " + director);
+        directorLabel.setFont(new Font("Montserrat", Font.PLAIN, 12));
+        return directorLabel;
+    }
+
+    private JLabel createActorsLabel() {
+        String text = "";
+        if (movie.getActors().isEmpty()) {
+            text = "";
+        } else {
+            for (String actor : movie.getActors()) {
+                text = text + actor + ", ";
+            }
+        }
+        actorsLabel = new JLabel(text);
+        return actorsLabel;
+
     }
 
     // EFFECTS: scales a given ImageIcon to the desired width and height

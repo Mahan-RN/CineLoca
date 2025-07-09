@@ -96,6 +96,24 @@ public class Movie {
         this.filePath = filePath;
     }
 
+    // EFFECTS: returns comma-separated string representation of actors in
+    // the movie
+    public String actorsToString() {
+        String str = "";
+        if (!actors.isEmpty()) {
+            int len = actors.size();
+            if (len == 1) {
+                str = actors.get(0);
+            } else {
+                for (int i = 0; i < len - 1; i++) {
+                    str += actors.get(i) + ", ";
+                }
+                str += actors.get(len - 1);
+            }
+        }
+        return str;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

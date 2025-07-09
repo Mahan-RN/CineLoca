@@ -1,3 +1,4 @@
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,7 @@ public class TestMovie {
     private Movie testMovie;
 
     @BeforeEach
-    
+
     void runBefore() {
         testMovie = new Movie("tt1392190", "Mad Max: Fury Road");
     }
@@ -101,6 +102,29 @@ public class TestMovie {
         String path = "CineLoca//00testData//movie//testMovie.mp4";
         testMovie.setFilePath(path);
         assertEquals(path, testMovie.getFilePath());
+    }
+
+    @Test
+    void testActorsToStringEmpty() {
+        String output = testMovie.actorsToString();
+        assertEquals("", output);
+    }
+
+    @Test
+    void testActorsToStringSingle() {
+        testMovie.addActor("Sam");
+        String output = testMovie.actorsToString();
+        assertEquals("Sam", output);
+    }
+
+    @Test
+    void testActorsToStringMultiple() {
+        testMovie.addActor("Sam");
+        testMovie.addActor("Lara");
+        testMovie.addActor("Mahan");
+        testMovie.addActor("Jackie");
+        String output = testMovie.actorsToString();
+        assertEquals("Sam, Lara, Mahan, Jackie", output);
     }
 
     @Test
