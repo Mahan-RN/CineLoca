@@ -143,6 +143,12 @@ public class MainWindow {
         informationButton.setIcon(icon);
         informationButton.setFocusable(false);
         informationButton.setToolTipText("Information: current session information and about this app");
+        informationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new InformationWindow(frame);
+            }
+        });
     }
 
     // EFFECTS: creates a JLabel that shows total number of movies in collection
