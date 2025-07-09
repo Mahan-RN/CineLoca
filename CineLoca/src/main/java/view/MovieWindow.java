@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import model.Movie;
 import net.miginfocom.swing.MigLayout;
@@ -86,6 +87,7 @@ public class MovieWindow {
         return lengthLabel;
     }
 
+    // EFFECTS: creates label for movie director
     private JLabel createDirectorLabel() {
         String director = movie.getDirector();
         directorLabel = new JLabel("Directed by: " + director);
@@ -93,18 +95,21 @@ public class MovieWindow {
         return directorLabel;
     }
 
+    // EFFECTS: creates label for movie actors
     private JLabel createActorsLabel() {
         actorsLabel = new JLabel("Starring: " + movie.actorsToString());
         actorsLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
         return actorsLabel;
     }
 
+    // EFFECTS: creates label for movie countary
     private JLabel craeateCountaryLabel() {
         countaryLabel = new JLabel("Countary: " + movie.getCountary());
         countaryLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
         return countaryLabel;
     }
 
+    // EFFECTS: creates label for movie subtitle availability
     private JLabel createsubLabel() {
         String answer = "No";
         if (movie.hasEnglishSubtitle()) {
@@ -115,6 +120,9 @@ public class MovieWindow {
         return subtitleLabel;
     }
 
+    // EFFECTS: creates a play button that when clicked will open the movie
+    // file using OS default app. Throws IO Exception if the file cannot be
+    // opened
     private JButton createPlayButton() {
         ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\playButton.png");
         playButton = new JButton("Play", icon);
@@ -129,7 +137,9 @@ public class MovieWindow {
                     File file = new File(movie.getFilePath());
                     Desktop.getDesktop().open(file);
                 } catch (IOException exception) {
-                    System.out.println("File cannot be opened!");
+                    JOptionPane.showMessageDialog(window, "Error:\n" + e,
+                            "Movie File Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
