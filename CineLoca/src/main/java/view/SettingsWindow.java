@@ -48,7 +48,6 @@ public class SettingsWindow {
     // a JDialog on top of it. Adds buttons and labels to the JDialog.
     // The JDialog:
     // - Is modal (when opened, user can't click on the main page)
-    // - Has no layout manager to allow for custome positioning of components
     private void initialize(JFrame frame) {
         settingsDialog = new JDialog(frame, "Settings", true);
         settingsDialog.setSize(900, 600);
