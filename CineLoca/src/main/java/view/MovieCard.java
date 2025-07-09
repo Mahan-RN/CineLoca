@@ -2,12 +2,15 @@ package view;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import model.Movie;
 import net.miginfocom.swing.MigLayout;
@@ -15,13 +18,15 @@ import net.miginfocom.swing.MigLayout;
 // Represents an individual movie card in the MainWindow
 public class MovieCard {
     private Movie movie;
+    private JFrame frame;
     private JPanel panel;
     private ImageIcon icon;
     private JButton viewButton;
     private MigLayout mgl;
 
     // EFFECTS: creates a movie card to represent the given movie
-    public MovieCard(Movie movie) {
+    public MovieCard(JFrame frame, Movie movie) {
+        this.frame = frame;
         this.movie = movie;
         initialize();
     }
@@ -87,7 +92,13 @@ public class MovieCard {
         viewButton.setFocusable(false);
         viewButton.setToolTipText("View detailed movie page");
         viewButton.setFont(new Font("Montserrat", Font.BOLD, 12));
-        // TODO add action listener
+        viewButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MovieWindow(frame, movie);
+            }
+        });
         return viewButton;
     }
 

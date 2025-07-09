@@ -1,8 +1,13 @@
 package view;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,18 +42,26 @@ public class MovieWindow {
     // EFFECTS: creates a modal JDialog on top of the frame
     private void initialize(JFrame frame) {
         window = new JDialog(frame, movie.getTitle(), true);
-        window.setSize(600, 900);
+        window.setSize(450, 800);
         window.setLocationRelativeTo(frame);
-        mgl = new MigLayout("wrap, insets 10", "[]");
+        mgl = new MigLayout("wrap, insets 10",
+                "[]");
         window.setLayout(mgl);
-
+        window.add(createPoster(), "center");
+        window.add(createTitleAndDate(), "left");
+        window.add(createPlayButton(), "center, grow");
+        window.add(createLengthLabel(), "left");
+        window.add(createDirectorLabel(), "left");
+        window.add(createActorsLabel(), "left, grow");
+        window.add(craeateCountaryLabel(), "left");
+        window.add(createsubLabel(), "left");
     }
 
     // EFFECTS: creates a JLabel containing scaled movie poster
     private JLabel createPoster() {
         String path = movie.getImagePath();
         icon = new ImageIcon(path);
-        posterLabel = new JLabel(scaleImage(icon, 300, 450)); // 2:3 ratio
+        posterLabel = new JLabel(scaleImage(icon, 350, 525)); // 2:3 ratio
         return posterLabel;
     }
 
@@ -68,30 +81,59 @@ public class MovieWindow {
         int length = movie.getLengthMinutes();
         int hours = length / 60;
         int minutes = length % 60;
-        lengthLabel = new JLabel(hours + " h " + minutes + " min");
-        lengthLabel.setFont(new Font("Montserrat", Font.PLAIN, 12));
+        lengthLabel = new JLabel("Run time: " + hours + " h " + minutes + " min");
+        lengthLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
         return lengthLabel;
     }
 
     private JLabel createDirectorLabel() {
         String director = movie.getDirector();
         directorLabel = new JLabel("Directed by: " + director);
-        directorLabel.setFont(new Font("Montserrat", Font.PLAIN, 12));
+        directorLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
         return directorLabel;
     }
 
     private JLabel createActorsLabel() {
-        String text = "";
-        if (movie.getActors().isEmpty()) {
-            text = "";
-        } else {
-            for (String actor : movie.getActors()) {
-                text = text + actor + ", ";
-            }
-        }
-        actorsLabel = new JLabel(text);
+        actorsLabel = new JLabel("Starring: " + movie.actorsToString());
+        actorsLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
         return actorsLabel;
+    }
 
+    private JLabel craeateCountaryLabel() {
+        countaryLabel = new JLabel("Countary: " + movie.getCountary());
+        countaryLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        return countaryLabel;
+    }
+
+    private JLabel createsubLabel() {
+        String answer = "No";
+        if (movie.hasEnglishSubtitle()) {
+            answer = "Yes";
+        }
+        subtitleLabel = new JLabel("Subtitle availability: " + answer);
+        subtitleLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        return subtitleLabel;
+    }
+
+    private JButton createPlayButton() {
+        ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\playButton.png");
+        playButton = new JButton("Play", icon);
+        playButton.setIconTextGap(10);
+        playButton.setFont(new Font("Montserrat", Font.BOLD, 12));
+        playButton.setFocusable(false);
+        playButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    File file = new File(movie.getFilePath());
+                    Desktop.getDesktop().open(file);
+                } catch (IOException exception) {
+                    System.out.println("File cannot be opened!");
+                }
+            }
+        });
+        return playButton;
     }
 
     // EFFECTS: scales a given ImageIcon to the desired width and height

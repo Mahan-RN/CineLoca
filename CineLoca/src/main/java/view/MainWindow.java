@@ -124,7 +124,7 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Movie movie : movieCollection.getMovieMap().values()) {
-                    MovieCard card = new MovieCard(movie);
+                    MovieCard card = new MovieCard(frame, movie);
                     JPanel cardPanel = card.getPanel();
                     centerPanel.add(cardPanel);
                 }
