@@ -85,14 +85,12 @@ public class MainWindow {
     // 15 pixel vgap
     private void setCenterPanel() {
         centerPanel = new JPanel();
-        //FlowLayout flow = new FlowLayout(FlowLayout.LEFT, 10, 10);
         WrapLayout wl = new WrapLayout(WrapLayout.CENTER, 10, 10);
         centerPanel.setLayout(wl);
         centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         scrollPane = new JScrollPane(centerPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        //centerPanel.setLayout(new GridLayout(0, 4, 10, 10));
         frame.add(scrollPane, BorderLayout.CENTER);
     }
 
