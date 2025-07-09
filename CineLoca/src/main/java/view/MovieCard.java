@@ -75,7 +75,7 @@ public class MovieCard {
         int length = movie.getLengthMinutes();
         int hours = length / 60;
         int minutes = length % 60;
-        JLabel label = new JLabel(hours + "hr" + minutes + "min");
+        JLabel label = new JLabel(hours + " h " + minutes + " min");
         label.setFont(new Font("Montserrat", Font.PLAIN, 12));
         return label;
     }
