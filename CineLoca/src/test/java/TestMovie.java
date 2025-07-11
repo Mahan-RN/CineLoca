@@ -152,4 +152,22 @@ public class TestMovie {
         assertEquals(expected, movies);
     }
 
+    @Test
+    void testYearComparator() {
+        Movie movie0 = new Movie("123", "A");
+        movie0.setReleaseYear(1960);
+        Movie movie1 = new Movie("1234", "B");
+        movie1.setReleaseYear(1960);
+        Movie movie2 = new Movie("12345", "Z");
+        movie2.setReleaseYear(1990);
+        Movie movie3 = new Movie("123456", "11");
+        movie3.setReleaseYear(2025);
+        ArrayList<Movie> movies = new ArrayList<>(
+                Arrays.asList(movie2, movie3, movie1, movie0));
+        ArrayList<Movie> expected = new ArrayList<>(
+                Arrays.asList(movie1, movie0, movie2, movie3));
+        movies.sort(Movie.yearComparator);
+        assertEquals(expected, movies);
+    }
+
 }

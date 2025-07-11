@@ -184,12 +184,19 @@ public class Movie {
         return filePath;
     }
 
-    // EFFECTS: returns a comparator that sorts movies lexicographically based
-    // on their title
+    // EFFECTS: comparator to compare movies lexicographically
     public static Comparator<Movie> titleComparator = new Comparator<Movie>() {
         @Override
         public int compare(Movie m1, Movie m2) {
             return m1.getTitle().compareTo(m2.getTitle());
+        }
+    };
+
+    // EFFECTS: comparator to compare movies based on release year
+    public static Comparator<Movie> yearComparator = new Comparator<Movie>() {
+        @Override
+        public int compare(Movie m1, Movie m2) {
+            return m1.getReleaseYear() - m2.getReleaseYear();
         }
     };
 }
