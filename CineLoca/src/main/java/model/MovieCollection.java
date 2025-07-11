@@ -43,6 +43,20 @@ public class MovieCollection {
         }
     }
 
+    // EFFECTS: returns lexicographically sorted list of movies based title
+    public ArrayList<Movie> moviesSortedByTitle() {
+        ArrayList<Movie> movies = new ArrayList<>(movieMap.values());
+        movies.sort(Movie.titleComparator);
+        return movies;
+    }
+
+    // EFFECTS: returns a sorted list of movies based on release year
+    public ArrayList<Movie> moviesSortedByYear() {
+        ArrayList<Movie> movies = new ArrayList<>(movieMap.values());
+        movies.sort(Movie.yearComparator);
+        return movies;
+    }
+
     // EFFECTS: returns the set of all movie IDs in the collection
     public Set<String> getAllMovieIDs() {
         return movieMap.keySet();
