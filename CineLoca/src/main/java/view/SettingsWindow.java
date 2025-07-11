@@ -21,13 +21,16 @@ import net.miginfocom.swing.MigLayout;
 
 // Represents the settings menue of the UI
 public class SettingsWindow {
+    private final int WINDOW_WIDTH = 900;
+    private final int WINDOW_HEIGHT = 600;
+
     private MovieCSVReader csvReader;
     private FileReader movieFileReader;
     private FileReader imageFileReader;
     private String csvPath;
     private String movieDirectoryPath;
     private String imageDirectoryPath;
-    private JDialog settingsDialog;
+    private JDialog window;
     private MigLayout mgl;
     private JButton csvButton;
     private JButton movieDirectoryButton;
@@ -40,7 +43,7 @@ public class SettingsWindow {
     // EFFECTS: initializes the settings menue and its associated components
     public SettingsWindow(JFrame frame) {
         initialize(frame);
-        settingsDialog.setVisible(true);
+        window.setVisible(true);
     }
 
     // MODIFIES: this
@@ -49,20 +52,20 @@ public class SettingsWindow {
     // The JDialog:
     // - Is modal (when opened, user can't click on the main page)
     private void initialize(JFrame frame) {
-        settingsDialog = new JDialog(frame, "Settings", true);
-        settingsDialog.setSize(900, 600);
-        settingsDialog.setLocationRelativeTo(frame);
+        window = new JDialog(frame, "Settings", true);
+        window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        window.setLocationRelativeTo(frame);
         mgl = new MigLayout("insets 20, wrap, fillx",
                 "[]100[]",
                 "[]100[]100[]200[]");
-        settingsDialog.setLayout(mgl);
-        settingsDialog.add(createCSVPathLabel());
-        settingsDialog.add(createCSVButton(), "center");
-        settingsDialog.add(createMovieDirectoryPathLabel());
-        settingsDialog.add(createMovieDirectoryButton(), "center");
-        settingsDialog.add(createImageDirectoryPathLabel());
-        settingsDialog.add(createImageDirectoryButton(), "center");
-        settingsDialog.add(createLoadButton(), "span, grow");
+        window.setLayout(mgl);
+        window.add(createCSVPathLabel());
+        window.add(createCSVButton(), "center");
+        window.add(createMovieDirectoryPathLabel());
+        window.add(createMovieDirectoryButton(), "center");
+        window.add(createImageDirectoryPathLabel());
+        window.add(createImageDirectoryButton(), "center");
+        window.add(createLoadButton(), "span, grow");
     }
 
     // =====================
@@ -116,14 +119,14 @@ public class SettingsWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser csvFileChooser = csvChooser();
-                int response = csvFileChooser.showOpenDialog(settingsDialog);
+                int response = csvFileChooser.showOpenDialog(window);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     csvPath = csvFileChooser.getSelectedFile().getAbsolutePath();
                     csvPathLabel.setText("<html>CSV File:<br>"
                             + csvPath
                             + "</html>");
                 } else {
-                    JOptionPane.showMessageDialog(settingsDialog,
+                    JOptionPane.showMessageDialog(window,
                             "No CSV File Selected",
                             "CSV Warning",
                             JOptionPane.WARNING_MESSAGE);
@@ -147,7 +150,7 @@ public class SettingsWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser movieDirectoryChooser = directoryChooser();
-                int response = movieDirectoryChooser.showOpenDialog(settingsDialog);
+                int response = movieDirectoryChooser.showOpenDialog(window);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     movieDirectoryPath = movieDirectoryChooser.getSelectedFile()
                             .getAbsolutePath();
@@ -177,7 +180,7 @@ public class SettingsWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser imageDirectoryChooser = directoryChooser();
-                int response = imageDirectoryChooser.showOpenDialog(settingsDialog);
+                int response = imageDirectoryChooser.showOpenDialog(window);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     imageDirectoryPath = imageDirectoryChooser.getSelectedFile()
                             .getAbsolutePath();
@@ -225,12 +228,12 @@ public class SettingsWindow {
                         movieFileReader.addPathsToCollection(false);
                         imageFileReader = new FileReader(imageDirectoryPath);
                         imageFileReader.addPathsToCollection(true);
-                        JOptionPane.showMessageDialog(settingsDialog,
+                        JOptionPane.showMessageDialog(window,
                                 "Data was loaded successfully! "
                                         + "Refresh the main window.",
                                 "Success!",
                                 JOptionPane.INFORMATION_MESSAGE);
-                        settingsDialog.dispose();
+                        window.dispose();
                     } catch (FileNotFoundException ex) {
                         errorPopUp("FileNotFound Exception",
                                 ex.getMessage());
@@ -251,7 +254,7 @@ public class SettingsWindow {
 
     // EFFECTS: shows a pop-up error message with the given title and error msg
     private void errorPopUp(String title, String msg) {
-        JOptionPane.showMessageDialog(settingsDialog,
+        JOptionPane.showMessageDialog(window,
                 "An error occurred:\n" + msg,
                 title,
                 JOptionPane.ERROR_MESSAGE);
@@ -259,7 +262,7 @@ public class SettingsWindow {
 
     // EFFECTS: shows a pop-up warning message with the given title and error msg
     private void warningPopUp(String title, String msg) {
-        JOptionPane.showMessageDialog(settingsDialog,
+        JOptionPane.showMessageDialog(window,
                 "Warning:\n" + msg,
                 title,
                 JOptionPane.WARNING_MESSAGE);

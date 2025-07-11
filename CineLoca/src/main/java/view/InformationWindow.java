@@ -11,6 +11,8 @@ import net.miginfocom.swing.MigLayout;
 
 // Represents the information window
 public class InformationWindow {
+    private final String FONT = "Montserrat";
+    
     private JDialog window;
     private MigLayout mgl;
     private JLabel duplicatesLabel;
@@ -42,7 +44,7 @@ public class InformationWindow {
     private JLabel createDuplicatesLabel() {
         duplicatesLabel = new JLabel("Duplicate IDs: "
                 + collection.getDuplicateIDs().toString());
-        duplicatesLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        duplicatesLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return duplicatesLabel;
     }
 
@@ -51,7 +53,7 @@ public class InformationWindow {
         String str = "<html>CineLoca is developed and maintained by MahanRN.<br>"
                 + "For more information visit https://github.com/Mahan-RN/CineLoca</html>";
         creditsLabel = new JLabel(str);
-        creditsLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        creditsLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return creditsLabel;
     }
 }

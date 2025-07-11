@@ -17,6 +17,12 @@ import net.miginfocom.swing.MigLayout;
 
 // Represents an individual movie card in the MainWindow
 public class MovieCard {
+    private final int PANEL_WIDTH = 301;
+    private final int PANEL_HEIGHT = 500;
+    private final int POSTER_WIDTH = 300; // 2:3 poster W:H ratio
+    private final int POSTER_HEIGHT = 450;
+    private final String FONT = "Montserrat";
+
     private Movie movie;
     private JFrame frame;
     private JPanel panel;
@@ -49,7 +55,7 @@ public class MovieCard {
                 "[]",
                 "[]5[]5[]10[]");
         panel.setLayout(mgl);
-        panel.setSize(301, 500);
+        panel.setSize(PANEL_WIDTH, PANEL_HEIGHT);
         panel.add(createPoster(), "center");
         panel.add(createTitleAndDate(), "left");
         panel.add(createLengthLabel(), "left");
@@ -60,7 +66,7 @@ public class MovieCard {
     private JLabel createPoster() {
         String path = movie.getImagePath();
         icon = new ImageIcon(path);
-        JLabel label = new JLabel(scaleImage(icon, 300, 450)); // 2:3 ratio
+        JLabel label = new JLabel(scaleImage(icon, POSTER_WIDTH, POSTER_HEIGHT));
         return label;
     }
 
@@ -70,7 +76,7 @@ public class MovieCard {
         int year = movie.getReleaseYear();
         JLabel label = new JLabel(title + " (" + year + ")");
         label.setMinimumSize(new Dimension(200, 10));
-        label.setFont(new Font("Montserrat", Font.BOLD, 16));
+        label.setFont(new Font(FONT, Font.BOLD, 16));
         return label;
     }
 
@@ -81,7 +87,7 @@ public class MovieCard {
         int hours = length / 60;
         int minutes = length % 60;
         JLabel label = new JLabel(hours + " h " + minutes + " min");
-        label.setFont(new Font("Montserrat", Font.PLAIN, 12));
+        label.setFont(new Font(FONT, Font.PLAIN, 12));
         return label;
     }
 
@@ -91,7 +97,7 @@ public class MovieCard {
         viewButton = new JButton("View");
         viewButton.setFocusable(false);
         viewButton.setToolTipText("View detailed movie page");
-        viewButton.setFont(new Font("Montserrat", Font.BOLD, 12));
+        viewButton.setFont(new Font(FONT, Font.BOLD, 12));
         viewButton.addActionListener(new ActionListener() {
 
             @Override
