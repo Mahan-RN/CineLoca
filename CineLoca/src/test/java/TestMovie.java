@@ -1,5 +1,9 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -132,6 +136,20 @@ public class TestMovie {
         Movie movie1 = new Movie("tt0372784", "Batman");
         Movie movie2 = new Movie("tt0372784", "Dune");
         assertTrue(movie1.equals(movie2));
+    }
+
+    @Test
+    void testTitleComparator() {
+        Movie movie0 = new Movie("123", "A");
+        Movie movie1 = new Movie("1234", "B");
+        Movie movie2 = new Movie("12345", "Z");
+        Movie movie3 = new Movie("123456", "11");
+        ArrayList<Movie> movies = new ArrayList<>(
+                Arrays.asList(movie2, movie0, movie3, movie1));
+        ArrayList<Movie> expected = new ArrayList<>(
+                Arrays.asList(movie3, movie0, movie1, movie2));
+        movies.sort(Movie.titleComparator);
+        assertEquals(expected, movies);
     }
 
 }

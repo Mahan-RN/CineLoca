@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 // Represents a Movie
 public class Movie {
@@ -183,4 +184,12 @@ public class Movie {
         return filePath;
     }
 
+    // EFFECTS: returns a comparator that sorts movies lexicographically based
+    // on their title
+    public static Comparator<Movie> titleComparator = new Comparator<Movie>() {
+        @Override
+        public int compare(Movie m1, Movie m2) {
+            return m1.getTitle().compareTo(m2.getTitle());
+        }
+    };
 }
