@@ -18,6 +18,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 // Represents the main window of the program's UI
 public class MainWindow {
@@ -123,7 +124,8 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Movie movie : movieCollection.getMovieMap().values()) {
+                ArrayList<Movie> movies = movieCollection.moviesSortedByTitle();
+                for (Movie movie : movies) {
                     MovieCard card = new MovieCard(frame, movie);
                     JPanel cardPanel = card.getPanel();
                     centerPanel.add(cardPanel);
