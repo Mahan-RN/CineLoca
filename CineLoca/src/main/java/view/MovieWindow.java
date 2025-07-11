@@ -21,6 +21,14 @@ import net.miginfocom.swing.MigLayout;
 
 // Represents the detailed movie window
 public class MovieWindow {
+    private final int WINDOW_WIDTH = 450;
+    private final int WINDO_HEIGHT = 800;
+    private final int POSTER_HEIGHT = 525;
+    private final int POSTER_WIDTH = 350;
+    private final String PLAY_BUTTON_ICON = "CineLoca\\src\\main\\resources"
+            + "\\view\\buttonIcons\\playButton.png";
+    private final String FONT = "Montserrat";
+
     private Movie movie;
     private JDialog window;
     private MigLayout mgl;
@@ -43,7 +51,7 @@ public class MovieWindow {
     // EFFECTS: creates a modal JDialog on top of the frame
     private void initialize(JFrame frame) {
         window = new JDialog(frame, movie.getTitle(), true);
-        window.setSize(450, 800);
+        window.setSize(WINDOW_WIDTH, WINDO_HEIGHT);
         window.setLocationRelativeTo(frame);
         mgl = new MigLayout("wrap, insets 10",
                 "[]");
@@ -62,17 +70,17 @@ public class MovieWindow {
     private JLabel createPoster() {
         String path = movie.getImagePath();
         icon = new ImageIcon(path);
-        posterLabel = new JLabel(scaleImage(icon, 350, 525)); // 2:3 ratio
+        posterLabel = new JLabel(scaleImage(icon, POSTER_WIDTH, POSTER_HEIGHT)); // 2:3 ratio
         return posterLabel;
     }
 
-    // EFFECTS: creates a JPanel with "Movie (Year)" text
+    // EFFECTS: creates a JLabel with "Movie (Year)" text
     private JLabel createTitleAndDate() {
         String title = movie.getTitle();
         int year = movie.getReleaseYear();
         JLabel label = new JLabel(title + " (" + year + ")");
         label.setMinimumSize(new Dimension(200, 10));
-        label.setFont(new Font("Montserrat", Font.BOLD, 16));
+        label.setFont(new Font(FONT, Font.BOLD, 16));
         return label;
     }
 
@@ -83,7 +91,7 @@ public class MovieWindow {
         int hours = length / 60;
         int minutes = length % 60;
         lengthLabel = new JLabel("Run time: " + hours + " h " + minutes + " min");
-        lengthLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        lengthLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return lengthLabel;
     }
 
@@ -91,21 +99,21 @@ public class MovieWindow {
     private JLabel createDirectorLabel() {
         String director = movie.getDirector();
         directorLabel = new JLabel("Directed by: " + director);
-        directorLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        directorLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return directorLabel;
     }
 
     // EFFECTS: creates label for movie actors
     private JLabel createActorsLabel() {
         actorsLabel = new JLabel("Starring: " + movie.actorsToString());
-        actorsLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        actorsLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return actorsLabel;
     }
 
     // EFFECTS: creates label for movie countary
     private JLabel craeateCountaryLabel() {
         countaryLabel = new JLabel("Countary: " + movie.getCountary());
-        countaryLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        countaryLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return countaryLabel;
     }
 
@@ -116,7 +124,7 @@ public class MovieWindow {
             answer = "Yes";
         }
         subtitleLabel = new JLabel("Subtitle availability: " + answer);
-        subtitleLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        subtitleLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return subtitleLabel;
     }
 
@@ -124,10 +132,10 @@ public class MovieWindow {
     // file using OS default app. Throws IO Exception if the file cannot be
     // opened
     private JButton createPlayButton() {
-        ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\playButton.png");
+        ImageIcon icon = new ImageIcon(PLAY_BUTTON_ICON);
         playButton = new JButton("Play", icon);
         playButton.setIconTextGap(10);
-        playButton.setFont(new Font("Montserrat", Font.BOLD, 12));
+        playButton.setFont(new Font(FONT, Font.BOLD, 12));
         playButton.setFocusable(false);
         playButton.addActionListener(new ActionListener() {
 

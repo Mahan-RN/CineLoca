@@ -23,6 +23,15 @@ import java.util.ArrayList;
 // Represents the main window of the program's UI
 public class MainWindow {
 
+    private final int FRAME_WIDTH = 800;
+    private final int FRAME_HEIGHT = 500;
+    private final String LOAD_BUTTON_ICON = "CineLoca\\src\\main\\resources"
+            + "\\view\\buttonIcons\\refreshButton.png";
+    private final String SETTINGS_BUTTON_ICON = "CineLoca\\src\\main\\resources"
+            + "\\view\\buttonIcons\\settingsButton.png";
+    private final String INFORMATION_BUTTON_ICON = "CineLoca\\src\\main"
+            + "\\resources\\view\\buttonIcons\\informationButton.png";
+
     private MovieCollection movieCollection;
     private JFrame frame;
     private JPanel topPanel;
@@ -53,7 +62,7 @@ public class MainWindow {
         this.frame.setLayout(new BorderLayout());
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.frame.setSize(800, 500);
+        this.frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.frame.setLocationRelativeTo(null);
         setTopPanel();
         setCenterPanel();
@@ -98,7 +107,7 @@ public class MainWindow {
     // EFFECTS: creates a JButton with label "Settings"
     private void createSettingsButton() {
         settingsButton = new JButton();
-        ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\settingsButton.png");
+        ImageIcon icon = new ImageIcon(SETTINGS_BUTTON_ICON);
         settingsButton.setIcon(icon);
         settingsButton.setFocusable(false);
         settingsButton.setToolTipText("Settings: set path to application resources");
@@ -116,7 +125,7 @@ public class MainWindow {
     // EFFECTS: creates a JButton with label "Load Movies"
     public void createLoadMoviesButton() {
         loadMoviesButton = new JButton();
-        ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\refreshButton.png");
+        ImageIcon icon = new ImageIcon(LOAD_BUTTON_ICON);
         loadMoviesButton.setIcon(icon);
         loadMoviesButton.setFocusable(false);
         loadMoviesButton.setToolTipText("Refresh window");
@@ -141,7 +150,7 @@ public class MainWindow {
     // EFFECTS: creates a JButton with label "Session Information"
     private void createInformationButton() {
         informationButton = new JButton();
-        ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\informationButton.png");
+        ImageIcon icon = new ImageIcon(INFORMATION_BUTTON_ICON);
         informationButton.setIcon(icon);
         informationButton.setFocusable(false);
         informationButton.setToolTipText("Information: current session information and about this app");
