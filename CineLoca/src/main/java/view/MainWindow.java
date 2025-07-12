@@ -36,6 +36,8 @@ public class MainWindow {
             + "\\view\\buttonIcons\\settingsButton.png";
     private final String INFORMATION_BUTTON_ICON = "CineLoca\\src\\main"
             + "\\resources\\view\\buttonIcons\\informationButton.png";
+    private final String SORT_BY_BUTTON_ICON = "CineLoca\\src\\main\\resources"
+            + "\\view\\buttonIcons\\sortButton.png";
 
     private MovieCollection movieCollection;
     private JFrame frame;
@@ -186,16 +188,23 @@ public class MainWindow {
 
     private JButton createSortButton() {
         JPopupMenu popupMenu = new JPopupMenu("Sort by:");
+        popupMenu.add(sortByTitleItem());
+        popupMenu.add(sortByYearItem());
+        ImageIcon icon = new ImageIcon(SORT_BY_BUTTON_ICON);
+        JButton dropDownButton = DropDownButtonFactory.createDropDownButton(icon, popupMenu);
+        return dropDownButton;
+    }
+
+    // EFFECTS: creates a menu item that when clicked, sorts the collection
+    // by title. If collection is empty, shows a pop-up error.
+    private JMenuItem sortByTitleItem() {
         JMenuItem menuItemSortByTitle = new JMenuItem("Title");
         menuItemSortByTitle.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (movieCollection.getAllMovieIDs().isEmpty()) {
-                    JOptionPane.showMessageDialog(frame,
-                            "Your collection is empty. Load movies first.",
-                            "Empty Collection",
-                            JOptionPane.ERROR_MESSAGE);
+                    emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
                     ArrayList<Movie> movies = movieCollection.moviesSortedByTitle();
@@ -209,16 +218,19 @@ public class MainWindow {
                 }
             }
         });
+        return menuItemSortByTitle;
+    }
+
+    // EFFECTS: creates a menu item that when clicked, sort the collection by
+    // release year. Shows a pop-up error if collection is empty
+    private JMenuItem sortByYearItem() {
         JMenuItem menuItemSortByYear = new JMenuItem("Release Year");
         menuItemSortByYear.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (movieCollection.getAllMovieIDs().isEmpty()) {
-                    JOptionPane.showMessageDialog(frame,
-                            "Your collection is empty. Load movies first.",
-                            "Empty Collection",
-                            JOptionPane.ERROR_MESSAGE);
+                    emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
                     ArrayList<Movie> movies = movieCollection.moviesSortedByYear();
@@ -232,11 +244,15 @@ public class MainWindow {
                 }
             }
         });
-        popupMenu.add(menuItemSortByTitle);
-        popupMenu.add(menuItemSortByYear);
-        ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\sortButton.png");
-        JButton dropDownButton = DropDownButtonFactory.createDropDownButton(icon, popupMenu);
-        return dropDownButton;
+        return menuItemSortByYear;
+    }
+
+    // EFFECTS: pop-up error message to inform user that collection is empty
+    private void emptyCollectionPopUp() {
+        JOptionPane.showMessageDialog(frame,
+                "Your collection is empty. Load movies first.",
+                "Empty Collection",
+                JOptionPane.ERROR_MESSAGE);
     }
 
 }
