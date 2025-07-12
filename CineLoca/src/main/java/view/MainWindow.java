@@ -57,13 +57,19 @@ public class MainWindow {
     }
 
     // MODIFIES: this
-    // EFFECTS: private set up method for the JFrame of the main window
-    // - Sets "CineLoca" as the name displayed on the main window
-    // - Makes the "X" button on top left to close the application
-    // - Sets the window size to full screen; then sets size for when the screen
-    // is minimized
-    // - Sets the relative location of the window at the center of the device
-    // screen
+    // EFFECTS: makes the main frame visible
+    public void show() {
+        this.frame.setVisible(true);
+    }
+
+    // =====================
+    // Private Helper Methods
+    // =====================
+
+    // Main Frame and its container components:
+
+    // MODIFIES: this
+    // EFFECTS: private set up method for main JFrame
     private void initializeMainFrame() {
         this.frame = new JFrame("CineLoca");
         this.frame.setLayout(new BorderLayout());
@@ -77,7 +83,7 @@ public class MainWindow {
 
     // MODIFIES: this
     // EFFECTS: creates a JPanel with borderlayout at the NORTH region of
-    // the main frame. Adds a settings button at the right of the JPanel
+    // the main frame. Adds its components.
     private void setTopPanel() {
         this.topPanel = new JPanel();
         mgl = new MigLayout("insets 10, fillx",
@@ -97,22 +103,24 @@ public class MainWindow {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a vertically scrollable JPanel with grid layout at
-    // the center of the main frame.
-    // - Grid layout has unlimied rows (0), 5 columns, 10 pixel hgap, and
-    // 15 pixel vgap
+    // EFFECTS: creates a vertically scrollable JPanel at the center of the
+    // main frame. Adds its components
     private void setCenterPanel() {
         centerPanel = new JPanel();
         WrapLayout wl = new WrapLayout(WrapLayout.CENTER, 10, 10);
         centerPanel.setLayout(wl);
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10,
+                10, 10));
         scrollPane = new JScrollPane(centerPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frame.add(scrollPane, BorderLayout.CENTER);
     }
 
-    // EFFECTS: creates a JButton with label "Settings"
+    // Buttons:
+
+    // EFFECTS: creates the settings button. When clicked, opens the
+    // settings window
     private void createSettingsButton() {
         settingsButton = new JButton();
         ImageIcon icon = new ImageIcon(SETTINGS_BUTTON_ICON);
@@ -126,11 +134,12 @@ public class MainWindow {
             public void actionPerformed(ActionEvent e) {
                 new SettingsWindow(frame);
             }
-
         });
     }
 
-    // EFFECTS: creates a JButton with label "Load Movies"
+    // EFFECTS: creates a load movies button. When clicked, loads movies from
+    // the collection, sorted by title.
+    // If collection is empty, shows a pop-up error message
     public void createLoadMoviesButton() {
         loadMoviesButton = new JButton();
         ImageIcon icon = new ImageIcon(LOAD_BUTTON_ICON);
@@ -160,13 +169,15 @@ public class MainWindow {
         });
     }
 
-    // EFFECTS: creates a JButton with label "Session Information"
+    // EFFECTS: creates the information button. When clicked, opens information
+    // window
     private void createInformationButton() {
         informationButton = new JButton();
         ImageIcon icon = new ImageIcon(INFORMATION_BUTTON_ICON);
         informationButton.setIcon(icon);
         informationButton.setFocusable(false);
-        informationButton.setToolTipText("Information: current session information and about this app");
+        String text = "Information: current session information and about this app";
+        informationButton.setToolTipText(text);
         informationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -175,7 +186,22 @@ public class MainWindow {
         });
     }
 
-    // EFFECTS: creates a JLabel that shows total number of movies in collection
+    // EFFECTS: creates a sort button. When clicked, opens a drop-down menu
+    // letting user choose how to sort their collection
+    private JButton createSortButton() {
+        JPopupMenu popupMenu = new JPopupMenu("Sort by:");
+        popupMenu.add(sortByTitleItem());
+        popupMenu.add(sortByYearItem());
+        ImageIcon icon = new ImageIcon(SORT_BY_BUTTON_ICON);
+        JButton dropDownButton = DropDownButtonFactory.createDropDownButton(icon,
+                popupMenu);
+        return dropDownButton;
+    }
+
+    // Labels:
+
+    // EFFECTS: creates a label that shows total number of movies in the
+    // collection
     private void createTotalMoviesCounterLabel() {
         int moviesNum = movieCollection.getAllMovieIDs().size();
         totalMoviesCounter = new JLabel("Total Movies in Collection: "
@@ -183,21 +209,7 @@ public class MainWindow {
         totalMoviesCounter.setFont(new Font("Arial", Font.PLAIN, 16));
     }
 
-    // MODIFIES: this
-    // EFFECTS: makes the main window visible; used to start the application
-    // from Main
-    public void show() {
-        this.frame.setVisible(true);
-    }
-
-    private JButton createSortButton() {
-        JPopupMenu popupMenu = new JPopupMenu("Sort by:");
-        popupMenu.add(sortByTitleItem());
-        popupMenu.add(sortByYearItem());
-        ImageIcon icon = new ImageIcon(SORT_BY_BUTTON_ICON);
-        JButton dropDownButton = DropDownButtonFactory.createDropDownButton(icon, popupMenu);
-        return dropDownButton;
-    }
+    // Menu Items:
 
     // EFFECTS: creates a menu item that when clicked, sorts the collection
     // by title. If collection is empty, shows a pop-up error.
@@ -250,6 +262,8 @@ public class MainWindow {
         });
         return menuItemSortByYear;
     }
+
+    // Pop-ups:
 
     // EFFECTS: pop-up error message to inform user that collection is empty
     private void emptyCollectionPopUp() {
