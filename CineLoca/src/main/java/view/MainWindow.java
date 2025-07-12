@@ -2,11 +2,16 @@ package view;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+
+import org.openide.awt.DropDownButtonFactory;
 
 import model.Movie;
 import model.MovieCollection;
@@ -82,8 +87,9 @@ public class MainWindow {
         createInformationButton();
         createTotalMoviesCounterLabel();
         createLoadMoviesButton();
-        topPanel.add(settingsButton, "split 2, left, gapx 5");
+        topPanel.add(settingsButton, "split 3, left, gapx 5");
         topPanel.add(loadMoviesButton);
+        topPanel.add(createSortButton());
         topPanel.add(totalMoviesCounter, "center");
         topPanel.add(informationButton, "right");
     }
@@ -133,6 +139,7 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                centerPanel.removeAll();
                 ArrayList<Movie> movies = movieCollection.moviesSortedByTitle();
                 for (Movie movie : movies) {
                     MovieCard card = new MovieCard(frame, movie);
@@ -175,6 +182,61 @@ public class MainWindow {
     // from Main
     public void show() {
         this.frame.setVisible(true);
+    }
+
+    private JButton createSortButton() {
+        JPopupMenu popupMenu = new JPopupMenu("Sort by:");
+        JMenuItem menuItemSortByTitle = new JMenuItem("Title");
+        menuItemSortByTitle.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                    JOptionPane.showMessageDialog(frame,
+                            "Your collection is empty. Load movies first.",
+                            "Empty Collection",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    centerPanel.removeAll();
+                    ArrayList<Movie> movies = movieCollection.moviesSortedByTitle();
+                    for (Movie movie : movies) {
+                        MovieCard card = new MovieCard(frame, movie);
+                        JPanel cardPanel = card.getPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
+                }
+            }
+        });
+        JMenuItem menuItemSortByYear = new JMenuItem("Release Year");
+        menuItemSortByYear.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                    JOptionPane.showMessageDialog(frame,
+                            "Your collection is empty. Load movies first.",
+                            "Empty Collection",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    centerPanel.removeAll();
+                    ArrayList<Movie> movies = movieCollection.moviesSortedByYear();
+                    for (Movie movie : movies) {
+                        MovieCard card = new MovieCard(frame, movie);
+                        JPanel cardPanel = card.getPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
+                }
+            }
+        });
+        popupMenu.add(menuItemSortByTitle);
+        popupMenu.add(menuItemSortByYear);
+        ImageIcon icon = new ImageIcon("CineLoca\\src\\main\\resources\\view\\buttonIcons\\sortButton.png");
+        JButton dropDownButton = DropDownButtonFactory.createDropDownButton(icon, popupMenu);
+        return dropDownButton;
     }
 
 }
