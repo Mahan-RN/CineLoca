@@ -141,17 +141,21 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                centerPanel.removeAll();
-                ArrayList<Movie> movies = movieCollection.moviesSortedByTitle();
-                for (Movie movie : movies) {
-                    MovieCard card = new MovieCard(frame, movie);
-                    JPanel cardPanel = card.getPanel();
-                    centerPanel.add(cardPanel);
+                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                    emptyCollectionPopUp();
+                } else {
+                    centerPanel.removeAll();
+                    ArrayList<Movie> movies = movieCollection.moviesSortedByTitle();
+                    for (Movie movie : movies) {
+                        MovieCard card = new MovieCard(frame, movie);
+                        JPanel cardPanel = card.getPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                    totalMoviesCounter.setText("Total Movies in Collection: "
+                            + movieCollection.getAllMovieIDs().size());
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
                 }
-                totalMoviesCounter.setText("Total Movies in Collection: "
-                        + movieCollection.getAllMovieIDs().size());
-                centerPanel.revalidate();
-                centerPanel.repaint();
             }
         });
     }
