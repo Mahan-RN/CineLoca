@@ -1,9 +1,11 @@
 package model;
 
-import java.io.FileReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVParser;
@@ -20,7 +22,7 @@ public class MovieCSVReader {
 
     private CSVReader csvReader;
     private File csvFile;
-    private FileReader fileReader;
+    private InputStreamReader fileReader;
     private ArrayList<String> parsedRow;
     private MovieCollection collection;
 
@@ -110,15 +112,16 @@ public class MovieCSVReader {
 
     // EFFECTS: creats a file reader with the given path.
     // Throws FileNotFoundException if there is no file at the given path
-    private FileReader createFileReader(String filePathName)
+    private InputStreamReader createFileReader(String filePathName)
             throws FileNotFoundException {
         csvFile = new File(filePathName);
         if (!csvFile.exists()) {
             throw new FileNotFoundException("File not found: "
                     + filePathName);
         } else {
-            fileReader = new FileReader(csvFile);
-            return fileReader;
+            InputStreamReader reader = new InputStreamReader(
+                    new FileInputStream(csvFile), StandardCharsets.UTF_8);
+            return reader;
         }
     }
 
@@ -128,7 +131,7 @@ public class MovieCSVReader {
     // - Ignores the first line of the CSV file, which should correspond to
     // headers
     // - Ignores leading whitespaces
-    private CSVReader createCSVReader(FileReader fileReader) {
+    private CSVReader createCSVReader(InputStreamReader fileReader) {
         CSVParser parser = new CSVParserBuilder()
                 .withIgnoreLeadingWhiteSpace(true)
                 .build(); // takes a CSVParserBuilder and returns a CSVParser
