@@ -55,7 +55,7 @@ public class TestMovieCollection {
     }
 
     @Test
-    void testMoviesSortedByTitle() {
+    void testMoviesSortedByTitleAscending() {
         Movie testMovie3 = new Movie("123", "A");
         Movie testMovie4 = new Movie("1234", "1");
         testCollection.addMovie(testMovie1);
@@ -70,7 +70,22 @@ public class TestMovieCollection {
     }
 
     @Test
-    void testMoviesSortedByYear() {
+    void testMovieSortByTitleDescending() {
+        Movie testMovie3 = new Movie("123", "A");
+        Movie testMovie4 = new Movie("1234", "1");
+        testCollection.addMovie(testMovie1);
+        testCollection.addMovie(testMovie2);
+        testCollection.addMovie(testMovie3);
+        testCollection.addMovie(testMovie4);
+        ArrayList<Movie> expected = new ArrayList<>(Arrays.asList(testMovie2,
+                testMovie1,
+                testMovie3,
+                testMovie4));
+        assertEquals(expected, testCollection.moviesSortedByTitleDescending());
+    }
+
+    @Test
+    void testMoviesSortedByYearAscending() {
         testMovie1.setReleaseYear(1991);
         testMovie2.setReleaseYear(1992);
         Movie testMovie3 = new Movie("123", "A");
@@ -88,4 +103,22 @@ public class TestMovieCollection {
         assertEquals(expected, testCollection.moviesSortedByYearAscending());
     }
 
+    @Test
+    void testMoviesSortedByYearDescending() {
+        testMovie1.setReleaseYear(1991);
+        testMovie2.setReleaseYear(1992);
+        Movie testMovie3 = new Movie("123", "A");
+        testMovie3.setReleaseYear(1990);
+        Movie testMovie4 = new Movie("1234", "1");
+        testMovie4.setReleaseYear(2025);
+        testCollection.addMovie(testMovie1);
+        testCollection.addMovie(testMovie2);
+        testCollection.addMovie(testMovie3);
+        testCollection.addMovie(testMovie4);
+        ArrayList<Movie> expected = new ArrayList<>(Arrays.asList(testMovie4,
+                testMovie2,
+                testMovie1,
+                testMovie3));
+        assertEquals(expected, testCollection.moviesSortedByYearDescending());
+    }
 }
