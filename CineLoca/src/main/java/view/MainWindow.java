@@ -154,7 +154,7 @@ public class MainWindow {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.moviesSortedByTitle();
+                    ArrayList<Movie> movies = movieCollection.moviesSortedByTitleAscending();
                     for (Movie movie : movies) {
                         MovieCard card = new MovieCard(frame, movie);
                         JPanel cardPanel = card.getPanel();
@@ -190,8 +190,8 @@ public class MainWindow {
     // letting user choose how to sort their collection
     private JButton createSortButton() {
         JPopupMenu popupMenu = new JPopupMenu("Sort by:");
-        popupMenu.add(sortByTitleItem());
-        popupMenu.add(sortByYearItem());
+        popupMenu.add(sortByTitleItemAscending());
+        popupMenu.add(sortByYearItemAscending());
         ImageIcon icon = new ImageIcon(SORT_BY_BUTTON_ICON);
         JButton dropDownButton = DropDownButtonFactory.createDropDownButton(icon,
                 popupMenu);
@@ -213,7 +213,7 @@ public class MainWindow {
 
     // EFFECTS: creates a menu item that when clicked, sorts the collection
     // by title. If collection is empty, shows a pop-up error.
-    private JMenuItem sortByTitleItem() {
+    private JMenuItem sortByTitleItemAscending() {
         JMenuItem menuItemSortByTitle = new JMenuItem("Title");
         menuItemSortByTitle.addActionListener(new ActionListener() {
 
@@ -223,7 +223,7 @@ public class MainWindow {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.moviesSortedByTitle();
+                    ArrayList<Movie> movies = movieCollection.moviesSortedByTitleAscending();
                     for (Movie movie : movies) {
                         MovieCard card = new MovieCard(frame, movie);
                         JPanel cardPanel = card.getPanel();
@@ -237,9 +237,35 @@ public class MainWindow {
         return menuItemSortByTitle;
     }
 
+    // EFFECTS: creates a menu item that when clicked, sorts the collection
+    // by title. If collection is empty, shows a pop-up error.
+    private JMenuItem sortByTitleItemDescending() {
+        JMenuItem menuItemSortByTitle = new JMenuItem("Title");
+        menuItemSortByTitle.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                    emptyCollectionPopUp();
+                } else {
+                    centerPanel.removeAll();
+                    ArrayList<Movie> movies = movieCollection.moviesSortedByTitleAscending();
+                    for (Movie movie : movies) {
+                        MovieCard card = new MovieCard(frame, movie);
+                        JPanel cardPanel = card.getPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
+                }
+            }
+        });
+        return menuItemSortByTitle; // TODO
+    }
+
     // EFFECTS: creates a menu item that when clicked, sort the collection by
     // release year. Shows a pop-up error if collection is empty
-    private JMenuItem sortByYearItem() {
+    private JMenuItem sortByYearItemAscending() {
         JMenuItem menuItemSortByYear = new JMenuItem("Release Year");
         menuItemSortByYear.addActionListener(new ActionListener() {
 
@@ -249,7 +275,7 @@ public class MainWindow {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.moviesSortedByYear();
+                    ArrayList<Movie> movies = movieCollection.moviesSortedByYearAscending();
                     for (Movie movie : movies) {
                         MovieCard card = new MovieCard(frame, movie);
                         JPanel cardPanel = card.getPanel();
@@ -261,6 +287,32 @@ public class MainWindow {
             }
         });
         return menuItemSortByYear;
+    }
+
+    // EFFECTS: creates a menu item that when clicked, sort the collection by
+    // release year. Shows a pop-up error if collection is empty
+    private JMenuItem sortByYearItemDescending() {
+        JMenuItem menuItemSortByYear = new JMenuItem("Release Year");
+        menuItemSortByYear.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                    emptyCollectionPopUp();
+                } else {
+                    centerPanel.removeAll();
+                    ArrayList<Movie> movies = movieCollection.moviesSortedByYearAscending();
+                    for (Movie movie : movies) {
+                        MovieCard card = new MovieCard(frame, movie);
+                        JPanel cardPanel = card.getPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
+                }
+            }
+        });
+        return menuItemSortByYear; // TODO
     }
 
     // Pop-ups:

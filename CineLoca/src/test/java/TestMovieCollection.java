@@ -66,7 +66,7 @@ public class TestMovieCollection {
                 testMovie3,
                 testMovie1,
                 testMovie2));
-        assertEquals(expected, testCollection.moviesSortedByTitle());
+        assertEquals(expected, testCollection.moviesSortedByTitleAscending());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class TestMovieCollection {
                 testMovie1,
                 testMovie2,
                 testMovie4));
-        assertEquals(expected, testCollection.moviesSortedByYear());
+        assertEquals(expected, testCollection.moviesSortedByYearAscending());
     }
 
 }

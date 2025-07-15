@@ -43,15 +43,33 @@ public class MovieCollection {
         }
     }
 
-    // EFFECTS: returns lexicographically sorted list of movies based title
-    public ArrayList<Movie> moviesSortedByTitle() {
+    // EFFECTS: returns lexicographically sorted list of movies based title in
+    // ascending order
+    public ArrayList<Movie> moviesSortedByTitleAscending() {
         ArrayList<Movie> movies = new ArrayList<>(movieMap.values());
         movies.sort(Movie.titleComparatorAscending);
         return movies;
     }
 
-    // EFFECTS: returns a sorted list of movies based on release year
-    public ArrayList<Movie> moviesSortedByYear() {
+    // EFFECTS: returns lexicographically sorted list of movies based title
+    // in descending order
+    public ArrayList<Movie> moviesSortedByTitleDescending() {
+        ArrayList<Movie> movies = new ArrayList<>(movieMap.values());
+        movies.sort(Movie.titleComparatorDescending);
+        return movies;
+    }
+
+    // EFFECTS: returns a sorted list of movies based on release year in
+    // ascending order
+    public ArrayList<Movie> moviesSortedByYearAscending() {
+        ArrayList<Movie> movies = new ArrayList<>(movieMap.values());
+        movies.sort(Movie.yearComparatorAscending);
+        return movies;
+    }
+
+    // EFFECTS: returns a sorted list of movies based on release year in
+    // descending order
+    public ArrayList<Movie> moviesSortedByYearDescending() {
         ArrayList<Movie> movies = new ArrayList<>(movieMap.values());
         movies.sort(Movie.yearComparatorAscending);
         return movies;
