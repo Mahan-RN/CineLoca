@@ -71,7 +71,7 @@ public class MovieCollection {
     // descending order
     public ArrayList<Movie> moviesSortedByYearDescending() {
         ArrayList<Movie> movies = new ArrayList<>(movieMap.values());
-        movies.sort(Movie.yearComparatorAscending);
+        movies.sort(Movie.yearComparatorDescending);
         return movies;
     }
 
