@@ -197,6 +197,7 @@ public class MainWindow {
         ImageIcon icon = new ImageIcon(SORT_BY_BUTTON_ICON);
         JButton dropDownButton = DropDownButtonFactory.createDropDownButton(icon,
                 popupMenu);
+        dropDownButton.setToolTipText("Sort movies by:");
         return dropDownButton;
     }
 
@@ -216,7 +217,7 @@ public class MainWindow {
     // EFFECTS: creates a menu item that when clicked, sorts the collection
     // by title. If collection is empty, shows a pop-up error.
     private JMenuItem sortByTitleItemAscending() {
-        JMenuItem menuItemSortByTitle = new JMenuItem("Title (Ascending)");
+        JMenuItem menuItemSortByTitle = new JMenuItem("Title (0–9, A–Z)");
         menuItemSortByTitle.addActionListener(new ActionListener() {
 
             @Override
@@ -242,7 +243,7 @@ public class MainWindow {
     // EFFECTS: creates a menu item that when clicked, sorts the collection
     // by title. If collection is empty, shows a pop-up error.
     private JMenuItem sortByTitleItemDescending() {
-        JMenuItem menuItemSortByTitle = new JMenuItem("Title (Descending)");
+        JMenuItem menuItemSortByTitle = new JMenuItem("Title (Z-A, 9–0)");
         menuItemSortByTitle.addActionListener(new ActionListener() {
 
             @Override
@@ -268,7 +269,7 @@ public class MainWindow {
     // EFFECTS: creates a menu item that when clicked, sort the collection by
     // release year. Shows a pop-up error if collection is empty
     private JMenuItem sortByYearItemAscending() {
-        JMenuItem menuItemSortByYear = new JMenuItem("Release Year (Ascending)");
+        JMenuItem menuItemSortByYear = new JMenuItem("Old to New");
         menuItemSortByYear.addActionListener(new ActionListener() {
 
             @Override
@@ -294,7 +295,7 @@ public class MainWindow {
     // EFFECTS: creates a menu item that when clicked, sort the collection by
     // release year. Shows a pop-up error if collection is empty
     private JMenuItem sortByYearItemDescending() {
-        JMenuItem menuItemSortByYear = new JMenuItem("Release Year (Descending)");
+        JMenuItem menuItemSortByYear = new JMenuItem("New to Old");
         menuItemSortByYear.addActionListener(new ActionListener() {
 
             @Override
