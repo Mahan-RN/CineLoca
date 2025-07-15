@@ -46,14 +46,14 @@ public class MovieCollection {
     // EFFECTS: returns lexicographically sorted list of movies based title
     public ArrayList<Movie> moviesSortedByTitle() {
         ArrayList<Movie> movies = new ArrayList<>(movieMap.values());
-        movies.sort(Movie.titleComparator);
+        movies.sort(Movie.titleComparatorAscending);
         return movies;
     }
 
     // EFFECTS: returns a sorted list of movies based on release year
     public ArrayList<Movie> moviesSortedByYear() {
         ArrayList<Movie> movies = new ArrayList<>(movieMap.values());
-        movies.sort(Movie.yearComparator);
+        movies.sort(Movie.yearComparatorAscending);
         return movies;
     }
 

@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 // Represents a Movie
@@ -184,19 +185,40 @@ public class Movie {
         return filePath;
     }
 
-    // EFFECTS: comparator to compare movies lexicographically
-    public static Comparator<Movie> titleComparator = new Comparator<Movie>() {
+    // EFFECTS: comparator to compare movies lexicographically in ascending
+    // order
+    public static Comparator<Movie> titleComparatorAscending = new Comparator<Movie>() {
         @Override
         public int compare(Movie m1, Movie m2) {
             return m1.getTitle().compareTo(m2.getTitle());
         }
     };
 
-    // EFFECTS: comparator to compare movies based on release year
-    public static Comparator<Movie> yearComparator = new Comparator<Movie>() {
+    // EFFECTS: comparator to compare movies lexicographically in descending
+    // order
+    public static Comparator<Movie> titleComparatorDescending = Collections.reverseOrder(new Comparator<Movie>() {
+        @Override
+        public int compare(Movie m1, Movie m2) {
+            return m2.getTitle().compareTo(m1.getTitle());
+        }
+    });
+
+    // EFFECTS: comparator to compare movies based on release year in ascending
+    // order
+    public static Comparator<Movie> yearComparatorAscending = new Comparator<Movie>() {
         @Override
         public int compare(Movie m1, Movie m2) {
             return m1.getReleaseYear() - m2.getReleaseYear();
         }
     };
+
+    // EFFECTS: comparator to compare movies based on release year in descending
+    // order
+    public static Comparator<Movie> yearComparatorDescending = Collections.reverseOrder(new Comparator<Movie>() {
+        @Override
+        public int compare(Movie m1, Movie m2) {
+            return m1.getReleaseYear() - m2.getReleaseYear();
+        }
+    });
+
 }

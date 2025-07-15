@@ -3,6 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -139,7 +140,7 @@ public class TestMovie {
     }
 
     @Test
-    void testTitleComparator() {
+    void testTitleComparatorAscending() {
         Movie movie0 = new Movie("123", "A");
         Movie movie1 = new Movie("1234", "B");
         Movie movie2 = new Movie("12345", "Z");
@@ -148,12 +149,26 @@ public class TestMovie {
                 Arrays.asList(movie2, movie0, movie3, movie1));
         ArrayList<Movie> expected = new ArrayList<>(
                 Arrays.asList(movie3, movie0, movie1, movie2));
-        movies.sort(Movie.titleComparator);
+        movies.sort(Movie.titleComparatorAscending);
         assertEquals(expected, movies);
     }
 
     @Test
-    void testYearComparator() {
+    void testTitleComparatorDescending() {
+        Movie movie0 = new Movie("123", "A");
+        Movie movie1 = new Movie("1234", "B");
+        Movie movie2 = new Movie("12345", "Z");
+        Movie movie3 = new Movie("123456", "11");
+        ArrayList<Movie> movies = new ArrayList<>(
+                Arrays.asList(movie2, movie0, movie3, movie1));
+        ArrayList<Movie> expected = new ArrayList<>(
+                Arrays.asList(movie2, movie1, movie0, movie3));
+        movies.sort(Collections.reverseOrder(Movie.titleComparatorAscending));
+        assertEquals(expected, movies);
+    }
+
+    @Test
+    void testYearComparatorAscending() {
         Movie movie0 = new Movie("123", "A");
         movie0.setReleaseYear(1960);
         Movie movie1 = new Movie("1234", "B");
@@ -166,7 +181,25 @@ public class TestMovie {
                 Arrays.asList(movie2, movie3, movie1, movie0));
         ArrayList<Movie> expected = new ArrayList<>(
                 Arrays.asList(movie1, movie0, movie2, movie3));
-        movies.sort(Movie.yearComparator);
+        movies.sort(Movie.yearComparatorAscending);
+        assertEquals(expected, movies);
+    }
+
+    @Test
+    void testYearComparatorDescending() {
+        Movie movie0 = new Movie("123", "A");
+        movie0.setReleaseYear(1959);
+        Movie movie1 = new Movie("1234", "B");
+        movie1.setReleaseYear(1960);
+        Movie movie2 = new Movie("12345", "Z");
+        movie2.setReleaseYear(1961);
+        Movie movie3 = new Movie("123456", "11");
+        movie3.setReleaseYear(2025);
+        ArrayList<Movie> movies = new ArrayList<>(
+                Arrays.asList(movie2, movie3, movie1, movie0));
+        ArrayList<Movie> expected = new ArrayList<>(
+                Arrays.asList(movie3, movie2, movie1, movie0));
+        movies.sort(Movie.yearComparatorDescending);
         assertEquals(expected, movies);
     }
 
