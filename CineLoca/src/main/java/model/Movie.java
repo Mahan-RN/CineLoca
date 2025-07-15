@@ -199,7 +199,7 @@ public class Movie {
     public static Comparator<Movie> titleComparatorDescending = Collections.reverseOrder(new Comparator<Movie>() {
         @Override
         public int compare(Movie m1, Movie m2) {
-            return m2.getTitle().compareTo(m1.getTitle());
+            return m1.getTitle().compareTo(m2.getTitle());
         }
     });
 
