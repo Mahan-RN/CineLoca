@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collection;
 
 // Represents a collection of movies
 public class MovieCollection {
@@ -73,6 +74,23 @@ public class MovieCollection {
         ArrayList<Movie> movies = new ArrayList<>(movieMap.values());
         movies.sort(Movie.yearComparatorDescending);
         return movies;
+    }
+
+    // EFFECTS: returns the list of movies with titles that contain the search
+    // string. Returns an empty list if the search string is blank.
+    public ArrayList<Movie> searchTitle(String str) {
+        Collection<Movie> movies = movieMap.values();
+        ArrayList<Movie> hits = new ArrayList<>();
+        if (str.isBlank()) {
+            return hits;
+        } else {
+            for (Movie m : movies) {
+                if (m.getTitle().contains(str)) {
+                    hits.add(m);
+                }
+            }
+        }
+        return hits;
     }
 
     // EFFECTS: returns the set of all movie IDs in the collection

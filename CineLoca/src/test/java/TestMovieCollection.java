@@ -121,4 +121,28 @@ public class TestMovieCollection {
                 testMovie3));
         assertEquals(expected, testCollection.moviesSortedByYearDescending());
     }
+
+    @Test
+    void testSearchTitleEmptySearch() {
+        assertTrue(testCollection.searchTitle("null").isEmpty());
+    }
+
+    @Test
+    void testSearchTitleSingleHit() {
+        testCollection.addMovie(testMovie1);
+        testCollection.addMovie(testMovie2);
+        ArrayList<Movie> output = testCollection.searchTitle("Dune: Part One");
+        assertEquals(1, output.size());
+        assertEquals(testMovie1, output.get(0));
+    }
+
+    @Test
+    void testSearchTitleMultipleHits() {
+        testCollection.addMovie(testMovie1);
+        testCollection.addMovie(testMovie2);
+        ArrayList<Movie> output = testCollection.searchTitle("Dune");
+        assertEquals(2, output.size());
+        assertEquals(testMovie1, output.get(0));
+        assertEquals(testMovie2, output.get(1));
+    }
 }
