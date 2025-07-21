@@ -85,7 +85,7 @@ public class MovieCollection {
             return hits;
         } else {
             for (Movie m : movies) {
-                if (m.getTitle().contains(str)) {
+                if (m.getTitle().toLowerCase().contains(str.toLowerCase())) {
                     hits.add(m);
                 }
             }

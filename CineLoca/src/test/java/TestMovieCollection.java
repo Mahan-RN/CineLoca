@@ -140,7 +140,7 @@ public class TestMovieCollection {
     void testSearchTitleMultipleHits() {
         testCollection.addMovie(testMovie1);
         testCollection.addMovie(testMovie2);
-        ArrayList<Movie> output = testCollection.searchTitle("Dune");
+        ArrayList<Movie> output = testCollection.searchTitle("dune");
         assertEquals(2, output.size());
         assertEquals(testMovie1, output.get(0));
         assertEquals(testMovie2, output.get(1));
