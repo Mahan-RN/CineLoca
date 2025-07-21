@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import org.openide.awt.DropDownButtonFactory;
 
@@ -20,6 +21,7 @@ import view.util.WrapLayout;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,6 +50,7 @@ public class MainWindow {
     private JButton loadMoviesButton;
     private JButton informationButton;
     private JLabel totalMoviesCounter;
+    private JTextField textField;
     private MigLayout mgl;
 
     // EFFECTS: initializes the main window JFrame
@@ -99,7 +102,8 @@ public class MainWindow {
         topPanel.add(loadMoviesButton);
         topPanel.add(createSortButton());
         topPanel.add(totalMoviesCounter, "center");
-        topPanel.add(informationButton, "right");
+        topPanel.add(createSearchBar(), "split 2, right, gapx 10");
+        topPanel.add(informationButton);
     }
 
     // MODIFIES: this
@@ -318,6 +322,83 @@ public class MainWindow {
         return menuItemSortByYear;
     }
 
+    // Search Bar:
+
+    // EFFECTS: creates a panel with a search textfield and button side by side
+    // When enter is pressed or search button is clicked, shows movies with
+    // matching title
+    private JPanel createSearchBar() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        textField = createSearchField();
+        JButton searchButton = createSearchButton();
+        panel.add(createSearchField());
+        panel.add(searchButton);
+        return panel;
+    }
+
+    // EFFECTS: creates a text field for searching movie titles
+    private JTextField createSearchField() {
+        JTextField textField = new JTextField(15);
+        textField.setFont(new Font("Arial", Font.PLAIN, 13));
+        textField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = textField.getText();
+                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                    emptyCollectionPopUp();
+                } else if (input.isBlank()) {
+                    emptySearchStringPopUp();
+                } else {
+                    centerPanel.removeAll();
+                    ArrayList<Movie> movies = movieCollection.searchTitle(input);
+                    for (Movie movie : movies) {
+                        MovieCard card = new MovieCard(frame, movie);
+                        JPanel cardPanel = card.getPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
+                }
+            }
+
+        });
+        return textField;
+    }
+
+    // EFFECTS: creates a search button
+    private JButton createSearchButton() {
+        JButton searchButton = new JButton("Search");
+        searchButton.setFocusable(false);
+        String text = "Search movies by title. Type and then press enter";
+        searchButton.setToolTipText(text);
+        searchButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = textField.getText();
+                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                    emptyCollectionPopUp();
+                } else if (input.isBlank()) {
+                    emptySearchStringPopUp();
+                } else {
+                    centerPanel.removeAll();
+                    ArrayList<Movie> movies = movieCollection.searchTitle(input);
+                    for (Movie movie : movies) {
+                        MovieCard card = new MovieCard(frame, movie);
+                        JPanel cardPanel = card.getPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
+                }
+            }
+
+        });
+        return searchButton;
+    }
+
     // Pop-ups:
 
     // EFFECTS: pop-up error message to inform user that collection is empty
@@ -325,6 +406,13 @@ public class MainWindow {
         JOptionPane.showMessageDialog(frame,
                 "Your collection is empty. Load movies first.",
                 "Empty Collection",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void emptySearchStringPopUp() {
+        JOptionPane.showMessageDialog(frame,
+                "Invalid search string!",
+                "Invalid Search",
                 JOptionPane.ERROR_MESSAGE);
     }
 
