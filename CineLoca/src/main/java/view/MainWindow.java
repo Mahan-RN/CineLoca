@@ -49,6 +49,7 @@ public class MainWindow {
     private JButton settingsButton;
     private JButton loadMoviesButton;
     private JButton informationButton;
+    private JButton searchButton;
     private JLabel totalMoviesCounter;
     private JTextField textField;
     private MigLayout mgl;
@@ -331,17 +332,8 @@ public class MainWindow {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         textField = createSearchField();
-        JButton searchButton = createSearchButton();
-        panel.add(createSearchField());
-        panel.add(searchButton);
-        return panel;
-    }
-
-    // EFFECTS: creates a text field for searching movie titles
-    private JTextField createSearchField() {
-        JTextField textField = new JTextField(15);
-        textField.setFont(new Font("Arial", Font.PLAIN, 13));
-        textField.addActionListener(new ActionListener() {
+        searchButton = createSearchButton();
+        ActionListener listener = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -363,7 +355,18 @@ public class MainWindow {
                 }
             }
 
-        });
+        };
+        textField.addActionListener(listener);
+        searchButton.addActionListener(listener);
+        panel.add(textField);
+        panel.add(searchButton);
+        return panel;
+    }
+
+    // EFFECTS: creates a text field for searching movie titles
+    private JTextField createSearchField() {
+        JTextField textField = new JTextField(15);
+        textField.setFont(new Font("Arial", Font.PLAIN, 13));
         return textField;
     }
 
@@ -373,29 +376,6 @@ public class MainWindow {
         searchButton.setFocusable(false);
         String text = "Search movies by title. Type and then press enter";
         searchButton.setToolTipText(text);
-        searchButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String input = textField.getText();
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
-                    emptyCollectionPopUp();
-                } else if (input.isBlank()) {
-                    emptySearchStringPopUp();
-                } else {
-                    centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.searchTitle(input);
-                    for (Movie movie : movies) {
-                        MovieCard card = new MovieCard(frame, movie);
-                        JPanel cardPanel = card.getPanel();
-                        centerPanel.add(cardPanel);
-                    }
-                    centerPanel.revalidate();
-                    centerPanel.repaint();
-                }
-            }
-
-        });
         return searchButton;
     }
 
