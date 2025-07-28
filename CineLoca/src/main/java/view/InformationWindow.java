@@ -6,7 +6,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import model.MovieCollection;
+import model.MediaCollection;
 import net.miginfocom.swing.MigLayout;
 
 // Represents the information window
@@ -17,11 +17,11 @@ public class InformationWindow {
     private MigLayout mgl;
     private JLabel duplicatesLabel;
     private JLabel creditsLabel;
-    private MovieCollection collection;
+    private MediaCollection collection;
 
     // EFFECTS: initializes information window
     public InformationWindow(JFrame frame) {
-        this.collection = MovieCollection.getInstance();
+        this.collection = MediaCollection.getInstance();
         initialize(frame);
         window.setVisible(true);
     }

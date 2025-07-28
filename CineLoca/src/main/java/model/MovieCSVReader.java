@@ -24,14 +24,14 @@ public class MovieCSVReader {
     private File csvFile;
     private InputStreamReader fileReader;
     private ArrayList<String> parsedRow;
-    private MovieCollection collection;
+    private MediaCollection collection;
 
     // EFFECTS: creates a CSV reader to read the CSV file at the given file path
     // throws FileNotFoundException if the provided file path doesn't exist
     public MovieCSVReader(String filePathName) throws FileNotFoundException {
         this.fileReader = createFileReader(filePathName);
         this.csvReader = createCSVReader(fileReader);
-        collection = MovieCollection.getInstance();
+        collection = MediaCollection.getInstance();
     }
 
     // MODIFIES: MovieCollection
@@ -43,7 +43,7 @@ public class MovieCSVReader {
             parsedRow = new ArrayList<>(Arrays.asList(row));
             Movie movie = rowToMovie(parsedRow);
             if (movie != null) {
-                collection.addMovie(movie);
+                collection.addMedia(movie);
             }
         }
     }
@@ -63,15 +63,15 @@ public class MovieCSVReader {
     // and contains only numerical values
     private Movie rowToMovie(List<String> strings) {
         Movie movie;
-        String imdbID = ParsingUtilities.trimMovieID(strings.get(0));
-        String title = ParsingUtilities.trimMovieData(strings.get(1));
-        String release = ParsingUtilities.trimMovieData(strings.get(2));
-        String director = ParsingUtilities.trimMovieData(strings.get(3));
-        String length = ParsingUtilities.trimMovieData(strings.get(4));
-        String countary = ParsingUtilities.trimMovieData(strings.get(5));
-        String actors = ParsingUtilities.trimMovieData(strings.get(6));
+        String imdbID = ParsingUtilities.trimMediaID(strings.get(0));
+        String title = ParsingUtilities.trimMediaData(strings.get(1));
+        String release = ParsingUtilities.trimMediaData(strings.get(2));
+        String director = ParsingUtilities.trimMediaData(strings.get(3));
+        String length = ParsingUtilities.trimMediaData(strings.get(4));
+        String countary = ParsingUtilities.trimMediaData(strings.get(5));
+        String actors = ParsingUtilities.trimMediaData(strings.get(6));
         String englishSub = ParsingUtilities
-                .trimMovieData(strings.get(7)).toLowerCase();
+                .trimMediaData(strings.get(7)).toLowerCase();
 
         if (title.isBlank() || imdbID.isBlank()) {
             return null;
@@ -95,7 +95,7 @@ public class MovieCSVReader {
         if (!actors.isBlank()) {
             List<String> actorsList = ParsingUtilities.actorsToList(actors);
             for (String actor : actorsList) {
-                movie.addActor(ParsingUtilities.trimMovieData(actor));
+                movie.addActor(ParsingUtilities.trimMediaData(actor));
             }
         }
         if (englishSub.equals("true") || englishSub.equals("false")) {
@@ -106,7 +106,7 @@ public class MovieCSVReader {
     }
 
     // getter
-    public MovieCollection getMovieCollection() {
+    public MediaCollection getMovieCollection() {
         return this.collection;
     }
 

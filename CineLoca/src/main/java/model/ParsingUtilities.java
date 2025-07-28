@@ -12,13 +12,13 @@ public final class ParsingUtilities {
     }
 
     // EFFECTS: removes leading and trailing whitespaces of the given string
-    public static String trimMovieData(String s) {
+    public static String trimMediaData(String s) {
         return s.strip();
     }
 
     // EFFECTS: removes ALL whitespaces in the given string. Converts the string
     // into all lower case
-    public static String trimMovieID(String s) {
+    public static String trimMediaID(String s) {
         return s.replaceAll("\\s+", "").toLowerCase();
     }
 
@@ -44,7 +44,7 @@ public final class ParsingUtilities {
 
     // EFFECTS: gets the substring flanked by the first [] in the file name.
     // Example: given "[tt1234]My_Movie", should return "tt1234"
-    public static String fileNameToMovieID(String fileName) {
+    public static String fileNameToMediaID(String fileName) {
         if (!fileName.contains("[") || !fileName.contains("]")) {
             return null;
         } else if (fileName.length() < 4) {
@@ -55,7 +55,7 @@ public final class ParsingUtilities {
         } else {
             String id = fileName.substring(fileName.indexOf("[") + 1,
                     fileName.indexOf("]"));
-            return trimMovieID(id);
+            return trimMediaID(id);
         }
     }
 }

@@ -3,23 +3,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Movie;
-import model.MovieCollection;
+import model.MediaCollection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class TestMovieCollection {
+public class TestMediaCollection {
 
-    private MovieCollection testCollection;
+    private MediaCollection testCollection;
     private Movie testMovie1;
     private Movie testMovie2;
 
     @BeforeEach
     void setup() {
-        MovieCollection.resetSingleton();
-        testCollection = MovieCollection.getInstance();
+        MediaCollection.resetSingleton();
+        testCollection = MediaCollection.getInstance();
         testMovie1 = new Movie("tt1160419", "Dune: Part One");
         testMovie2 = new Movie("tt15239678", "Dune: Part Two");
     }
@@ -32,8 +32,8 @@ public class TestMovieCollection {
 
     @Test
     void testAddMovie() {
-        assertTrue(testCollection.addMovie(testMovie1));
-        assertTrue(testCollection.addMovie(testMovie2));
+        assertTrue(testCollection.addMedia(testMovie1));
+        assertTrue(testCollection.addMedia(testMovie2));
         assertEquals(2, testCollection.getAllMovieIDs().size());
         assertTrue(testCollection.getAllMovieIDs().contains("tt1160419"));
         assertTrue(testCollection.getAllMovieIDs().contains("tt15239678"));
@@ -42,10 +42,10 @@ public class TestMovieCollection {
 
     @Test
     void testAddMovieDuplicate() {
-        assertTrue(testCollection.addMovie(testMovie1));
-        assertTrue(testCollection.addMovie(testMovie2));
-        assertFalse(testCollection.addMovie(testMovie1));
-        assertFalse(testCollection.addMovie(testMovie2));
+        assertTrue(testCollection.addMedia(testMovie1));
+        assertTrue(testCollection.addMedia(testMovie2));
+        assertFalse(testCollection.addMedia(testMovie1));
+        assertFalse(testCollection.addMedia(testMovie2));
         assertEquals(2, testCollection.getAllMovieIDs().size());
         assertTrue(testCollection.getAllMovieIDs().contains("tt1160419"));
         assertTrue(testCollection.getAllMovieIDs().contains("tt15239678"));
@@ -58,10 +58,10 @@ public class TestMovieCollection {
     void testMoviesSortedByTitleAscending() {
         Movie testMovie3 = new Movie("123", "A");
         Movie testMovie4 = new Movie("1234", "1");
-        testCollection.addMovie(testMovie1);
-        testCollection.addMovie(testMovie2);
-        testCollection.addMovie(testMovie3);
-        testCollection.addMovie(testMovie4);
+        testCollection.addMedia(testMovie1);
+        testCollection.addMedia(testMovie2);
+        testCollection.addMedia(testMovie3);
+        testCollection.addMedia(testMovie4);
         ArrayList<Movie> expected = new ArrayList<>(Arrays.asList(testMovie4,
                 testMovie3,
                 testMovie1,
@@ -73,10 +73,10 @@ public class TestMovieCollection {
     void testMovieSortByTitleDescending() {
         Movie testMovie3 = new Movie("123", "A");
         Movie testMovie4 = new Movie("1234", "1");
-        testCollection.addMovie(testMovie1);
-        testCollection.addMovie(testMovie2);
-        testCollection.addMovie(testMovie3);
-        testCollection.addMovie(testMovie4);
+        testCollection.addMedia(testMovie1);
+        testCollection.addMedia(testMovie2);
+        testCollection.addMedia(testMovie3);
+        testCollection.addMedia(testMovie4);
         ArrayList<Movie> expected = new ArrayList<>(Arrays.asList(testMovie2,
                 testMovie1,
                 testMovie3,
@@ -92,10 +92,10 @@ public class TestMovieCollection {
         testMovie3.setReleaseYear(1990);
         Movie testMovie4 = new Movie("1234", "1");
         testMovie4.setReleaseYear(2025);
-        testCollection.addMovie(testMovie1);
-        testCollection.addMovie(testMovie2);
-        testCollection.addMovie(testMovie3);
-        testCollection.addMovie(testMovie4);
+        testCollection.addMedia(testMovie1);
+        testCollection.addMedia(testMovie2);
+        testCollection.addMedia(testMovie3);
+        testCollection.addMedia(testMovie4);
         ArrayList<Movie> expected = new ArrayList<>(Arrays.asList(testMovie3,
                 testMovie1,
                 testMovie2,
@@ -111,10 +111,10 @@ public class TestMovieCollection {
         testMovie3.setReleaseYear(1990);
         Movie testMovie4 = new Movie("1234", "1");
         testMovie4.setReleaseYear(2025);
-        testCollection.addMovie(testMovie1);
-        testCollection.addMovie(testMovie2);
-        testCollection.addMovie(testMovie3);
-        testCollection.addMovie(testMovie4);
+        testCollection.addMedia(testMovie1);
+        testCollection.addMedia(testMovie2);
+        testCollection.addMedia(testMovie3);
+        testCollection.addMedia(testMovie4);
         ArrayList<Movie> expected = new ArrayList<>(Arrays.asList(testMovie4,
                 testMovie2,
                 testMovie1,
@@ -129,8 +129,8 @@ public class TestMovieCollection {
 
     @Test
     void testSearchTitleSingleHit() {
-        testCollection.addMovie(testMovie1);
-        testCollection.addMovie(testMovie2);
+        testCollection.addMedia(testMovie1);
+        testCollection.addMedia(testMovie2);
         ArrayList<Movie> output = testCollection.searchTitle("Dune: Part One");
         assertEquals(1, output.size());
         assertEquals(testMovie1, output.get(0));
@@ -138,8 +138,8 @@ public class TestMovieCollection {
 
     @Test
     void testSearchTitleMultipleHits() {
-        testCollection.addMovie(testMovie1);
-        testCollection.addMovie(testMovie2);
+        testCollection.addMedia(testMovie1);
+        testCollection.addMedia(testMovie2);
         ArrayList<Movie> output = testCollection.searchTitle("dune");
         assertEquals(2, output.size());
         assertEquals(testMovie1, output.get(0));

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import model.Movie;
 import model.FileReader;
-import model.MovieCollection;
+import model.MediaCollection;
 
 public class TestFileReader {
     private FileReader testReader;
@@ -18,7 +18,7 @@ public class TestFileReader {
     private Movie movie1;
     private Movie movie2;
     private Movie movie3;
-    private MovieCollection collection;
+    private MediaCollection collection;
 
     @Test
     void testDirectoryPathDoesNotExist() {
@@ -52,8 +52,8 @@ public class TestFileReader {
             movie1 = new Movie("tt1160419", "Mad Max: Fury Road");
             movie2 = new Movie("tt1392190", "The Batman");
             movie3 = new Movie("tt1877830", "Dune: Part One");
-            MovieCollection.resetSingleton();
-            collection = MovieCollection.getInstance();
+            MediaCollection.resetSingleton();
+            collection = MediaCollection.getInstance();
         }
 
         @Test
@@ -70,9 +70,9 @@ public class TestFileReader {
 
         @Test
         void testAddFilePathsToCollectionAllValidMovies() {
-            collection.addMovie(movie1);
-            collection.addMovie(movie2);
-            collection.addMovie(movie3);
+            collection.addMedia(movie1);
+            collection.addMedia(movie2);
+            collection.addMedia(movie3);
             try {
                 testReader = new FileReader(path);
                 testReader.addPathsToCollection(false);
@@ -94,7 +94,7 @@ public class TestFileReader {
 
         @Test
         void testAddFilePathsToCollectionMovieIDNotInCollection() {
-            collection.addMovie(movie1);
+            collection.addMedia(movie1);
             try {
                 testReader = new FileReader(path);
                 testReader.addPathsToCollection(false);
@@ -113,7 +113,7 @@ public class TestFileReader {
         @Test
         void testAddFilePathsToCollectionFileNameWithNoMovieID() {
             Movie movie4 = new Movie("tt4873118", "The Convenant");
-            collection.addMovie(movie4);
+            collection.addMedia(movie4);
             try {
                 testReader = new FileReader(path);
                 testReader.addPathsToCollection(false);
@@ -127,7 +127,7 @@ public class TestFileReader {
 
         @Test
         void testAddImagePathToCollectionValid() {
-            collection.addMovie(movie1);
+            collection.addMedia(movie1);
             path = "src\\test\\resources\\images\\testDirectory1";
             try {
                 testReader = new FileReader(path);

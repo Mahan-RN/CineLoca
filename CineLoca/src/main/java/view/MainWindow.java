@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import org.openide.awt.DropDownButtonFactory;
 
 import model.Movie;
-import model.MovieCollection;
+import model.MediaCollection;
 import net.miginfocom.swing.MigLayout;
 import view.util.WrapLayout;
 
@@ -41,7 +41,7 @@ public class MainWindow {
     private final String SORT_BY_BUTTON_ICON = "CineLoca\\src\\main\\resources"
             + "\\view\\buttonIcons\\sortButton.png";
 
-    private MovieCollection movieCollection;
+    private MediaCollection movieCollection;
     private JFrame frame;
     private JPanel topPanel;
     private JPanel centerPanel;
@@ -56,7 +56,7 @@ public class MainWindow {
 
     // EFFECTS: initializes the main window JFrame
     public MainWindow() {
-        movieCollection = MovieCollection.getInstance();
+        movieCollection = MediaCollection.getInstance();
         initializeMainFrame();
     }
 

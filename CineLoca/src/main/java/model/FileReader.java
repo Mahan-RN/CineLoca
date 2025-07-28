@@ -12,7 +12,7 @@ public class FileReader {
     private String pathName;
     private File directory;
     private ArrayList<File> files;
-    private MovieCollection collection = MovieCollection.getInstance();
+    private MediaCollection collection = MediaCollection.getInstance();
 
     // EFFECTS: creates a file reader
     // Throws FileNotFoundException if the provided file path is invalid
@@ -21,9 +21,9 @@ public class FileReader {
         initialize(pathName);
     }
 
-    // MODIFIES: this, Movie, MovieCollection
+    // MODIFIES: this, AbstractMedia, MediaCollection
     // EFFECTS: adds the path of each file in the directory to the corresponding
-    // movie object in the collection based on the movie id in the file name
+    // media object in the collection based on the media id in the file name
     // Throws IOException if getCannoicalPath fails
     public void addPathsToCollection(boolean image) throws IOException {
         String id;
@@ -31,17 +31,17 @@ public class FileReader {
             if (file.isDirectory()) {
                 continue;
             } else {
-                if (null == ParsingUtilities.fileNameToMovieID(file.getName())) {
+                if (null == ParsingUtilities.fileNameToMediaID(file.getName())) {
                     continue;
                 } else {
-                    id = ParsingUtilities.fileNameToMovieID(file.getName());
+                    id = ParsingUtilities.fileNameToMediaID(file.getName());
                 }
-                Movie movie = collection.getMovieMap().get(id);
-                if (movie != null) {
+                AbstractMedia media = collection.getMediaMap().get(id);
+                if (media != null) {
                     if (image) {
-                        movie.setImagePath(file.getPath());
+                        media.setImagePath(file.getPath());
                     } else {
-                        movie.setFilePath(file.getPath());
+                        media.setFilePath(file.getPath());
                     }
                 }
             }
