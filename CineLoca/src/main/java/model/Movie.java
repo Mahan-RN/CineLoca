@@ -1,119 +1,15 @@
 package model;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 // Represents a Movie
-public class Movie {
-    private String imdbID;
-    private String title;
-    private int releaseYear;
-    private String director;
-    private int lengthMinutes;
-    private String countary;
-    private List<String> actors;
-    private boolean englishSubtitle;
-    private String imagePath;
-    private String filePath;
+public class Movie extends AbstractMedia {
 
-    // EFFECTS: creates a movie object with the given ID, title, path to poster
-    // image and path to the movie file
+    // EFFECTS: creates a movie with the given ID and title
     public Movie(String imdbID, String title) {
-        setID(imdbID);
-        setTitle(title);
-        this.actors = new ArrayList<>();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the IMDB ID of this movie
-    // Converts the input to all upper case and then uses replaceAll to remove
-    // all whitespaces
-    public void setID(String imdbID) {
-        this.imdbID = imdbID;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets title of this movie
-    // Strips leading and trailing whitespaces
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the release year of this movie
-    public void setReleaseYear(int releaseYear) {
-        this.releaseYear = releaseYear;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the given director as the director of this movie
-    // Strips leading and trailing whitespaces
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the length of this movie (unit: minutes)
-    public void setLengthMinutes(int lengthMinutes) {
-        this.lengthMinutes = lengthMinutes;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the countary of this movie
-    // Strips leading and trailing whitespaces
-    public void setCountary(String countary) {
-        this.countary = countary;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds actor to the set of actors for this movie
-    // Strips leading and trailing whitespaces
-    public boolean addActor(String actor) {
-        if (!actors.contains(actor)) {
-            return this.actors.add(actor);
-        } else {
-            return false;
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets whether this movie has english subtitles available or not
-    public void setEnglishSubs(boolean englishSubtitle) {
-        this.englishSubtitle = englishSubtitle;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the relative path to the image of the poster of this movie
-    // Strips leading and trailing whitespacs
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the relative path to video file of this movie
-    // Strips leading and trailing whitespacs
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    // EFFECTS: returns comma-separated string representation of actors in
-    // the movie
-    public String actorsToString() {
-        String str = "";
-        if (!actors.isEmpty()) {
-            int len = actors.size();
-            if (len == 1) {
-                str = actors.get(0);
-            } else {
-                for (int i = 0; i < len - 1; i++) {
-                    str += actors.get(i) + ", ";
-                }
-                str += actors.get(len - 1);
-            }
-        }
-        return str;
+        super(imdbID, title);
     }
 
     @Override
