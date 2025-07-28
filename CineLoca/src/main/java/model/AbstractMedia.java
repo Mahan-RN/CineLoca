@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class AbstractMedia {
@@ -87,8 +89,7 @@ public abstract class AbstractMedia {
         this.filePath = filePath;
     }
 
-    // EFFECTS: returns comma-separated string representation of actors in
-    // the movie
+    // EFFECTS: returns comma-separated string representation of actors
     public String actorsToString() {
         String str = "";
         if (!actors.isEmpty()) {
@@ -104,5 +105,112 @@ public abstract class AbstractMedia {
         }
         return str;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((imdbID == null) ? 0 : imdbID.hashCode());
+        return result;
+    }
+
+    // EFFECTS: two media are equal if and only if they have the same
+    // IMDB ID
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AbstractMedia other = (AbstractMedia) obj;
+        if (imdbID == null) {
+            if (other.imdbID != null)
+                return false;
+        } else if (!imdbID.equals(other.imdbID))
+            return false;
+        return true;
+    }
+
+    // getters
+
+    public String getImdbID() {
+        return imdbID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public int getLengthMinutes() {
+        return lengthMinutes;
+    }
+
+    public String getCountary() {
+        return countary;
+    }
+
+    public List<String> getActors() {
+        return actors;
+    }
+
+    public boolean hasEnglishSubtitle() {
+        return englishSubtitle;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    // EFFECTS: comparator to compare media lexicographically in ascending
+    // order
+    public static Comparator<AbstractMedia> titleComparatorAscending = new Comparator<AbstractMedia>() {
+        @Override
+        public int compare(AbstractMedia m1, AbstractMedia m2) {
+            return m1.getTitle().compareTo(m2.getTitle());
+        }
+    };
+
+    // EFFECTS: comparator to compare media lexicographically in descending
+    // order
+    public static Comparator<AbstractMedia> titleComparatorDescending = Collections.reverseOrder(new Comparator<AbstractMedia>() {
+        @Override
+        public int compare(AbstractMedia m1, AbstractMedia m2) {
+            return m1.getTitle().compareTo(m2.getTitle());
+        }
+    });
+
+    // EFFECTS: comparator to compare media based on release year in ascending
+    // order
+    public static Comparator<AbstractMedia> yearComparatorAscending = new Comparator<AbstractMedia>() {
+        @Override
+        public int compare(AbstractMedia m1, AbstractMedia m2) {
+            return m1.getReleaseYear() - m2.getReleaseYear();
+        }
+    };
+
+    // EFFECTS: comparator to compare media based on release year in descending
+    // order
+    public static Comparator<AbstractMedia> yearComparatorDescending = Collections.reverseOrder(new Comparator<AbstractMedia>() {
+        @Override
+        public int compare(AbstractMedia m1, AbstractMedia m2) {
+            return m1.getReleaseYear() - m2.getReleaseYear();
+        }
+    });
+
+    
 
 }
