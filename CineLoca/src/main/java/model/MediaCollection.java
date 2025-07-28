@@ -99,6 +99,38 @@ public class MediaCollection {
         return movies;
     }
 
+    // EFFECTS: returns lexicographically sorted list of series based on title
+    // in ascending order
+    public ArrayList<Series> seriesSortedByTitleAscending() {
+        ArrayList<Series> series = getSeries();
+        series.sort(AbstractMedia.titleComparatorAscending);
+        return series; //TODO: add tests
+    }
+
+    // EFFECTS: returns lexicographically sorted list of series based title
+    // in descending order
+    public ArrayList<Series> seriesSortedByTitleDescending() {
+        ArrayList<Series> series = getSeries();
+        series.sort(AbstractMedia.titleComparatorDescending);
+        return series; //TODO: add tests
+    }
+
+    // EFFECTS: returns a sorted list of series based on release year in
+    // ascending order
+    public ArrayList<Series> seriesSortedByYearAscending() {
+        ArrayList<Series> series = getSeries();
+        series.sort(AbstractMedia.yearComparatorAscending);
+        return series; //TODO: add tests
+    }
+
+    // EFFECTS: returns a sorted list of series based on release year in
+    // descending order
+    public ArrayList<Series> seriesSortedByYearDescending() {
+        ArrayList<Series> series = getSeries();
+        series.sort(AbstractMedia.yearComparatorDescending);
+        return series; //TODO: add tests
+    }
+
     // EFFECTS: returns the list of movies with titles that contain the search
     // string. Returns an empty list if the search string is blank.
     public ArrayList<Movie> searchTitle(String str) {
