@@ -344,7 +344,7 @@ public class MainWindow {
                     emptySearchStringPopUp();
                 } else {
                     centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.searchTitle(input);
+                    ArrayList<Movie> movies = movieCollection.searchMovieTitle(input);
                     for (Movie movie : movies) {
                         MovieCard card = new MovieCard(frame, movie);
                         JPanel cardPanel = card.getPanel();

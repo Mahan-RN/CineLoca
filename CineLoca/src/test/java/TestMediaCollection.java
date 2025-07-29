@@ -39,6 +39,7 @@ public class TestMediaCollection {
     void testConstructor() {
         assertEquals(0, testCollection.getAllMediaIDs().size());
         assertEquals(0, testCollection.getDuplicateIDs().size());
+        assertEquals(0, testCollection.getMediaMap().keySet().size());
     }
 
     @Test
@@ -225,26 +226,55 @@ public class TestMediaCollection {
     }
 
     @Test
-    void testSearchTitleEmptySearch() {
-        assertTrue(testCollection.searchTitle("null").isEmpty());
+    void testSearchMovieTitleEmptySearch() {
+        ArrayList<Movie> output = testCollection.searchMovieTitle("");
+        assertTrue(output.isEmpty());
     }
 
     @Test
-    void testSearchTitleSingleHit() {
+    void testSearchMovieTitleSingleHit() {
         testCollection.addMedia(testMovie1);
         testCollection.addMedia(testMovie2);
-        ArrayList<Movie> output = testCollection.searchTitle("Dune: Part One");
+        ArrayList<Movie> output = testCollection.searchMovieTitle("Dune: Part One");
         assertEquals(1, output.size());
         assertEquals(testMovie1, output.get(0));
     }
 
     @Test
-    void testSearchTitleMultipleHits() {
+    void testSearchMovieTitleMultipleHits() {
         testCollection.addMedia(testMovie1);
         testCollection.addMedia(testMovie2);
-        ArrayList<Movie> output = testCollection.searchTitle("dune");
+        ArrayList<Movie> output = testCollection.searchMovieTitle("dune");
         assertEquals(2, output.size());
         assertEquals(testMovie1, output.get(0));
         assertEquals(testMovie2, output.get(1));
+    }
+
+    @Test
+    void testSearchSeriesTitleEmptySearch() {
+        ArrayList<Series> output = testCollection.searchSeriesTitle("");
+        assertTrue(output.isEmpty());
+    }
+
+    @Test
+    void testSearchSeriesTitleSingleHit() {
+        testCollection.addMedia(testSeries1);
+        testCollection.addMedia(testSeries2);
+        ArrayList<Series> output = testCollection.searchSeriesTitle("Breaking Bad");
+        assertEquals(1, output.size());
+        assertEquals(testSeries2, output.get(0));
+    }
+
+    @Test
+    void testSearchSeriesTitleMultipleHits() {
+        testCollection.addMedia(testSeries1);
+        testCollection.addMedia(testSeries2);
+        testCollection.addMedia(testSeries3);
+        testCollection.addMedia(testSeries4);
+        ArrayList<Series> output = testCollection.searchSeriesTitle("T");
+        assertEquals(3, output.size());
+        assertTrue(output.contains(testSeries1));
+        assertTrue(output.contains(testSeries3));
+        assertTrue(output.contains(testSeries4));
     }
 }

@@ -133,11 +133,11 @@ public class MediaCollection {
 
     // EFFECTS: returns the list of movies with titles that contain the search
     // string. Returns an empty list if the search string is blank.
-    public ArrayList<Movie> searchTitle(String str) {
+    public ArrayList<Movie> searchMovieTitle(String str) {
         ArrayList<Movie> movies = getMovies();
         ArrayList<Movie> hits = new ArrayList<>();
         if (str.isBlank()) {
-            return hits; //TODO: add test
+            return hits;
         } else {
             for (Movie m : movies) {
                 if (m.getTitle().toLowerCase().contains(str.toLowerCase())) {
@@ -148,7 +148,22 @@ public class MediaCollection {
         return hits;
     }
 
-    //TODO: add search for series
+    // EFFECTS: returns the list of series with titles that contain the search
+    // string. Returns an empty list if the search string is blank.
+    public ArrayList<Series> searchSeriesTitle(String str) {
+        ArrayList<Series> series = getSeries();
+        ArrayList<Series> hits = new ArrayList<>();
+        if (str.isBlank()) {
+            return hits;
+        } else {
+            for (Series s : series) {
+                if (s.getTitle().toLowerCase().contains(str.toLowerCase())) {
+                    hits.add(s);
+                }
+            }
+        }
+        return hits;
+    }
 
     // EFFECTS: returns the set of all movie IDs in the collection
     public Set<String> getAllMediaIDs() {
