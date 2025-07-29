@@ -1,10 +1,10 @@
 package model;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 // Represents a collection of media
 public class MediaCollection {
@@ -104,7 +104,7 @@ public class MediaCollection {
     public ArrayList<Series> seriesSortedByTitleAscending() {
         ArrayList<Series> series = getSeries();
         series.sort(AbstractMedia.titleComparatorAscending);
-        return series; //TODO: add tests
+        return series;
     }
 
     // EFFECTS: returns lexicographically sorted list of series based title
@@ -112,7 +112,7 @@ public class MediaCollection {
     public ArrayList<Series> seriesSortedByTitleDescending() {
         ArrayList<Series> series = getSeries();
         series.sort(AbstractMedia.titleComparatorDescending);
-        return series; //TODO: add tests
+        return series;
     }
 
     // EFFECTS: returns a sorted list of series based on release year in
@@ -120,7 +120,7 @@ public class MediaCollection {
     public ArrayList<Series> seriesSortedByYearAscending() {
         ArrayList<Series> series = getSeries();
         series.sort(AbstractMedia.yearComparatorAscending);
-        return series; //TODO: add tests
+        return series;
     }
 
     // EFFECTS: returns a sorted list of series based on release year in
@@ -128,7 +128,7 @@ public class MediaCollection {
     public ArrayList<Series> seriesSortedByYearDescending() {
         ArrayList<Series> series = getSeries();
         series.sort(AbstractMedia.yearComparatorDescending);
-        return series; //TODO: add tests
+        return series;
     }
 
     // EFFECTS: returns the list of movies with titles that contain the search
@@ -137,7 +137,7 @@ public class MediaCollection {
         ArrayList<Movie> movies = getMovies();
         ArrayList<Movie> hits = new ArrayList<>();
         if (str.isBlank()) {
-            return hits;
+            return hits; //TODO: add test
         } else {
             for (Movie m : movies) {
                 if (m.getTitle().toLowerCase().contains(str.toLowerCase())) {
@@ -147,6 +147,8 @@ public class MediaCollection {
         }
         return hits;
     }
+
+    //TODO: add search for series
 
     // EFFECTS: returns the set of all movie IDs in the collection
     public Set<String> getAllMediaIDs() {

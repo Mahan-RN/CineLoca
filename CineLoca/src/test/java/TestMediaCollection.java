@@ -20,6 +20,8 @@ public class TestMediaCollection {
     private Movie testMovie2;
     private Series testSeries1;
     private Series testSeries2;
+    private Series testSeries3;
+    private Series testSeries4;
 
     @BeforeEach
     void setup() {
@@ -29,6 +31,8 @@ public class TestMediaCollection {
         testMovie2 = new Movie("tt15239678", "Dune: Part Two");
         testSeries1 = new Series("tt0944947", "Game of Thrones");
         testSeries2 = new Series("tt0903747", "Breaking Bad");
+        testSeries3 = new Series("tt1305826", "Adventure Time");
+        testSeries4 = new Series("tt6517102", "Castlevania");
     }
 
     @Test
@@ -154,6 +158,70 @@ public class TestMediaCollection {
                 testMovie1,
                 testMovie3));
         assertEquals(expected, testCollection.moviesSortedByYearDescending());
+    }
+
+    @Test
+    void testSeriesSortedByTitleAscending() {
+        testCollection.addMedia(testSeries1);
+        testCollection.addMedia(testSeries2);
+        testCollection.addMedia(testSeries3);
+        testCollection.addMedia(testSeries4);
+        ArrayList<Series> output = testCollection.seriesSortedByTitleAscending();
+        ArrayList<Series> expected = new ArrayList<>(Arrays.asList(testSeries3,
+                testSeries2,
+                testSeries4,
+                testSeries1));
+        assertEquals(output, expected);
+    }
+
+    @Test
+    void testSeriesSortedByTitleDescending() {
+        testCollection.addMedia(testSeries1);
+        testCollection.addMedia(testSeries2);
+        testCollection.addMedia(testSeries3);
+        testCollection.addMedia(testSeries4);
+        ArrayList<Series> output = testCollection.seriesSortedByTitleDescending();
+        ArrayList<Series> expected = new ArrayList<>(Arrays.asList(testSeries1,
+                testSeries4,
+                testSeries2,
+                testSeries3));
+        assertEquals(output, expected);
+    }
+
+    @Test
+    void testSeriesSortedByYearAscending() {
+        testSeries1.setReleaseYear(2025);
+        testSeries2.setReleaseYear(2024);
+        testSeries3.setReleaseYear(2023);
+        testSeries4.setReleaseYear(2022);
+        testCollection.addMedia(testSeries1);
+        testCollection.addMedia(testSeries2);
+        testCollection.addMedia(testSeries3);
+        testCollection.addMedia(testSeries4);
+        ArrayList<Series> output = testCollection.seriesSortedByYearAscending();
+        ArrayList<Series> expected = new ArrayList<>(Arrays.asList(testSeries4,
+                testSeries3,
+                testSeries2,
+                testSeries1));
+        assertEquals(output, expected);
+    }
+
+    @Test
+    void testSeriesSortedByYearDescending() {
+        testSeries1.setReleaseYear(2025);
+        testSeries2.setReleaseYear(2024);
+        testSeries3.setReleaseYear(2023);
+        testSeries4.setReleaseYear(2022);
+        testCollection.addMedia(testSeries1);
+        testCollection.addMedia(testSeries2);
+        testCollection.addMedia(testSeries3);
+        testCollection.addMedia(testSeries4);
+        ArrayList<Series> output = testCollection.seriesSortedByYearDescending();
+        ArrayList<Series> expected = new ArrayList<>(Arrays.asList(testSeries1,
+                testSeries2,
+                testSeries3,
+                testSeries4));
+        assertEquals(output, expected);
     }
 
     @Test
