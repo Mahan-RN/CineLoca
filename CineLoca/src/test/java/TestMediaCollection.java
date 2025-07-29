@@ -1,20 +1,25 @@
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import model.Movie;
-import model.MediaCollection;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import model.MediaCollection;
+import model.Movie;
+import model.Series;
 
 public class TestMediaCollection {
 
     private MediaCollection testCollection;
     private Movie testMovie1;
     private Movie testMovie2;
+    private Series testSeries1;
+    private Series testSeries2;
 
     @BeforeEach
     void setup() {
@@ -22,36 +27,65 @@ public class TestMediaCollection {
         testCollection = MediaCollection.getInstance();
         testMovie1 = new Movie("tt1160419", "Dune: Part One");
         testMovie2 = new Movie("tt15239678", "Dune: Part Two");
+        testSeries1 = new Series("tt0944947", "Game of Thrones");
+        testSeries2 = new Series("tt0903747", "Breaking Bad");
     }
 
     @Test
     void testConstructor() {
-        assertEquals(0, testCollection.getAllMovieIDs().size());
+        assertEquals(0, testCollection.getAllMediaIDs().size());
         assertEquals(0, testCollection.getDuplicateIDs().size());
     }
 
     @Test
-    void testAddMovie() {
+    void testAddMedia() {
         assertTrue(testCollection.addMedia(testMovie1));
         assertTrue(testCollection.addMedia(testMovie2));
-        assertEquals(2, testCollection.getAllMovieIDs().size());
-        assertTrue(testCollection.getAllMovieIDs().contains("tt1160419"));
-        assertTrue(testCollection.getAllMovieIDs().contains("tt15239678"));
+        assertTrue(testCollection.addMedia(testSeries1));
+        assertEquals(3, testCollection.getAllMediaIDs().size());
+        assertTrue(testCollection.getAllMediaIDs().contains("tt1160419"));
+        assertTrue(testCollection.getAllMediaIDs().contains("tt15239678"));
+        assertTrue(testCollection.getAllMediaIDs().contains("tt0944947"));
         assertEquals(0, testCollection.getDuplicateIDs().size());
     }
 
     @Test
-    void testAddMovieDuplicate() {
+    void testAddMediaDuplicate() {
         assertTrue(testCollection.addMedia(testMovie1));
         assertTrue(testCollection.addMedia(testMovie2));
         assertFalse(testCollection.addMedia(testMovie1));
         assertFalse(testCollection.addMedia(testMovie2));
-        assertEquals(2, testCollection.getAllMovieIDs().size());
-        assertTrue(testCollection.getAllMovieIDs().contains("tt1160419"));
-        assertTrue(testCollection.getAllMovieIDs().contains("tt15239678"));
+        assertEquals(2, testCollection.getAllMediaIDs().size());
+        assertTrue(testCollection.getAllMediaIDs().contains("tt1160419"));
+        assertTrue(testCollection.getAllMediaIDs().contains("tt15239678"));
         assertEquals(2, testCollection.getDuplicateIDs().size());
         assertEquals("tt1160419", testCollection.getDuplicateIDs().get(0));
         assertEquals("tt15239678", testCollection.getDuplicateIDs().get(1));
+    }
+
+    @Test
+    void testGetMovies() {
+        testCollection.addMedia(testMovie1);
+        testCollection.addMedia(testMovie2);
+        testCollection.addMedia(testSeries1);
+        testCollection.addMedia(testSeries2);
+        ArrayList<Movie> output = testCollection.getMovies();
+        assertEquals(2, output.size());
+        assertTrue(output.contains(testMovie1));
+        assertTrue(output.contains(testMovie2));
+
+    }
+
+    @Test
+    void testGetSeries() {
+        testCollection.addMedia(testMovie1);
+        testCollection.addMedia(testMovie2);
+        testCollection.addMedia(testSeries1);
+        testCollection.addMedia(testSeries2);
+        ArrayList<Series> output = testCollection.getSeries();
+        assertEquals(2, output.size());
+        assertTrue(output.contains(testSeries1));
+        assertTrue(output.contains(testSeries2));
     }
 
     @Test

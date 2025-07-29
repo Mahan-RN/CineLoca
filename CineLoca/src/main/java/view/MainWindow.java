@@ -155,7 +155,7 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                if (movieCollection.getAllMediaIDs().isEmpty()) {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
@@ -166,7 +166,7 @@ public class MainWindow {
                         centerPanel.add(cardPanel);
                     }
                     totalMoviesCounter.setText("Total Movies in Collection: "
-                            + movieCollection.getAllMovieIDs().size());
+                            + movieCollection.getAllMediaIDs().size());
                     centerPanel.revalidate();
                     centerPanel.repaint();
                 }
@@ -211,7 +211,7 @@ public class MainWindow {
     // EFFECTS: creates a label that shows total number of movies in the
     // collection
     private void createTotalMoviesCounterLabel() {
-        int moviesNum = movieCollection.getAllMovieIDs().size();
+        int moviesNum = movieCollection.getAllMediaIDs().size();
         totalMoviesCounter = new JLabel("Total Movies in Collection: "
                 + moviesNum, JLabel.CENTER);
         totalMoviesCounter.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -227,7 +227,7 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                if (movieCollection.getAllMediaIDs().isEmpty()) {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
@@ -253,7 +253,7 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                if (movieCollection.getAllMediaIDs().isEmpty()) {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
@@ -279,7 +279,7 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                if (movieCollection.getAllMediaIDs().isEmpty()) {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
@@ -305,7 +305,7 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                if (movieCollection.getAllMediaIDs().isEmpty()) {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
@@ -338,7 +338,7 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String input = textField.getText();
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                if (movieCollection.getAllMediaIDs().isEmpty()) {
                     emptyCollectionPopUp();
                 } else if (input.isBlank()) {
                     emptySearchStringPopUp();

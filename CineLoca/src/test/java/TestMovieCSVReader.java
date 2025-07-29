@@ -54,7 +54,7 @@ public class TestMovieCSVReader {
                 fail("CsvValidationException should not be thrown!");
             }
             MediaCollection testCollection = testReader.getMovieCollection();
-            Set<String> allMovieIDs = testCollection.getAllMovieIDs();
+            Set<String> allMovieIDs = testCollection.getAllMediaIDs();
             assertEquals(3, allMovieIDs.size());
             assertTrue(allMovieIDs.contains("tt1877830"));
             assertTrue(allMovieIDs.contains("tt1160419"));
@@ -141,7 +141,7 @@ public class TestMovieCSVReader {
                 fail("CsvValidationException should not be thrown!");
             }
             MediaCollection testCollection = testReader.getMovieCollection();
-            Set<String> allMovieIDs = testCollection.getAllMovieIDs();
+            Set<String> allMovieIDs = testCollection.getAllMediaIDs();
             assertEquals(3, allMovieIDs.size());
             assertTrue(allMovieIDs.contains("tt1877830"));
             assertTrue(allMovieIDs.contains("tt1160419"));

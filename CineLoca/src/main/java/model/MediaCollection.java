@@ -52,7 +52,7 @@ public class MediaCollection {
                 movies.add((Movie) m);
             }
         }
-        return movies; //TODO: add tests
+        return movies;
     }
 
     // EFFECTS: returns the list of all series in the collection
@@ -64,7 +64,7 @@ public class MediaCollection {
                 series.add((Series) m);
             }
         }
-        return series; //TODO: add tests
+        return series;
     }
 
     // EFFECTS: returns lexicographically sorted list of movies based on title
@@ -149,7 +149,7 @@ public class MediaCollection {
     }
 
     // EFFECTS: returns the set of all movie IDs in the collection
-    public Set<String> getAllMovieIDs() {
+    public Set<String> getAllMediaIDs() {
         return mediaMap.keySet();
     }
 
