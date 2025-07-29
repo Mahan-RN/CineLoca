@@ -223,7 +223,7 @@ public class SettingsWindow {
                 } else {
                     try {
                         csvReader = new MovieCSVReader(csvPath);
-                        csvReader.loadMoviesFromCSV();
+                        csvReader.loadMediaFromCSV();
                         movieFileReader = new FileReader(movieDirectoryPath);
                         movieFileReader.addPathsToCollection(false);
                         imageFileReader = new FileReader(imageDirectoryPath);

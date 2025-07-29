@@ -47,7 +47,7 @@ public class TestMovieCSVReader {
         @Test
         void testLoadMoviesFromCSV() {
             try {
-                testReader.loadMoviesFromCSV();
+                testReader.loadMediaFromCSV();
             } catch (IOException e) {
                 fail("IOException should not be thrown!");
             } catch (CsvValidationException e) {
@@ -134,7 +134,7 @@ public class TestMovieCSVReader {
         @Test
         void testLoadMoviesFromCSV() {
             try {
-                testReader.loadMoviesFromCSV();
+                testReader.loadMediaFromCSV();
             } catch (IOException e) {
                 fail("IOException should not be thrown!");
             } catch (CsvValidationException e) {
