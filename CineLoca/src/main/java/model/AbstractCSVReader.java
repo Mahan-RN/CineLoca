@@ -28,21 +28,6 @@ public abstract class AbstractCSVReader {
         this.csvReader = createCSVReader(fileReader);
     }
 
-    // EFFECTS: creats a file reader with the given path.
-    // Throws FileNotFoundException if there is no file at the given path
-    private InputStreamReader createFileReader(String filePathName)
-            throws FileNotFoundException {
-        csvFile = new File(filePathName);
-        if (!csvFile.exists()) {
-            throw new FileNotFoundException("File not found: "
-                    + filePathName);
-        } else {
-            InputStreamReader reader = new InputStreamReader(
-                    new FileInputStream(csvFile), StandardCharsets.UTF_8);
-            return reader;
-        }
-    }
-
     // =====================
     // Abstract Methods
     // =====================
@@ -67,6 +52,21 @@ public abstract class AbstractCSVReader {
     // =====================
     // Private Helper Methods
     // =====================
+
+    // EFFECTS: creats a file reader with the given path.
+    // Throws FileNotFoundException if there is no file at the given path
+    private InputStreamReader createFileReader(String filePathName)
+            throws FileNotFoundException {
+        csvFile = new File(filePathName);
+        if (!csvFile.exists()) {
+            throw new FileNotFoundException("File not found: "
+                    + filePathName);
+        } else {
+            InputStreamReader reader = new InputStreamReader(
+                    new FileInputStream(csvFile), StandardCharsets.UTF_8);
+            return reader;
+        }
+    }
 
     // MODIFIES: CSVReader
     // EFFECTS: creats a CSV reader with the given file reader. The constructed
