@@ -32,7 +32,7 @@ public final class ParsingUtilities {
     // EFFECTS: returns true if the given string is not empty and
     // contains only numbers
     public static boolean isValidNum(String s) {
-        if (s.isEmpty()) {
+        if (s.isBlank()) {
             return false;
         } else {
             Pattern pattern = Pattern.compile("[^0-9]", Pattern.CASE_INSENSITIVE);

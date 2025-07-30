@@ -163,11 +163,12 @@ public class TestMovieCSVReader {
             assertEquals("tt1877830", m.getImdbID());
             assertEquals("The Batman", m.getTitle());
             assertEquals(0, m.getReleaseYear());
-            assertEquals(null, m.getDirector());
+            assertEquals("N/A", m.getDirector());
             assertEquals(0, m.getLengthMinutes());
-            assertEquals(null, m.getCountary());
+            assertEquals("N/A", m.getCountary());
             List<String> actors = m.getActors();
-            assertEquals(0, actors.size());
+            assertEquals(1, actors.size());
+            assertEquals("N/A", actors.get(0));
             assertFalse(m.hasEnglishSubtitle());
         }
 
