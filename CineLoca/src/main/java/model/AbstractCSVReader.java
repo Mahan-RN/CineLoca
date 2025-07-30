@@ -28,19 +28,9 @@ public abstract class AbstractCSVReader {
         this.csvReader = createCSVReader(fileReader);
     }
 
-    // =====================
-    // Abstract Methods
-    // =====================
-
     // MODIFIES: AbstractMedia
     // EFFECTS: takes the list of strings corresponding to a row of the CSV
-    // file and creates a Movie or Series if IMDb ID and title are provided. It sets
-    // the remaining media attributes if they are provided and valid:
-    // - string attributes are valid if they are not empty
-    // - boolean attributes are valid if the corresponding string is "true" or
-    // "false"
-    // - int attributes are valid if the corresponding string is non-empty
-    // and contains only numerical values
+    // file and creates a Movie or Series if IMDb ID and title are provided.
     protected AbstractMedia rowToMedia(List<String> strings) {
         String imdbID = ParsingUtilities.trimMediaID(strings.get(0));
         String title = ParsingUtilities.trimMediaData(strings.get(1));
@@ -63,13 +53,22 @@ public abstract class AbstractCSVReader {
         setCountary(media, countary);
         setActors(media, actors);
         setEnglishSubs(media, englishSub);
+
         setSpecificFields(media, strings);
 
         return media;
     }
 
+    // =====================
+    // Abstract Methods
+    // =====================
+
+    // MODIFIES: AbstractMedia
+    // EFFECTS: creats and returns a media with given ID and title
     protected abstract AbstractMedia createMedia(String imdbID, String title);
 
+    // MODIFIES: AbstractMedia
+    // EFFECTS: sets media-specific fields based on CSV data
     protected abstract void setSpecificFields(AbstractMedia media, List<String> string);
 
     // MODIFIES: MediaCollection
@@ -114,6 +113,7 @@ public abstract class AbstractCSVReader {
         return csvReader;
     }
 
+    // Setters for adding CSV data to media objects
     private void setReleaseYear(AbstractMedia media, String release) {
         int releaseYear = 0;
         if (ParsingUtilities.isValidNum(release)) {
