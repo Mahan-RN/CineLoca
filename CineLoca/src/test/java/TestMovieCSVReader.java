@@ -49,7 +49,7 @@ public class TestMovieCSVReader {
         }
 
         @Test
-        void testLoadMoviesFromCSV() {
+        void testLoadMediaFromCSV() {
             try {
                 testReader.loadMediaFromCSV();
             } catch (IOException e) {

@@ -115,11 +115,10 @@ public abstract class AbstractCSVReader {
 
     // Setters for adding CSV data to media objects
     private void setReleaseYear(AbstractMedia media, String release) {
-        int releaseYear = 0;
         if (ParsingUtilities.isValidNum(release)) {
-            releaseYear = Integer.parseInt(release);
+            int releaseYear = Integer.parseInt(release);
+            media.setReleaseYear(releaseYear);
         }
-        media.setReleaseYear(releaseYear);
     }
 
     private void setDirector(AbstractMedia media, String director) {
@@ -130,11 +129,10 @@ public abstract class AbstractCSVReader {
     }
 
     private void setLength(AbstractMedia media, String length) {
-        int num = 0;
         if (ParsingUtilities.isValidNum(length)) {
-            num = Integer.parseInt(length);
+            int num = Integer.parseInt(length);
+            media.setLengthMinutes(num);
         }
-        media.setLengthMinutes(num);
     }
 
     private void setCountary(AbstractMedia media, String countary) {
