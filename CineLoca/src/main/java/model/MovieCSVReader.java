@@ -78,9 +78,4 @@ public class MovieCSVReader extends AbstractCSVReader {
         }
         return movie;
     }
-
-    // getter
-    public MediaCollection getMovieCollection() {
-        return this.collection;
-    }
 }

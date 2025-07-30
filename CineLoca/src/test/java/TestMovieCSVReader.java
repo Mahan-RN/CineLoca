@@ -1,18 +1,22 @@
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import com.opencsv.exceptions.CsvValidationException;
 
-import model.MovieCSVReader;
 import model.AbstractMedia;
 import model.MediaCollection;
-
-import java.util.Set;
-import java.util.List;
+import model.MovieCSVReader;
 
 public class TestMovieCSVReader {
     private MovieCSVReader testReader;
@@ -53,7 +57,7 @@ public class TestMovieCSVReader {
             } catch (CsvValidationException e) {
                 fail("CsvValidationException should not be thrown!");
             }
-            MediaCollection testCollection = testReader.getMovieCollection();
+            MediaCollection testCollection = MediaCollection.getInstance();
             Set<String> allMovieIDs = testCollection.getAllMediaIDs();
             assertEquals(3, allMovieIDs.size());
             assertTrue(allMovieIDs.contains("tt1877830"));
@@ -140,7 +144,7 @@ public class TestMovieCSVReader {
             } catch (CsvValidationException e) {
                 fail("CsvValidationException should not be thrown!");
             }
-            MediaCollection testCollection = testReader.getMovieCollection();
+            MediaCollection testCollection = MediaCollection.getInstance();
             Set<String> allMovieIDs = testCollection.getAllMediaIDs();
             assertEquals(3, allMovieIDs.size());
             assertTrue(allMovieIDs.contains("tt1877830"));
