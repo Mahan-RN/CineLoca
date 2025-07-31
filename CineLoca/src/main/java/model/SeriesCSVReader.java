@@ -42,15 +42,20 @@ public class SeriesCSVReader extends AbstractCSVReader {
     @Override
     protected void setSpecificFields(Media media, List<String> strings) {
         Series series = (Series) media;
+        String creator = ParsingUtilities.trimMediaData(strings.get(3));
         String totalSeasons = ParsingUtilities.trimMediaData(strings.get(8));
         String network = ParsingUtilities.trimMediaData(strings.get(9));
         if (ParsingUtilities.isValidNum(totalSeasons)) {
             int num = Integer.parseInt(totalSeasons);
             series.setTotalSeasonsIMDb(num);
         }
+        if (creator.isBlank()) {
+            creator = "N/A";
+        }
         if (network.isBlank()) {
             network = "N/A";
         }
+        series.setCreator(creator);
         series.setNetwork(network);
     }
 }
