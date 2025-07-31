@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Series extends Media {
 
     private String creator;
+    private int endYear;
     private int totalSeasonsIMDb;
     private int availableSeasons;
     private String network;
@@ -36,6 +37,10 @@ public class Series extends Media {
         this.creator = creator;
     }
 
+    public void setEndYear(int endYear) {
+        this.endYear = endYear;
+    }
+
     public void setTotalSeasonsIMDb(int num) {
         totalSeasonsIMDb = num;
     }
@@ -47,6 +52,10 @@ public class Series extends Media {
     // getters
     public String getCreator() {
         return creator;
+    }
+
+    public int getEndYear() {
+        return endYear;
     }
 
     public int getTotalSeasonsIMDb() {

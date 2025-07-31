@@ -1,7 +1,7 @@
-IMDb_ID,Title,Release_Year,Creator,Length(min),Countary,Actors,Has_Englsih_Sub,Total Seasons,Network
-tt0944947,Game of Thrones,2011–2019,David Nutter ,57,USA,Emilia Clarke; Peter Dinklage; Kit Harington,FALSE,8,HBO
-tt0903747,Breaking Bad,2008–2013,Vince Gilligan,49,USA,Bryan Cranston; Aaron Paul; Anna Gunn,TRUE,5,AMC
-tt0903747,,2008–2013,Vince Gilligan,49,USA,Bryan Cranston; Aaron Paul; Anna Gunn,FALSE,5,AMC
-,Squid Game,2021–2025,Hwang Dong-hyuk,60,South Korea,Lee Jung-jae; Wi Ha-joon; Jeon Young-soo,TRUE,3,Netflix
-,,2021–2025,Hwang Dong-hyuk,60,South Korea,Lee Jung-jae; Wi Ha-joon; Jeon Young-soo,TRUE,3,Netflix
-tt10919420,Squid Game,,,,,,,,
+IMDb_ID,Title,Release_Year,Creator,Length(min),Countary,Actors,Has_Englsih_Sub,Total Seasons,Network,End_Year
+tt0944947,Game of Thrones,2011,David Nutter ,57,USA,Emilia Clarke; Peter Dinklage; Kit Harington,FALSE,8,HBO,2019
+tt0903747,Breaking Bad,2008,Vince Gilligan,49,USA,Bryan Cranston; Aaron Paul; Anna Gunn,TRUE,5,AMC,2013
+tt0903747,,2008,Vince Gilligan,49,USA,Bryan Cranston; Aaron Paul; Anna Gunn,FALSE,5,AMC,
+,Squid Game,2021,Hwang Dong-hyuk,60,South Korea,Lee Jung-jae; Wi Ha-joon; Jeon Young-soo,TRUE,3,Netflix,
+,,2021,Hwang Dong-hyuk,60,South Korea,Lee Jung-jae; Wi Ha-joon; Jeon Young-soo,FALSE,3,Netflix,
+tt10919420,Squid Game,,,,,,,,,

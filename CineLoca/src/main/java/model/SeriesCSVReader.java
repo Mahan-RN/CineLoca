@@ -45,6 +45,7 @@ public class SeriesCSVReader extends AbstractCSVReader {
         String creator = ParsingUtilities.trimMediaData(strings.get(3));
         String totalSeasons = ParsingUtilities.trimMediaData(strings.get(8));
         String network = ParsingUtilities.trimMediaData(strings.get(9));
+        String endYear = ParsingUtilities.trimMediaData(strings.get(10));
         if (ParsingUtilities.isValidNum(totalSeasons)) {
             int num = Integer.parseInt(totalSeasons);
             series.setTotalSeasonsIMDb(num);
@@ -57,5 +58,9 @@ public class SeriesCSVReader extends AbstractCSVReader {
         }
         series.setCreator(creator);
         series.setNetwork(network);
+        if (ParsingUtilities.isValidNum(endYear)) {
+            int num = Integer.parseInt(endYear);
+            series.setEndYear(num);
+        }
     }
 }

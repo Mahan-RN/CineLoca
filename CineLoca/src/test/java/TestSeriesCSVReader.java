@@ -75,7 +75,8 @@ public class TestSeriesCSVReader {
             Series series = (Series) media;
             assertEquals("tt0944947", series.getImdbID());
             assertEquals("Game of Thrones", series.getTitle());
-            assertEquals(0, series.getReleaseYear()); // TODO: fix release year for TV shows
+            assertEquals(2011, series.getReleaseYear());
+            assertEquals(2019, series.getEndYear());
             assertEquals("David Nutter", series.getCreator());
             // TV shows
             assertEquals(57, series.getLengthMinutes());
@@ -92,7 +93,8 @@ public class TestSeriesCSVReader {
             Series series = (Series) media;
             assertEquals("tt0903747", series.getImdbID());
             assertEquals("Breaking Bad", series.getTitle());
-            assertEquals(0, series.getReleaseYear()); // TODO: fix release year for TV shows
+            assertEquals(2008, series.getReleaseYear());
+            assertEquals(2013, series.getEndYear());
             assertEquals("Vince Gilligan", series.getCreator());
             // for TV shows
             assertEquals(49, series.getLengthMinutes());
@@ -109,7 +111,8 @@ public class TestSeriesCSVReader {
             Series series = (Series) media;
             assertEquals("tt10919420", series.getImdbID());
             assertEquals("Squid Game", series.getTitle());
-            assertEquals(0, series.getReleaseYear()); // TODO: fix release year for TV shows
+            assertEquals(0, series.getReleaseYear());
+            assertEquals(0, series.getEndYear());
             assertEquals("N/A", series.getCreator());
             assertEquals(0, series.getLengthMinutes());
             assertEquals("N/A", series.getCountary());
