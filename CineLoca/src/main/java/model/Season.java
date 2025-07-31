@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 // Represents one season of a TV show
 public class Season {
+
+    private String creator;
     private int totalEpisodes;
     private int seasonNumber;
     private ArrayList<String> episodes;
@@ -22,7 +24,16 @@ public class Season {
         totalEpisodes++;
     }
 
+    // setters
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
     // getters
+    public String getCreator() {
+        return creator;
+    }
+
     public int getTotalEpisodes() {
         return totalEpisodes;
     }
