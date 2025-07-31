@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import model.Movie;
-import model.FileReader;
+import model.MovieFileReader;
 import model.MediaCollection;
 
 public class TestFileReader {
-    private FileReader testReader;
+    private MovieFileReader testReader;
     private String path;
     private Movie movie1;
     private Movie movie2;
@@ -24,7 +24,7 @@ public class TestFileReader {
     void testDirectoryPathDoesNotExist() {
         try {
             path = "src//test//resources//movie//FAKEtestDirectory";
-            testReader = new FileReader(path);
+            testReader = new MovieFileReader(path);
             fail("FileNotFoundException was not thrown!");
         } catch (FileNotFoundException e) {
             // expected
@@ -36,7 +36,7 @@ public class TestFileReader {
         try {
             path = "src//test//resources//movie//testDirectory1//"
                     + "[tt1160419]movie3.mp4";
-            testReader = new FileReader(path);
+            testReader = new MovieFileReader(path);
             fail("FileNotFoundException was not thrown!");
         } catch (FileNotFoundException e) {
             // expected
@@ -59,7 +59,7 @@ public class TestFileReader {
         @Test
         void testConstructor() {
             try {
-                testReader = new FileReader(path);
+                testReader = new MovieFileReader(path);
             } catch (FileNotFoundException e) {
                 fail("FileNotFoundException should've not been thrown!");
             }
@@ -74,7 +74,7 @@ public class TestFileReader {
             collection.addMedia(movie2);
             collection.addMedia(movie3);
             try {
-                testReader = new FileReader(path);
+                testReader = new MovieFileReader(path);
                 testReader.addPathsToCollection(false);
             } catch (FileNotFoundException e) {
                 fail("FileNotFoundException should've not been thrown!");
@@ -96,7 +96,7 @@ public class TestFileReader {
         void testAddFilePathsToCollectionMovieIDNotInCollection() {
             collection.addMedia(movie1);
             try {
-                testReader = new FileReader(path);
+                testReader = new MovieFileReader(path);
                 testReader.addPathsToCollection(false);
             } catch (FileNotFoundException e) {
                 fail("FileNotFoundException should've not been thrown!");
@@ -115,7 +115,7 @@ public class TestFileReader {
             Movie movie4 = new Movie("tt4873118", "The Convenant");
             collection.addMedia(movie4);
             try {
-                testReader = new FileReader(path);
+                testReader = new MovieFileReader(path);
                 testReader.addPathsToCollection(false);
             } catch (FileNotFoundException e) {
                 fail("FileNotFoundException should've not been thrown!");
@@ -130,7 +130,7 @@ public class TestFileReader {
             collection.addMedia(movie1);
             path = "src\\test\\resources\\images\\testDirectory1";
             try {
-                testReader = new FileReader(path);
+                testReader = new MovieFileReader(path);
                 testReader.addPathsToCollection(true);
             } catch (FileNotFoundException e) {
                 fail("FileNotFoundException should've not been thrown!");

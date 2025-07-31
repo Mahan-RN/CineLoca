@@ -15,7 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.opencsv.exceptions.CsvValidationException;
 
-import model.FileReader;
+import model.MovieFileReader;
 import model.MovieCSVReader;
 import net.miginfocom.swing.MigLayout;
 
@@ -25,8 +25,8 @@ public class SettingsWindow {
     private final int WINDOW_HEIGHT = 600;
 
     private MovieCSVReader csvReader;
-    private FileReader movieFileReader;
-    private FileReader imageFileReader;
+    private MovieFileReader movieFileReader;
+    private MovieFileReader imageFileReader;
     private String csvPath;
     private String movieDirectoryPath;
     private String imageDirectoryPath;
@@ -224,9 +224,9 @@ public class SettingsWindow {
                     try {
                         csvReader = new MovieCSVReader(csvPath);
                         csvReader.loadMediaFromCSV();
-                        movieFileReader = new FileReader(movieDirectoryPath);
+                        movieFileReader = new MovieFileReader(movieDirectoryPath);
                         movieFileReader.addPathsToCollection(false);
-                        imageFileReader = new FileReader(imageDirectoryPath);
+                        imageFileReader = new MovieFileReader(imageDirectoryPath);
                         imageFileReader.addPathsToCollection(true);
                         JOptionPane.showMessageDialog(window,
                                 "Data was loaded successfully! "

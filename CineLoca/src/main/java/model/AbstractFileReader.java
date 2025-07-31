@@ -37,6 +37,20 @@ public abstract class AbstractFileReader {
         this.files = new ArrayList<>(Arrays.asList(directory.listFiles()));
     }
 
+    protected void addImagePath(File file) {
+        if (!file.isDirectory()) {
+            String id = ParsingUtilities.fileNameToMediaID(file.getName());
+            if (null != id) {
+                Media media = collection.getMediaMap().get(id);
+                if (null != media) {
+                    media.setImagePath(file.getPath());
+                }
+            }
+        }
+    }
+
+    protected abstract void addMediaPath(File file);
+
     // getters
     public String getPathName() {
         return pathName;
