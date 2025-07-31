@@ -58,4 +58,10 @@ public class TestSeries {
         series1.setNetwork("HBO");
         assertEquals("HBO", series1.getNetwork());
     }
+
+    @Test
+    void testSetDirector() {
+        series1.setCreator("David Benioff");
+        assertEquals("David Benioff", series1.getCreator());
+    }
 }
