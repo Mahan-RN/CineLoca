@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Series extends AbstractMedia {
+public class Series extends Media {
 
     private int totalSeasonsIMDb;
     private int availableSeasons;

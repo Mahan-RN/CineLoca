@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import com.opencsv.exceptions.CsvValidationException;
 
-import model.AbstractMedia;
+import model.Media;
 import model.MediaCollection;
 import model.Series;
 import model.SeriesCSVReader;
@@ -63,15 +63,15 @@ public class TestSeriesCSVReader {
             assertTrue(allMediaIDs.contains("tt0944947"));
             assertTrue(allMediaIDs.contains("tt0903747"));
             assertTrue(allMediaIDs.contains("tt10919420"));
-            AbstractMedia firstSeries = testCollection.getMediaMap().get("tt0944947");
-            AbstractMedia secondSeries = testCollection.getMediaMap().get("tt0903747");
-            AbstractMedia thirdSeries = testCollection.getMediaMap().get("tt10919420");
+            Media firstSeries = testCollection.getMediaMap().get("tt0944947");
+            Media secondSeries = testCollection.getMediaMap().get("tt0903747");
+            Media thirdSeries = testCollection.getMediaMap().get("tt10919420");
             testSeries1(firstSeries);
             testSeries2(secondSeries);
             testSeries3(thirdSeries);
         }
 
-        private void testSeries1(AbstractMedia media) {
+        private void testSeries1(Media media) {
             Series series = (Series) media;
             assertEquals("tt0944947", series.getImdbID());
             assertEquals("Game of Thrones", series.getTitle());
@@ -87,7 +87,7 @@ public class TestSeriesCSVReader {
             assertFalse(series.hasEnglishSubtitle());
         }
 
-        private void testSeries2(AbstractMedia media) {
+        private void testSeries2(Media media) {
             Series series = (Series) media;
             assertEquals("tt0903747", series.getImdbID());
             assertEquals("Breaking Bad", series.getTitle());
@@ -103,7 +103,7 @@ public class TestSeriesCSVReader {
             assertTrue(series.hasEnglishSubtitle());
         }
 
-        private void testSeries3(AbstractMedia media) {
+        private void testSeries3(Media media) {
             Series series = (Series) media;
             assertEquals("tt10919420", series.getImdbID());
             assertEquals("Squid Game", series.getTitle());

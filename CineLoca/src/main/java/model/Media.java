@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AbstractMedia {
+public abstract class Media {
     protected String imdbID;
     protected String title;
     protected int releaseYear;
@@ -18,7 +18,7 @@ public abstract class AbstractMedia {
     protected String filePath;
 
     // EFFECTS: creates an abstract media with the given ID and title
-    protected AbstractMedia(String imdbID, String title) {
+    protected Media(String imdbID, String title) {
         this.imdbID = imdbID;
         this.title = title;
         this.actors = new ArrayList<>();
@@ -124,7 +124,7 @@ public abstract class AbstractMedia {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AbstractMedia other = (AbstractMedia) obj;
+        Media other = (Media) obj;
         if (imdbID == null) {
             if (other.imdbID != null)
                 return false;
@@ -177,36 +177,36 @@ public abstract class AbstractMedia {
 
     // EFFECTS: comparator to compare media lexicographically in ascending
     // order
-    public static Comparator<AbstractMedia> titleComparatorAscending = new Comparator<AbstractMedia>() {
+    public static Comparator<Media> titleComparatorAscending = new Comparator<Media>() {
         @Override
-        public int compare(AbstractMedia m1, AbstractMedia m2) {
+        public int compare(Media m1, Media m2) {
             return m1.getTitle().compareTo(m2.getTitle());
         }
     };
 
     // EFFECTS: comparator to compare media lexicographically in descending
     // order
-    public static Comparator<AbstractMedia> titleComparatorDescending = Collections.reverseOrder(new Comparator<AbstractMedia>() {
+    public static Comparator<Media> titleComparatorDescending = Collections.reverseOrder(new Comparator<Media>() {
         @Override
-        public int compare(AbstractMedia m1, AbstractMedia m2) {
+        public int compare(Media m1, Media m2) {
             return m1.getTitle().compareTo(m2.getTitle());
         }
     });
 
     // EFFECTS: comparator to compare media based on release year in ascending
     // order
-    public static Comparator<AbstractMedia> yearComparatorAscending = new Comparator<AbstractMedia>() {
+    public static Comparator<Media> yearComparatorAscending = new Comparator<Media>() {
         @Override
-        public int compare(AbstractMedia m1, AbstractMedia m2) {
+        public int compare(Media m1, Media m2) {
             return m1.getReleaseYear() - m2.getReleaseYear();
         }
     };
 
     // EFFECTS: comparator to compare media based on release year in descending
     // order
-    public static Comparator<AbstractMedia> yearComparatorDescending = Collections.reverseOrder(new Comparator<AbstractMedia>() {
+    public static Comparator<Media> yearComparatorDescending = Collections.reverseOrder(new Comparator<Media>() {
         @Override
-        public int compare(AbstractMedia m1, AbstractMedia m2) {
+        public int compare(Media m1, Media m2) {
             return m1.getReleaseYear() - m2.getReleaseYear();
         }
     });

@@ -10,7 +10,7 @@ import java.util.Set;
 public class MediaCollection {
 
     private static MediaCollection mediaCollection;
-    private Map<String, AbstractMedia> mediaMap;
+    private Map<String, Media> mediaMap;
     private List<String> duplicateIDs;
 
     // EFFECTS: creats a private media collection
@@ -32,7 +32,7 @@ public class MediaCollection {
     // EFFECTS: adds media to this collection if not already there and returns
     // true. If media is already in the collection, returns false and adds its
     // ID to the list of duplicate IDs
-    public boolean addMedia(AbstractMedia media) {
+    public boolean addMedia(Media media) {
         String mediaID = media.getImdbID();
         if (mediaMap.containsKey(mediaID)) {
             duplicateIDs.add(mediaID);
@@ -45,9 +45,9 @@ public class MediaCollection {
 
     // EFFECTS: returns the list of all movies in the collection
     public ArrayList<Movie> getMovies() {
-        ArrayList<AbstractMedia> media = new ArrayList<>(mediaMap.values());
+        ArrayList<Media> media = new ArrayList<>(mediaMap.values());
         ArrayList<Movie> movies = new ArrayList<>();
-        for (AbstractMedia m : media) {
+        for (Media m : media) {
             if (m instanceof Movie) {
                 movies.add((Movie) m);
             }
@@ -57,9 +57,9 @@ public class MediaCollection {
 
     // EFFECTS: returns the list of all series in the collection
     public ArrayList<Series> getSeries() {
-        ArrayList<AbstractMedia> media = new ArrayList<>(mediaMap.values());
+        ArrayList<Media> media = new ArrayList<>(mediaMap.values());
         ArrayList<Series> series = new ArrayList<>();
-        for (AbstractMedia m : media) {
+        for (Media m : media) {
             if (m instanceof Series) {
                 series.add((Series) m);
             }
@@ -71,7 +71,7 @@ public class MediaCollection {
     // in ascending order
     public ArrayList<Movie> moviesSortedByTitleAscending() {
         ArrayList<Movie> movies = getMovies();
-        movies.sort(AbstractMedia.titleComparatorAscending);
+        movies.sort(Media.titleComparatorAscending);
         return movies;
     }
 
@@ -79,7 +79,7 @@ public class MediaCollection {
     // in descending order
     public ArrayList<Movie> moviesSortedByTitleDescending() {
         ArrayList<Movie> movies = getMovies();
-        movies.sort(AbstractMedia.titleComparatorDescending);
+        movies.sort(Media.titleComparatorDescending);
         return movies;
     }
 
@@ -87,7 +87,7 @@ public class MediaCollection {
     // ascending order
     public ArrayList<Movie> moviesSortedByYearAscending() {
         ArrayList<Movie> movies = getMovies();
-        movies.sort(AbstractMedia.yearComparatorAscending);
+        movies.sort(Media.yearComparatorAscending);
         return movies;
     }
 
@@ -95,7 +95,7 @@ public class MediaCollection {
     // descending order
     public ArrayList<Movie> moviesSortedByYearDescending() {
         ArrayList<Movie> movies = getMovies();
-        movies.sort(AbstractMedia.yearComparatorDescending);
+        movies.sort(Media.yearComparatorDescending);
         return movies;
     }
 
@@ -103,7 +103,7 @@ public class MediaCollection {
     // in ascending order
     public ArrayList<Series> seriesSortedByTitleAscending() {
         ArrayList<Series> series = getSeries();
-        series.sort(AbstractMedia.titleComparatorAscending);
+        series.sort(Media.titleComparatorAscending);
         return series;
     }
 
@@ -111,7 +111,7 @@ public class MediaCollection {
     // in descending order
     public ArrayList<Series> seriesSortedByTitleDescending() {
         ArrayList<Series> series = getSeries();
-        series.sort(AbstractMedia.titleComparatorDescending);
+        series.sort(Media.titleComparatorDescending);
         return series;
     }
 
@@ -119,7 +119,7 @@ public class MediaCollection {
     // ascending order
     public ArrayList<Series> seriesSortedByYearAscending() {
         ArrayList<Series> series = getSeries();
-        series.sort(AbstractMedia.yearComparatorAscending);
+        series.sort(Media.yearComparatorAscending);
         return series;
     }
 
@@ -127,7 +127,7 @@ public class MediaCollection {
     // descending order
     public ArrayList<Series> seriesSortedByYearDescending() {
         ArrayList<Series> series = getSeries();
-        series.sort(AbstractMedia.yearComparatorDescending);
+        series.sort(Media.yearComparatorDescending);
         return series;
     }
 
@@ -176,7 +176,7 @@ public class MediaCollection {
     }
 
     // getter
-    public Map<String, AbstractMedia> getMediaMap() {
+    public Map<String, Media> getMediaMap() {
         return mediaMap;
     }
 

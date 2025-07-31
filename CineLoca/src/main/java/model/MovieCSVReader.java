@@ -34,13 +34,13 @@ public class MovieCSVReader extends AbstractCSVReader {
     // =====================
 
     @Override
-    protected AbstractMedia createMedia(String imdbID, String title) {
+    protected Media createMedia(String imdbID, String title) {
         Movie movie = new Movie(imdbID, title);
         return movie;
     }
 
     @Override
-    protected void setSpecificFields(AbstractMedia media, List<String> string) {
+    protected void setSpecificFields(Media media, List<String> string) {
         // Movie doesn't have any specific fields
     }
 }

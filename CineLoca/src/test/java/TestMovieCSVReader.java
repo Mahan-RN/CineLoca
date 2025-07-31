@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import com.opencsv.exceptions.CsvValidationException;
 
-import model.AbstractMedia;
+import model.Media;
 import model.MediaCollection;
 import model.MovieCSVReader;
 
@@ -63,16 +63,16 @@ public class TestMovieCSVReader {
             assertTrue(allMovieIDs.contains("tt1877830"));
             assertTrue(allMovieIDs.contains("tt1160419"));
             assertTrue(allMovieIDs.contains("tt0110413"));
-            AbstractMedia firstMovie = testCollection.getMediaMap().get("tt1877830");
-            AbstractMedia secondMovie = testCollection.getMediaMap().get("tt1160419");
-            AbstractMedia thirdMovie = testCollection.getMediaMap().get("tt0110413");
+            Media firstMovie = testCollection.getMediaMap().get("tt1877830");
+            Media secondMovie = testCollection.getMediaMap().get("tt1160419");
+            Media thirdMovie = testCollection.getMediaMap().get("tt0110413");
             testMovie1(firstMovie);
             testMovie2(secondMovie);
             testMovie3(thirdMovie);
 
         }
 
-        private void testMovie1(AbstractMedia m) {
+        private void testMovie1(Media m) {
             assertEquals("tt1877830", m.getImdbID());
             assertEquals("The Batman", m.getTitle());
             assertEquals(2022, m.getReleaseYear());
@@ -88,7 +88,7 @@ public class TestMovieCSVReader {
             assertTrue(m.hasEnglishSubtitle());
         }
 
-        private void testMovie2(AbstractMedia m) {
+        private void testMovie2(Media m) {
             assertEquals("tt1160419", m.getImdbID());
             assertEquals("Dune: Part One", m.getTitle());
             assertEquals(2021, m.getReleaseYear());
@@ -103,7 +103,7 @@ public class TestMovieCSVReader {
             assertFalse(m.hasEnglishSubtitle());
         }
 
-        private void testMovie3(AbstractMedia m) {
+        private void testMovie3(Media m) {
             assertEquals("tt0110413", m.getImdbID());
             assertEquals("Léon: The Professional", m.getTitle());
             assertEquals(1994, m.getReleaseYear());
@@ -150,16 +150,16 @@ public class TestMovieCSVReader {
             assertTrue(allMovieIDs.contains("tt1877830"));
             assertTrue(allMovieIDs.contains("tt1160419"));
             assertTrue(allMovieIDs.contains("tt0110413"));
-            AbstractMedia firstMovie = testCollection.getMediaMap().get("tt1877830");
-            AbstractMedia secondMovie = testCollection.getMediaMap().get("tt1160419");
-            AbstractMedia thirdMovie = testCollection.getMediaMap().get("tt0110413");
+            Media firstMovie = testCollection.getMediaMap().get("tt1877830");
+            Media secondMovie = testCollection.getMediaMap().get("tt1160419");
+            Media thirdMovie = testCollection.getMediaMap().get("tt0110413");
             testMovie1(firstMovie);
             testMovie2(secondMovie);
             testMovie3(thirdMovie);
 
         }
 
-        private void testMovie1(AbstractMedia m) {
+        private void testMovie1(Media m) {
             assertEquals("tt1877830", m.getImdbID());
             assertEquals("The Batman", m.getTitle());
             assertEquals(0, m.getReleaseYear());
@@ -172,7 +172,7 @@ public class TestMovieCSVReader {
             assertFalse(m.hasEnglishSubtitle());
         }
 
-        private void testMovie2(AbstractMedia m) {
+        private void testMovie2(Media m) {
             assertEquals("tt1160419", m.getImdbID());
             assertEquals("Dune: Part One", m.getTitle());
             assertEquals(0, m.getReleaseYear());
@@ -187,7 +187,7 @@ public class TestMovieCSVReader {
             assertFalse(m.hasEnglishSubtitle());
         }
 
-        private void testMovie3(AbstractMedia m) {
+        private void testMovie3(Media m) {
             assertEquals("tt0110413", m.getImdbID());
             assertEquals("Léon: The Professional", m.getTitle());
             assertEquals(1994, m.getReleaseYear());

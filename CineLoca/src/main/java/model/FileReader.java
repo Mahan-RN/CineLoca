@@ -36,7 +36,7 @@ public class FileReader {
                 } else {
                     id = ParsingUtilities.fileNameToMediaID(file.getName());
                 }
-                AbstractMedia media = collection.getMediaMap().get(id);
+                Media media = collection.getMediaMap().get(id);
                 if (media != null) {
                     if (image) {
                         media.setImagePath(file.getPath());

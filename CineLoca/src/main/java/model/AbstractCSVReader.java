@@ -31,7 +31,7 @@ public abstract class AbstractCSVReader {
     // MODIFIES: AbstractMedia
     // EFFECTS: takes the list of strings corresponding to a row of the CSV
     // file and creates a Movie or Series if IMDb ID and title are provided.
-    protected AbstractMedia rowToMedia(List<String> strings) {
+    protected Media rowToMedia(List<String> strings) {
         String imdbID = ParsingUtilities.trimMediaID(strings.get(0));
         String title = ParsingUtilities.trimMediaData(strings.get(1));
         String release = ParsingUtilities.trimMediaData(strings.get(2));
@@ -45,7 +45,7 @@ public abstract class AbstractCSVReader {
         if (title.isBlank() || imdbID.isBlank()) {
             return null;
         }
-        AbstractMedia media = createMedia(imdbID, title);
+        Media media = createMedia(imdbID, title);
 
         setReleaseYear(media, release);
         setDirector(media, director);
@@ -65,11 +65,11 @@ public abstract class AbstractCSVReader {
 
     // MODIFIES: AbstractMedia
     // EFFECTS: creats and returns a media with given ID and title
-    protected abstract AbstractMedia createMedia(String imdbID, String title);
+    protected abstract Media createMedia(String imdbID, String title);
 
     // MODIFIES: AbstractMedia
     // EFFECTS: sets media-specific fields based on CSV data
-    protected abstract void setSpecificFields(AbstractMedia media, List<String> string);
+    protected abstract void setSpecificFields(Media media, List<String> string);
 
     // MODIFIES: MediaCollection
     // EFFECTS: reads each row of the CSV file and stores it as a Movie/Series
@@ -114,35 +114,35 @@ public abstract class AbstractCSVReader {
     }
 
     // Setters for adding CSV data to media objects
-    private void setReleaseYear(AbstractMedia media, String release) {
+    private void setReleaseYear(Media media, String release) {
         if (ParsingUtilities.isValidNum(release)) {
             int releaseYear = Integer.parseInt(release);
             media.setReleaseYear(releaseYear);
         }
     }
 
-    private void setDirector(AbstractMedia media, String director) {
+    private void setDirector(Media media, String director) {
         if (director.isBlank()) {
             director = "N/A";
         }
         media.setDirector(director);
     }
 
-    private void setLength(AbstractMedia media, String length) {
+    private void setLength(Media media, String length) {
         if (ParsingUtilities.isValidNum(length)) {
             int num = Integer.parseInt(length);
             media.setLengthMinutes(num);
         }
     }
 
-    private void setCountary(AbstractMedia media, String countary) {
+    private void setCountary(Media media, String countary) {
         if (countary.isBlank()) {
             countary = "N/A";
         }
         media.setCountary(countary);
     }
 
-    private void setActors(AbstractMedia media, String actors) {
+    private void setActors(Media media, String actors) {
         if (!actors.isBlank()) {
             List<String> actorsList = ParsingUtilities.actorsToList(actors);
             for (String actor : actorsList) {
@@ -154,7 +154,7 @@ public abstract class AbstractCSVReader {
         }
     }
 
-    private void setEnglishSubs(AbstractMedia media, String englishSub) {
+    private void setEnglishSubs(Media media, String englishSub) {
         if (englishSub.equals("true") || englishSub.equals("false")) {
             boolean b = Boolean.parseBoolean(englishSub);
             media.setEnglishSubs(b);

@@ -34,13 +34,13 @@ public class SeriesCSVReader extends AbstractCSVReader {
     // =====================
 
     @Override
-    protected AbstractMedia createMedia(String imdbID, String title) {
+    protected Media createMedia(String imdbID, String title) {
         Series series = new Series(imdbID, title);
         return series;
     }
 
     @Override
-    protected void setSpecificFields(AbstractMedia media, List<String> strings) {
+    protected void setSpecificFields(Media media, List<String> strings) {
         Series series = (Series) media;
         String totalSeasons = ParsingUtilities.trimMediaData(strings.get(8));
         String network = ParsingUtilities.trimMediaData(strings.get(9));

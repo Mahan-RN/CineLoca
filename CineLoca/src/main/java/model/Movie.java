@@ -1,7 +1,7 @@
 package model;
 
 // Represents a Movie
-public class Movie extends AbstractMedia {
+public class Movie extends Media {
 
     // EFFECTS: creates a movie with the given ID and title
     public Movie(String imdbID, String title) {
