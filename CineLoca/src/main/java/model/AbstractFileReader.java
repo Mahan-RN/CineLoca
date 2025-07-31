@@ -19,6 +19,28 @@ public abstract class AbstractFileReader {
         initialize(pathName);
     }
 
+    // MODFIES: Media
+    // EFFECTS: adds image path to Media if media ID matches file name
+    protected void addImagePath(File file) {
+        if (!file.isDirectory()) {
+            String id = ParsingUtilities.fileNameToMediaID(file.getName());
+            if (null != id) {
+                Media media = collection.getMediaMap().get(id);
+                if (null != media) {
+                    media.setImagePath(file.getPath());
+                }
+            }
+        }
+    }
+
+    // =====================
+    // Abstract Methods
+    // =====================
+
+    // MODIFES: Media
+    // EFFECTS: adds file path to media if media ID matches the file name
+    protected abstract void addMediaPath(File file);
+
     // =====================
     // Private Helper Methods
     // =====================
@@ -36,20 +58,6 @@ public abstract class AbstractFileReader {
         }
         this.files = new ArrayList<>(Arrays.asList(directory.listFiles()));
     }
-
-    protected void addImagePath(File file) {
-        if (!file.isDirectory()) {
-            String id = ParsingUtilities.fileNameToMediaID(file.getName());
-            if (null != id) {
-                Media media = collection.getMediaMap().get(id);
-                if (null != media) {
-                    media.setImagePath(file.getPath());
-                }
-            }
-        }
-    }
-
-    protected abstract void addMediaPath(File file);
 
     // getters
     public String getPathName() {
