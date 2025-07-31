@@ -9,7 +9,6 @@ public abstract class Media {
     protected String imdbID;
     protected String title;
     protected int releaseYear;
-    protected String director;
     protected int lengthMinutes;
     protected String countary;
     protected List<String> actors;
@@ -40,12 +39,6 @@ public abstract class Media {
     // EFFECTS: sets the release year of this media
     public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets the director of this media
-    public void setDirector(String director) {
-        this.director = director;
     }
 
     // MODIFIES: this
@@ -147,10 +140,6 @@ public abstract class Media {
         return releaseYear;
     }
 
-    public String getDirector() {
-        return director;
-    }
-
     public int getLengthMinutes() {
         return lengthMinutes;
     }
@@ -210,7 +199,5 @@ public abstract class Media {
             return m1.getReleaseYear() - m2.getReleaseYear();
         }
     });
-
-    
 
 }

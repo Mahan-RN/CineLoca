@@ -35,7 +35,6 @@ public abstract class AbstractCSVReader {
         String imdbID = ParsingUtilities.trimMediaID(strings.get(0));
         String title = ParsingUtilities.trimMediaData(strings.get(1));
         String release = ParsingUtilities.trimMediaData(strings.get(2));
-        String director = ParsingUtilities.trimMediaData(strings.get(3));
         String length = ParsingUtilities.trimMediaData(strings.get(4));
         String countary = ParsingUtilities.trimMediaData(strings.get(5));
         String actors = ParsingUtilities.trimMediaData(strings.get(6));
@@ -48,7 +47,6 @@ public abstract class AbstractCSVReader {
         Media media = createMedia(imdbID, title);
 
         setReleaseYear(media, release);
-        setDirector(media, director);
         setLength(media, length);
         setCountary(media, countary);
         setActors(media, actors);
@@ -119,13 +117,6 @@ public abstract class AbstractCSVReader {
             int releaseYear = Integer.parseInt(release);
             media.setReleaseYear(releaseYear);
         }
-    }
-
-    private void setDirector(Media media, String director) {
-        if (director.isBlank()) {
-            director = "N/A";
-        }
-        media.setDirector(director);
     }
 
     private void setLength(Media media, String length) {

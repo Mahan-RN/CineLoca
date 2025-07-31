@@ -40,7 +40,12 @@ public class MovieCSVReader extends AbstractCSVReader {
     }
 
     @Override
-    protected void setSpecificFields(Media media, List<String> string) {
-        // Movie doesn't have any specific fields
+    protected void setSpecificFields(Media media, List<String> strings) {
+        Movie movie = (Movie) media;
+        String director = ParsingUtilities.trimMediaData(strings.get(3));
+        if (director.isBlank()) {
+            director = "N/A";
+        }
+        movie.setDirector(director);
     }
 }
