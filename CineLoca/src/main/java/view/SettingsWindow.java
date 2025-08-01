@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -36,6 +37,7 @@ public class SettingsWindow {
     private JButton movieDirectoryButton;
     private JButton imageDirectoryButton;
     private JButton loadButton;
+    private JLabel movieHeaderLabel;
     private JLabel csvPathLabel;
     private JLabel movieDirectoryPathLabel;
     private JLabel imageDirectoryPathLabel;
@@ -57,8 +59,9 @@ public class SettingsWindow {
         window.setLocationRelativeTo(frame);
         mgl = new MigLayout("insets 20, wrap, fillx",
                 "[]100[]",
-                "[]100[]100[]200[]");
+                "[]15[]50[]50[]200[]");
         window.setLayout(mgl);
+        window.add(createMovieHeaderLabel(), "span");
         window.add(createCSVPathLabel());
         window.add(createCSVButton(), "center");
         window.add(createMovieDirectoryPathLabel());
@@ -73,6 +76,14 @@ public class SettingsWindow {
     // =====================
 
     // --- JLabels:
+
+    // MODIFIES: this
+    // EFFECTS: returns a JLabel with text "Movies" in bold
+    private JLabel createMovieHeaderLabel() {
+        movieHeaderLabel = new JLabel("Movie Resources:");
+        movieHeaderLabel.setFont(new Font("Arial", Font.BOLD, 13));
+        return movieHeaderLabel;
+    }
 
     // MODIFIES: this
     // EFFECTS: creates a JLabel to display the path to the CSV file contaning
