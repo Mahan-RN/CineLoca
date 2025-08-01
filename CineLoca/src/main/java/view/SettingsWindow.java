@@ -22,24 +22,27 @@ import net.miginfocom.swing.MigLayout;
 
 // Represents the settings menue of the UI
 public class SettingsWindow {
-    private final int WINDOW_WIDTH = 900;
+    private final int WINDOW_WIDTH = 850;
     private final int WINDOW_HEIGHT = 600;
 
     private MovieCSVReader csvReader;
     private MovieFileReader movieFileReader;
     private MovieFileReader imageFileReader;
-    private String csvPath;
+    private String movieCSVPath;
+    private String seriesCSVPath;
     private String movieDirectoryPath;
     private String imageDirectoryPath;
     private JDialog window;
     private MigLayout mgl;
-    private JButton csvButton;
+    private JButton movieCSVButton;
+    private JButton seriesCSVButton;
     private JButton movieDirectoryButton;
     private JButton imageDirectoryButton;
     private JButton loadButton;
     private JLabel movieHeaderLabel;
     private JLabel seriesHeaderLabel;
-    private JLabel csvPathLabel;
+    private JLabel movieCSVPathLabel;
+    private JLabel seriesCSVPathLabel;
     private JLabel movieDirectoryPathLabel;
     private JLabel imageDirectoryPathLabel;
 
@@ -59,17 +62,19 @@ public class SettingsWindow {
         window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         window.setLocationRelativeTo(frame);
         mgl = new MigLayout("insets 20, wrap, fillx",
-                "[]100[]",
-                "[]15[]50[]50[]25[]200[]");
+                "[]225[]",
+                "[]15[]50[]50[]25[]15[]200[]");
         window.setLayout(mgl);
         window.add(createMovieHeaderLabel(), "span, center");
         window.add(createMovieCSVPathLabel());
-        window.add(createCSVButton(), "center");
+        window.add(createMovieCSVButton(), "center");
         window.add(createMovieDirectoryPathLabel());
         window.add(createMovieDirectoryButton(), "center");
         window.add(createMovieImageDirectoryPathLabel());
         window.add(createImageDirectoryButton(), "center");
         window.add(createSeriesHeaderLabel(), "span, center");
+        window.add(createSeriesCSVPathLabel());
+        window.add(createSeriesCSVButton(), "center");
         window.add(createLoadButton(), "span, grow");
     }
 
@@ -97,11 +102,18 @@ public class SettingsWindow {
 
     // MODIFIES: this
     // EFFECTS: creates a JLabel to display the path to the CSV file contaning
-    // movie metadata as choosen by the user. Displays "No CSV file selected"
-    // when user hasn't chosen anything yet
+    // movie metadata as choosen by the user
     private JLabel createMovieCSVPathLabel() {
-        csvPathLabel = new JLabel("No CSV file selected for movies");
-        return csvPathLabel;
+        movieCSVPathLabel = new JLabel("No CSV file selected for movies");
+        return movieCSVPathLabel;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a JLabel to display the path to the CSV file contaning
+    // tv series metadata as choosen by the user
+    private JLabel createSeriesCSVPathLabel() {
+        seriesCSVPathLabel = new JLabel("No CSV file selected for TV shows");
+        return seriesCSVPathLabel;
     }
 
     // MODIFIES: this
@@ -131,20 +143,20 @@ public class SettingsWindow {
     // selected file.
     // If no file is selected, a warning message will be displayed to inform
     // the user
-    private JButton createCSVButton() {
-        csvButton = new JButton("Choose Movie CSV File");
-        csvButton.setFocusable(false);
-        csvButton.setToolTipText("Select movie metadata CSV file");
-        csvButton.addActionListener(new ActionListener() {
+    private JButton createMovieCSVButton() {
+        movieCSVButton = new JButton("Choose Movie CSV File");
+        movieCSVButton.setFocusable(false);
+        movieCSVButton.setToolTipText("Select movie metadata CSV file");
+        movieCSVButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser csvFileChooser = csvChooser();
                 int response = csvFileChooser.showOpenDialog(window);
                 if (response == JFileChooser.APPROVE_OPTION) {
-                    csvPath = csvFileChooser.getSelectedFile().getAbsolutePath();
-                    csvPathLabel.setText("<html>Movie CSV File:<br>"
-                            + csvPath
+                    movieCSVPath = csvFileChooser.getSelectedFile().getAbsolutePath();
+                    movieCSVPathLabel.setText("<html>Movie CSV File:<br>"
+                            + movieCSVPath
                             + "</html>");
                 } else {
                     JOptionPane.showMessageDialog(window,
@@ -154,7 +166,40 @@ public class SettingsWindow {
                 }
             }
         });
-        return csvButton;
+        return movieCSVButton;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a button for selection of series CSV data. Only allows
+    // selection of CSV files
+    // The text of the seriesCSVPathLabel will change to the absolute path of the
+    // selected file.
+    // If no file is selected, a warning message will be displayed to inform
+    // the user
+    private JButton createSeriesCSVButton() {
+        seriesCSVButton = new JButton("Choose TV Show CSV File");
+        seriesCSVButton.setFocusable(false);
+        seriesCSVButton.setToolTipText("Select TV show metadata CSV file");
+        seriesCSVButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser csvFileChooser = csvChooser();
+                int response = csvFileChooser.showOpenDialog(window);
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    seriesCSVPath = csvFileChooser.getSelectedFile().getAbsolutePath();
+                    seriesCSVPathLabel.setText("<html>TV Show CSV File:<br>"
+                            + seriesCSVPath
+                            + "</html>");
+                } else {
+                    JOptionPane.showMessageDialog(window,
+                            "No TV Show CSV File Selected",
+                            "TV Show CSV Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        return seriesCSVButton;
     }
 
     // MODIFIES: this
@@ -232,7 +277,7 @@ public class SettingsWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (csvPath == null) {
+                if (movieCSVPath == null) {
                     errorPopUp("CSV Error",
                             "No CSV File Selected");
                 } else if (movieDirectoryPath == null) {
@@ -243,7 +288,7 @@ public class SettingsWindow {
                             "No Image Directory Selected");
                 } else {
                     try {
-                        csvReader = new MovieCSVReader(csvPath);
+                        csvReader = new MovieCSVReader(movieCSVPath);
                         csvReader.loadMediaFromCSV();
                         movieFileReader = new MovieFileReader(movieDirectoryPath);
                         movieFileReader.addPathsToCollection(false);
