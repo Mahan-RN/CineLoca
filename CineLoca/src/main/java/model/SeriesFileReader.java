@@ -55,8 +55,8 @@ public class SeriesFileReader extends AbstractFileReader {
     // season number based on the seasons created so far
     private void readSeasons(Series series, File file) {
         ArrayList<File> seasons = new ArrayList<>(Arrays.asList(file.listFiles()));
+        int num = 1;
         for (File season : seasons) {
-            int num = 1;
             if (!season.isDirectory()) {
                 continue;
             } else {
