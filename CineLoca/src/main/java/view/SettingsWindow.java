@@ -15,8 +15,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.opencsv.exceptions.CsvValidationException;
 
-import model.MovieFileReader;
 import model.MovieCSVReader;
+import model.MovieFileReader;
 import net.miginfocom.swing.MigLayout;
 
 // Represents the settings menue of the UI
