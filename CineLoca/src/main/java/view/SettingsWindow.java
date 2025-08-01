@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +24,7 @@ import net.miginfocom.swing.MigLayout;
 // Represents the settings menue of the UI
 public class SettingsWindow {
     private final int WINDOW_WIDTH = 850;
-    private final int WINDOW_HEIGHT = 600;
+    private final int WINDOW_HEIGHT = 700;
 
     private MovieCSVReader csvReader;
     private MovieFileReader movieFileReader;
@@ -31,20 +32,26 @@ public class SettingsWindow {
     private String movieCSVPath;
     private String seriesCSVPath;
     private String movieDirectoryPath;
-    private String imageDirectoryPath;
+    private String seriesDirectoryPath;
+    private String movieImageDirectoryPath;
+    private String seriesImageDirectoryPath;
     private JDialog window;
     private MigLayout mgl;
     private JButton movieCSVButton;
     private JButton seriesCSVButton;
     private JButton movieDirectoryButton;
-    private JButton imageDirectoryButton;
+    private JButton seriesDirectoryButton;
+    private JButton movieImageDirectoryButton;
+    private JButton seriesImageDirectoryButton;
     private JButton loadButton;
     private JLabel movieHeaderLabel;
     private JLabel seriesHeaderLabel;
     private JLabel movieCSVPathLabel;
     private JLabel seriesCSVPathLabel;
     private JLabel movieDirectoryPathLabel;
-    private JLabel imageDirectoryPathLabel;
+    private JLabel seriesDirectoryPathLabel;
+    private JLabel movieImageDirectoryPathLabel;
+    private JLabel seriesImageDirectoryPathLabel;
 
     // EFFECTS: initializes the settings menue and its associated components
     public SettingsWindow(JFrame frame) {
@@ -63,7 +70,7 @@ public class SettingsWindow {
         window.setLocationRelativeTo(frame);
         mgl = new MigLayout("insets 20, wrap, fillx",
                 "[]225[]",
-                "[]15[]50[]50[]25[]15[]200[]");
+                "[]15[]50[]50[]20[]50[]15[]50[]50[]");
         window.setLayout(mgl);
         window.add(createMovieHeaderLabel(), "span, center");
         window.add(createMovieCSVPathLabel());
@@ -71,11 +78,17 @@ public class SettingsWindow {
         window.add(createMovieDirectoryPathLabel());
         window.add(createMovieDirectoryButton(), "center");
         window.add(createMovieImageDirectoryPathLabel());
-        window.add(createImageDirectoryButton(), "center");
+        window.add(createMovieImageDirectoryButton(), "center");
+        window.add(createLoadButton(), "span, center");
+
         window.add(createSeriesHeaderLabel(), "span, center");
         window.add(createSeriesCSVPathLabel());
         window.add(createSeriesCSVButton(), "center");
-        window.add(createLoadButton(), "span, grow");
+        window.add(createSeriesDirectoryPathLabel());
+        window.add(createSeriesDirectoryButton(), "center");
+        window.add(createSeriesImageDirectoryPathLabel());
+        window.add(createSeriesImageDirectoryButton(), "center");
+        //window.add(createLoadButton(), "span, center");
     }
 
     // =====================
@@ -126,11 +139,28 @@ public class SettingsWindow {
     }
 
     // MODIFIES: this
+    // EFFECTS: creates a JLabel to display the absolute path to the movie
+    // directory selected by the user. If no directory selected, displays "No
+    // Directory Selected"
+    private JLabel createSeriesDirectoryPathLabel() {
+        seriesDirectoryPathLabel = new JLabel("No directory selected for TV shows");
+        return seriesDirectoryPathLabel;
+    }
+
+    // MODIFIES: this
     // EFFECTS: creates a JLabel to display the absolute path to the directory
     // containing movie poster images as selected by the user
     private JLabel createMovieImageDirectoryPathLabel() {
-        imageDirectoryPathLabel = new JLabel("No directory selected for movie posters");
-        return imageDirectoryPathLabel;
+        movieImageDirectoryPathLabel = new JLabel("No directory selected for movie posters");
+        return movieImageDirectoryPathLabel;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a JLabel to display the absolute path to the directory
+    // containing TV show poster images as selected by the user
+    private JLabel createSeriesImageDirectoryPathLabel() {
+        seriesImageDirectoryPathLabel = new JLabel("No directory selected for TV show posters");
+        return seriesImageDirectoryPathLabel;
     }
 
     // --- JButtons:
@@ -232,34 +262,94 @@ public class SettingsWindow {
         return movieDirectoryButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creteas a JButton that when user clicks on it will open a
+    // JFileChooser to selected the directory containing movies. When directory
+    // is selected, the text of hte MovieDirectoryPathLabel changes to display
+    // the absolute path to the directory
+    private JButton createSeriesDirectoryButton() {
+        seriesDirectoryButton = new JButton("Choose TV Show Directory");
+        seriesDirectoryButton.setFocusable(false);
+        seriesDirectoryButton.setToolTipText("Select path to TV show directory");
+        seriesDirectoryButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser seriesDirectoryChooser = directoryChooser();
+                int response = seriesDirectoryChooser.showOpenDialog(window);
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    seriesDirectoryPath = seriesDirectoryChooser.getSelectedFile()
+                            .getAbsolutePath();
+                    seriesDirectoryPathLabel.setText("<html>TV Show Directory:<br>"
+                            + seriesDirectoryPath
+                            + "</html>");
+                } else {
+                    warningPopUp("TV Show Directory Warning",
+                            "No TV Show Directory Selected");
+                }
+            }
+        });
+        return seriesDirectoryButton;
+    }
+
     // MODFIES: this
     // EFFECTS: creates a JButton that when the user clicks on it will open a
     // JFileChooser to select the directory containing movie poster images.
     // Upon selection, the text of the ImageDirectoryPathLabel changes to the
     // absolute path of the selected directory
-    private JButton createImageDirectoryButton() {
-        imageDirectoryButton = new JButton("Choose Movie Poster Directory");
-        imageDirectoryButton.setFocusable(false);
-        imageDirectoryButton.setToolTipText("Select path to movie poster directory");
-        imageDirectoryButton.addActionListener(new ActionListener() {
+    private JButton createMovieImageDirectoryButton() {
+        movieImageDirectoryButton = new JButton("Choose Movie Poster Directory");
+        movieImageDirectoryButton.setFocusable(false);
+        movieImageDirectoryButton.setToolTipText("Select path to movie poster directory");
+        movieImageDirectoryButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser imageDirectoryChooser = directoryChooser();
                 int response = imageDirectoryChooser.showOpenDialog(window);
                 if (response == JFileChooser.APPROVE_OPTION) {
-                    imageDirectoryPath = imageDirectoryChooser.getSelectedFile()
+                    movieImageDirectoryPath = imageDirectoryChooser.getSelectedFile()
                             .getAbsolutePath();
-                    imageDirectoryPathLabel.setText("<html>Image Directory:<br>"
-                            + imageDirectoryPath
+                    movieImageDirectoryPathLabel.setText("<html>Movie Poster Directory:<br>"
+                            + movieImageDirectoryPath
                             + "</html>");
                 } else {
-                    warningPopUp("Image Directory Warning",
+                    warningPopUp("Movie Poster Directory Warning",
                             "No Movie Poster Directory Selected");
                 }
             }
         });
-        return imageDirectoryButton;
+        return movieImageDirectoryButton;
+    }
+
+    // MODFIES: this
+    // EFFECTS: creates a JButton that when the user clicks on it will open a
+    // JFileChooser to select the directory containing tv show poster images.
+    // Upon selection, the text of the ImageDirectoryPathLabel changes to the
+    // absolute path of the selected directory
+    private JButton createSeriesImageDirectoryButton() {
+        seriesImageDirectoryButton = new JButton("Choose TV Show Poster Directory");
+        seriesImageDirectoryButton.setFocusable(false);
+        seriesImageDirectoryButton.setToolTipText("Select path to TV show poster directory");
+        seriesImageDirectoryButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser imageDirectoryChooser = directoryChooser();
+                int response = imageDirectoryChooser.showOpenDialog(window);
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    seriesImageDirectoryPath = imageDirectoryChooser.getSelectedFile()
+                            .getAbsolutePath();
+                    seriesImageDirectoryPathLabel.setText("<html>TV Show Poster Directory:<br>"
+                            + seriesImageDirectoryPath
+                            + "</html>");
+                } else {
+                    warningPopUp("TV Show Poster Directory Warning",
+                            "No TV Show Poster Directory Selected");
+                }
+            }
+        });
+        return seriesImageDirectoryButton;
     }
 
     // MODIFIES: this, MovieCollection, Movie(s)
@@ -272,6 +362,8 @@ public class SettingsWindow {
     private JButton createLoadButton() {
         loadButton = new JButton("Load Movies to Collection");
         loadButton.setFocusable(false);
+        loadButton.setFont(new Font("Arial", Font.BOLD, 13));
+        loadButton.setBackground(Color.darkGray);
         loadButton.setToolTipText("Load movies from selected resources");
         loadButton.addActionListener(new ActionListener() {
 
@@ -283,7 +375,7 @@ public class SettingsWindow {
                 } else if (movieDirectoryPath == null) {
                     errorPopUp("Movie Directory Error",
                             "No Movie Directory Selected");
-                } else if (imageDirectoryPath == null) {
+                } else if (movieImageDirectoryPath == null) {
                     errorPopUp("Image Directory Error",
                             "No Image Directory Selected");
                 } else {
@@ -292,7 +384,7 @@ public class SettingsWindow {
                         csvReader.loadMediaFromCSV();
                         movieFileReader = new MovieFileReader(movieDirectoryPath);
                         movieFileReader.addPathsToCollection(false);
-                        imageFileReader = new MovieFileReader(imageDirectoryPath);
+                        imageFileReader = new MovieFileReader(movieImageDirectoryPath);
                         imageFileReader.addPathsToCollection(true);
                         JOptionPane.showMessageDialog(window,
                                 "Data was loaded successfully! "
