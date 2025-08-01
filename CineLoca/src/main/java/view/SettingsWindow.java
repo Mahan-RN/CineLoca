@@ -38,6 +38,7 @@ public class SettingsWindow {
     private JButton imageDirectoryButton;
     private JButton loadButton;
     private JLabel movieHeaderLabel;
+    private JLabel seriesHeaderLabel;
     private JLabel csvPathLabel;
     private JLabel movieDirectoryPathLabel;
     private JLabel imageDirectoryPathLabel;
@@ -59,15 +60,16 @@ public class SettingsWindow {
         window.setLocationRelativeTo(frame);
         mgl = new MigLayout("insets 20, wrap, fillx",
                 "[]100[]",
-                "[]15[]50[]50[]200[]");
+                "[]15[]50[]50[]25[]200[]");
         window.setLayout(mgl);
-        window.add(createMovieHeaderLabel(), "span");
-        window.add(createCSVPathLabel());
+        window.add(createMovieHeaderLabel(), "span, center");
+        window.add(createMovieCSVPathLabel());
         window.add(createCSVButton(), "center");
         window.add(createMovieDirectoryPathLabel());
         window.add(createMovieDirectoryButton(), "center");
-        window.add(createImageDirectoryPathLabel());
+        window.add(createMovieImageDirectoryPathLabel());
         window.add(createImageDirectoryButton(), "center");
+        window.add(createSeriesHeaderLabel(), "span, center");
         window.add(createLoadButton(), "span, grow");
     }
 
@@ -80,17 +82,25 @@ public class SettingsWindow {
     // MODIFIES: this
     // EFFECTS: returns a JLabel with text "Movies" in bold
     private JLabel createMovieHeaderLabel() {
-        movieHeaderLabel = new JLabel("Movie Resources:");
+        movieHeaderLabel = new JLabel("Movie Resources");
         movieHeaderLabel.setFont(new Font("Arial", Font.BOLD, 13));
         return movieHeaderLabel;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: returns a JLabel with text "" in bold
+    private JLabel createSeriesHeaderLabel() {
+        seriesHeaderLabel = new JLabel("TV Show Resources");
+        seriesHeaderLabel.setFont(new Font("Arial", Font.BOLD, 13));
+        return seriesHeaderLabel;
     }
 
     // MODIFIES: this
     // EFFECTS: creates a JLabel to display the path to the CSV file contaning
     // movie metadata as choosen by the user. Displays "No CSV file selected"
     // when user hasn't chosen anything yet
-    private JLabel createCSVPathLabel() {
-        csvPathLabel = new JLabel("No CSV file selected");
+    private JLabel createMovieCSVPathLabel() {
+        csvPathLabel = new JLabel("No CSV file selected for movies");
         return csvPathLabel;
     }
 
@@ -99,15 +109,15 @@ public class SettingsWindow {
     // directory selected by the user. If no directory selected, displays "No
     // Directory Selected"
     private JLabel createMovieDirectoryPathLabel() {
-        movieDirectoryPathLabel = new JLabel("No Directory Selected");
+        movieDirectoryPathLabel = new JLabel("No directory selected for movies");
         return movieDirectoryPathLabel;
     }
 
     // MODIFIES: this
     // EFFECTS: creates a JLabel to display the absolute path to the directory
     // containing movie poster images as selected by the user
-    private JLabel createImageDirectoryPathLabel() {
-        imageDirectoryPathLabel = new JLabel("No Directory Selected");
+    private JLabel createMovieImageDirectoryPathLabel() {
+        imageDirectoryPathLabel = new JLabel("No directory selected for movie posters");
         return imageDirectoryPathLabel;
     }
 
@@ -122,7 +132,7 @@ public class SettingsWindow {
     // If no file is selected, a warning message will be displayed to inform
     // the user
     private JButton createCSVButton() {
-        csvButton = new JButton("Choose CSV File");
+        csvButton = new JButton("Choose Movie CSV File");
         csvButton.setFocusable(false);
         csvButton.setToolTipText("Select movie metadata CSV file");
         csvButton.addActionListener(new ActionListener() {
@@ -133,13 +143,13 @@ public class SettingsWindow {
                 int response = csvFileChooser.showOpenDialog(window);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     csvPath = csvFileChooser.getSelectedFile().getAbsolutePath();
-                    csvPathLabel.setText("<html>CSV File:<br>"
+                    csvPathLabel.setText("<html>Movie CSV File:<br>"
                             + csvPath
                             + "</html>");
                 } else {
                     JOptionPane.showMessageDialog(window,
-                            "No CSV File Selected",
-                            "CSV Warning",
+                            "No Movie CSV File Selected",
+                            "Movie CSV Warning",
                             JOptionPane.WARNING_MESSAGE);
                 }
             }
@@ -183,9 +193,9 @@ public class SettingsWindow {
     // Upon selection, the text of the ImageDirectoryPathLabel changes to the
     // absolute path of the selected directory
     private JButton createImageDirectoryButton() {
-        imageDirectoryButton = new JButton("Choose Image Directory");
+        imageDirectoryButton = new JButton("Choose Movie Poster Directory");
         imageDirectoryButton.setFocusable(false);
-        imageDirectoryButton.setToolTipText("Select path to image directory");
+        imageDirectoryButton.setToolTipText("Select path to movie poster directory");
         imageDirectoryButton.addActionListener(new ActionListener() {
 
             @Override
@@ -200,7 +210,7 @@ public class SettingsWindow {
                             + "</html>");
                 } else {
                     warningPopUp("Image Directory Warning",
-                            "No Image Directory Selected");
+                            "No Movie Poster Directory Selected");
                 }
             }
         });
