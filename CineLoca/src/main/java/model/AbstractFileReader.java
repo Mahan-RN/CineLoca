@@ -52,7 +52,10 @@ public abstract class AbstractFileReader {
     // is a file (rather than a directory)
     private void initialize(String pathName) throws FileNotFoundException {
         this.directory = new File(pathName);
-        if (!directory.exists() || directory.isFile()) {
+        if (!directory.exists()) {
+            throw new FileNotFoundException("Provided directory is invalid: "
+                    + pathName);
+        } else if (directory.isFile()) {
             throw new FileNotFoundException("Provided directory is invalid: "
                     + pathName);
         }

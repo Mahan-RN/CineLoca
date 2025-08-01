@@ -39,7 +39,7 @@ public class TestSeriesFileReader {
     @Test
     void testFilePathInsteadofDirectoryPath() {
         try {
-            seriesPath = "src//test//resources//series//[tt2356777] Episode1.mp4";
+            seriesPath = "src\\test\\resources\\images\\series\\[tt0118475] Spawn.jpg";
             reader = new SeriesFileReader(seriesPath);
             fail("FileNotFoundException was not thrown!");
         } catch (FileNotFoundException e) {
