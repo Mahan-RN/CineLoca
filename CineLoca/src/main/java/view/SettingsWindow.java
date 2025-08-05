@@ -80,20 +80,20 @@ public class SettingsWindow {
         window.setLayout(mgl);
         window.add(createMovieHeaderLabel(), "span, center");
         window.add(createMovieCSVPathLabel());
-        window.add(createMovieCSVButton(), "center");
+        window.add(createMovieCSVButton(), "grow, center");
         window.add(createMovieDirectoryPathLabel());
-        window.add(createMovieDirectoryButton(), "center");
+        window.add(createMovieDirectoryButton(), "grow, center");
         window.add(createMovieImageDirectoryPathLabel());
-        window.add(createMovieImageDirectoryButton(), "center");
+        window.add(createMovieImageDirectoryButton(), "grow, center");
         window.add(createLoadMoviesButton(), "span, center");
 
         window.add(createSeriesHeaderLabel(), "span, center");
         window.add(createSeriesCSVPathLabel());
-        window.add(createSeriesCSVButton(), "center");
+        window.add(createSeriesCSVButton(), "grow, center");
         window.add(createSeriesDirectoryPathLabel());
-        window.add(createSeriesDirectoryButton(), "center");
+        window.add(createSeriesDirectoryButton(), "grow, center");
         window.add(createSeriesImageDirectoryPathLabel());
-        window.add(createSeriesImageDirectoryButton(), "center");
+        window.add(createSeriesImageDirectoryButton(), "grow, center");
         window.add(createLoadSeriesButton(), "span, center");
     }
 
