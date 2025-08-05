@@ -19,6 +19,8 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import model.MovieCSVReader;
 import model.MovieFileReader;
+import model.SeriesCSVReader;
+import model.SeriesFileReader;
 import net.miginfocom.swing.MigLayout;
 
 // Represents the settings menue of the UI
@@ -26,9 +28,12 @@ public class SettingsWindow {
     private final int WINDOW_WIDTH = 850;
     private final int WINDOW_HEIGHT = 700;
 
-    private MovieCSVReader csvReader;
+    private MovieCSVReader movieCSVReader;
+    private SeriesCSVReader seriesCSVReader;
     private MovieFileReader movieFileReader;
-    private MovieFileReader imageFileReader;
+    private SeriesFileReader seriesFileReader;
+    private MovieFileReader movieImageFileReader;
+    private SeriesFileReader seriesImageFileReader;
     private String movieCSVPath;
     private String seriesCSVPath;
     private String movieDirectoryPath;
@@ -43,7 +48,8 @@ public class SettingsWindow {
     private JButton seriesDirectoryButton;
     private JButton movieImageDirectoryButton;
     private JButton seriesImageDirectoryButton;
-    private JButton loadButton;
+    private JButton loadMoviesButton;
+    private JButton loadSeriesButton;
     private JLabel movieHeaderLabel;
     private JLabel seriesHeaderLabel;
     private JLabel movieCSVPathLabel;
@@ -79,7 +85,7 @@ public class SettingsWindow {
         window.add(createMovieDirectoryButton(), "center");
         window.add(createMovieImageDirectoryPathLabel());
         window.add(createMovieImageDirectoryButton(), "center");
-        window.add(createLoadButton(), "span, center");
+        window.add(createLoadMoviesButton(), "span, center");
 
         window.add(createSeriesHeaderLabel(), "span, center");
         window.add(createSeriesCSVPathLabel());
@@ -88,7 +94,7 @@ public class SettingsWindow {
         window.add(createSeriesDirectoryButton(), "center");
         window.add(createSeriesImageDirectoryPathLabel());
         window.add(createSeriesImageDirectoryButton(), "center");
-        //window.add(createLoadButton(), "span, center");
+        window.add(createLoadSeriesButton(), "span, center");
     }
 
     // =====================
@@ -352,42 +358,42 @@ public class SettingsWindow {
         return seriesImageDirectoryButton;
     }
 
-    // MODIFIES: this, MovieCollection, Movie(s)
+    // MODIFIES: this, MediaCollection
     // EFFECTS: creates a JButton to laod movies from CSV metadata file, movie
     // directory, and image directory selected by the user.
     // - Produces a pop-up error message if user has not selected the required
     // resources
     // - Produces pop-up error messages corresponding to exceptions that might
     // be thrown
-    private JButton createLoadButton() {
-        loadButton = new JButton("Load Movies to Collection");
-        loadButton.setFocusable(false);
-        loadButton.setFont(new Font("Arial", Font.BOLD, 13));
-        loadButton.setBackground(Color.darkGray);
-        loadButton.setToolTipText("Load movies from selected resources");
-        loadButton.addActionListener(new ActionListener() {
+    private JButton createLoadMoviesButton() {
+        loadMoviesButton = new JButton("Load movies to collection");
+        loadMoviesButton.setFocusable(false);
+        loadMoviesButton.setFont(new Font("Arial", Font.BOLD, 13));
+        loadMoviesButton.setBackground(Color.darkGray);
+        loadMoviesButton.setToolTipText("Load movies from selected resources");
+        loadMoviesButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (movieCSVPath == null) {
-                    errorPopUp("CSV Error",
-                            "No CSV File Selected");
+                    errorPopUp("Movie CSV Error",
+                            "No CSV file selected for movies");
                 } else if (movieDirectoryPath == null) {
                     errorPopUp("Movie Directory Error",
-                            "No Movie Directory Selected");
+                            "No movie directory selected");
                 } else if (movieImageDirectoryPath == null) {
-                    errorPopUp("Image Directory Error",
-                            "No Image Directory Selected");
+                    errorPopUp("Movie Image Directory Error",
+                            "No image directory selected for movies");
                 } else {
                     try {
-                        csvReader = new MovieCSVReader(movieCSVPath);
-                        csvReader.loadMediaFromCSV();
+                        movieCSVReader = new MovieCSVReader(movieCSVPath);
+                        movieCSVReader.loadMediaFromCSV();
                         movieFileReader = new MovieFileReader(movieDirectoryPath);
                         movieFileReader.addPathsToCollection(false);
-                        imageFileReader = new MovieFileReader(movieImageDirectoryPath);
-                        imageFileReader.addPathsToCollection(true);
+                        movieImageFileReader = new MovieFileReader(movieImageDirectoryPath);
+                        movieImageFileReader.addPathsToCollection(true);
                         JOptionPane.showMessageDialog(window,
-                                "Data was loaded successfully! "
+                                "Movie data was loaded successfully! "
                                         + "Refresh the main window.",
                                 "Success!",
                                 JOptionPane.INFORMATION_MESSAGE);
@@ -405,7 +411,63 @@ public class SettingsWindow {
                 }
             }
         });
-        return loadButton;
+        return loadMoviesButton;
+    }
+
+    // MODIFIES: this, MediaCollection
+    // EFFECTS: creates a JButton to laod series from CSV metadata file, series
+    // directory, and image directory selected by the user.
+    // - Produces a pop-up error message if user has not selected the required
+    // resources
+    // - Produces pop-up error messages corresponding to exceptions that might
+    // be thrown
+    private JButton createLoadSeriesButton() {
+        loadSeriesButton = new JButton("Load TV shows to collection");
+        loadSeriesButton.setFocusable(false);
+        loadSeriesButton.setFont(new Font("Arial", Font.BOLD, 13));
+        loadSeriesButton.setBackground(Color.darkGray);
+        loadSeriesButton.setToolTipText("Load TV shows from selected resources");
+        loadSeriesButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (seriesCSVPath == null) {
+                    errorPopUp("TV Show CSV Error",
+                            "No CSV file selected for TV shows");
+                } else if (seriesDirectoryPath == null) {
+                    errorPopUp("TV Show Directory Error",
+                            "No TV show directory selected");
+                } else if (seriesImageDirectoryPath == null) {
+                    errorPopUp("TV Show Image Directory Error",
+                            "No image directory selected for TV shows");
+                } else {
+                    try {
+                        seriesCSVReader = new SeriesCSVReader(seriesCSVPath);
+                        seriesCSVReader.loadMediaFromCSV();
+                        seriesFileReader = new SeriesFileReader(seriesDirectoryPath);
+                        seriesFileReader.addPathsToCollection(false);
+                        seriesImageFileReader = new SeriesFileReader(seriesImageDirectoryPath);
+                        seriesImageFileReader.addPathsToCollection(true);
+                        JOptionPane.showMessageDialog(window,
+                                "TV show data was loaded successfully! "
+                                        + "Refresh the main window.",
+                                "Success!",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        window.dispose();
+                    } catch (FileNotFoundException ex) {
+                        errorPopUp("FileNotFound Exception",
+                                ex.getMessage());
+                    } catch (IOException ex) {
+                        errorPopUp("IO Exception",
+                                ex.getMessage());
+                    } catch (CsvValidationException ex) {
+                        errorPopUp("CsvValidation Exception",
+                                ex.getMessage());
+                    }
+                }
+            }
+        });
+        return loadSeriesButton;
     }
 
     // --- JOptionPane pop-up window helpers:
