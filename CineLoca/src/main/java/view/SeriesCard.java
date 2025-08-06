@@ -111,8 +111,14 @@ public class SeriesCard {
         int length = series.getLengthMinutes();
         int hours = length / 60;
         int minutes = length % 60;
-        JLabel label = new JLabel(hours + " h " + minutes + " min");
+        String prefix = "≈ ";
+        JLabel label = new JLabel();
         label.setFont(new Font(FONT, Font.PLAIN, 12));
+        if (hours != 0) {
+            label.setText(prefix + hours + " h " + minutes + " min");
+        } else {
+            label.setText(prefix + minutes + " min");
+        }
         return label;
     }
 
