@@ -3,6 +3,8 @@ package view;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -129,13 +131,13 @@ public class SeriesCard {
         viewButton.setFocusable(false);
         viewButton.setToolTipText("View detailed movie page");
         viewButton.setFont(new Font(FONT, Font.BOLD, 12));
-        // viewButton.addActionListener(new ActionListener() {
+        viewButton.addActionListener(new ActionListener() {
 
-        // @Override
-        // public void actionPerformed(ActionEvent e) {
-        // new MovieWindow(frame, movie);
-        // }
-        // }); //TODO: add action listener after finishing SeriesInformationWindow
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SeriesWindow(frame, series);
+            }
+        });
         return viewButton;
     }
 

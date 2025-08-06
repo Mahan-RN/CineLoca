@@ -15,12 +15,14 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-import model.Movie;
+import model.Series;
 import net.miginfocom.swing.MigLayout;
 
-// Represents a detailed movie window
-public class MovieWindow {
+// Represents a detailed series window
+public class SeriesWindow {
+
     private final int WINDOW_WIDTH = 450;
     private final int WINDO_HEIGHT = 800;
     private final int POSTER_HEIGHT = 525;
@@ -29,9 +31,9 @@ public class MovieWindow {
             + "\\view\\buttonIcons\\playButton.png";
     private final String FONT = "Montserrat";
 
-    private Movie movie;
+    private Series series;
     private JDialog window;
-    private MigLayout mgl;
+    private JPanel leftPanel;
     private JButton playButton;
     private JLabel posterLabel;
     private JLabel directorLabel;
@@ -41,34 +43,43 @@ public class MovieWindow {
     private JLabel subtitleLabel;
     private ImageIcon icon;
 
-    // EFFECTS: creates a detailed movie window
-    public MovieWindow(JFrame frame, Movie movie) {
-        this.movie = movie;
+    // EFFECTS: creates a SeriesWindow for the given series
+    public SeriesWindow(JFrame frame, Series series) {
+        this.series = series;
         initialize(frame);
         window.setVisible(true);
     }
 
-    // EFFECTS: creates a modal JDialog on top of the frame
+    // EFFECTS: sets up the window
     private void initialize(JFrame frame) {
-        window = new JDialog(frame, movie.getTitle(), true);
+        window = new JDialog(frame, series.getTitle(), true);
         window.setSize(WINDOW_WIDTH, WINDO_HEIGHT);
         window.setLocationRelativeTo(frame);
-        mgl = new MigLayout("wrap, insets 10",
-                "[]");
+        MigLayout mgl = new MigLayout("wrap, insets 10",
+                "[]10[]");
         window.setLayout(mgl);
-        window.add(createPoster(), "center");
-        window.add(createTitleAndDate(), "left");
-        window.add(createPlayButton(), "center, grow");
-        window.add(createLengthLabel(), "left");
-        window.add(createDirectorLabel(), "left");
-        window.add(createActorsLabel(), "left, grow");
-        window.add(craeateCountaryLabel(), "left");
-        window.add(createsubLabel(), "left");
+        window.add(createLeftPanel());
+    }
+
+    private JPanel createLeftPanel() {
+        leftPanel = new JPanel();
+        MigLayout mgl = new MigLayout("wrap, insets 10",
+                "[]");
+        leftPanel.setLayout(mgl);
+        leftPanel.add(createPoster(), "center");
+        leftPanel.add(createTitleAndDate(), "left");
+        // leftPanel.add(createPlayButton(), "center, grow");
+        leftPanel.add(createLengthLabel(), "left");
+        leftPanel.add(createCreatorLabel(), "left");
+        leftPanel.add(createActorsLabel(), "left, grow");
+        leftPanel.add(craeateCountaryLabel(), "left");
+        leftPanel.add(createsubLabel(), "left");
+        return leftPanel;
     }
 
     // EFFECTS: creates a JLabel containing scaled movie poster
     private JLabel createPoster() {
-        String path = movie.getImagePath();
+        String path = series.getImagePath();
         icon = new ImageIcon(path);
         posterLabel = new JLabel(scaleImage(icon, POSTER_WIDTH, POSTER_HEIGHT)); // 2:3 ratio
         return posterLabel;
@@ -76,8 +87,8 @@ public class MovieWindow {
 
     // EFFECTS: creates a JLabel with "Movie (Year)" text
     private JLabel createTitleAndDate() {
-        String title = movie.getTitle();
-        int year = movie.getReleaseYear();
+        String title = series.getTitle();
+        int year = series.getReleaseYear();
         JLabel label = new JLabel(title + " (" + year + ")");
         label.setMinimumSize(new Dimension(200, 10));
         label.setFont(new Font(FONT, Font.BOLD, 16));
@@ -87,7 +98,7 @@ public class MovieWindow {
     // EFFECTS: creates a JLabel to show the length of the movie in hour-min
     // format
     private JLabel createLengthLabel() {
-        int length = movie.getLengthMinutes();
+        int length = series.getLengthMinutes();
         int hours = length / 60;
         int minutes = length % 60;
         lengthLabel = new JLabel("Run time: " + hours + " h " + minutes + " min");
@@ -96,8 +107,8 @@ public class MovieWindow {
     }
 
     // EFFECTS: creates label for movie director
-    private JLabel createDirectorLabel() {
-        String director = movie.getDirector();
+    private JLabel createCreatorLabel() {
+        String director = series.getCreator();
         directorLabel = new JLabel("Directed by: " + director);
         directorLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return directorLabel;
@@ -105,14 +116,14 @@ public class MovieWindow {
 
     // EFFECTS: creates label for movie actors
     private JLabel createActorsLabel() {
-        actorsLabel = new JLabel("Starring: " + movie.actorsToString());
+        actorsLabel = new JLabel("Starring: " + series.actorsToString());
         actorsLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return actorsLabel;
     }
 
     // EFFECTS: creates label for movie countary
     private JLabel craeateCountaryLabel() {
-        countaryLabel = new JLabel("Countary: " + movie.getCountary());
+        countaryLabel = new JLabel("Countary: " + series.getCountary());
         countaryLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return countaryLabel;
     }
@@ -120,7 +131,7 @@ public class MovieWindow {
     // EFFECTS: creates label for movie subtitle availability
     private JLabel createsubLabel() {
         String answer = "No";
-        if (movie.hasEnglishSubtitle()) {
+        if (series.hasEnglishSubtitle()) {
             answer = "Yes";
         }
         subtitleLabel = new JLabel("Subtitle availability: " + answer);
@@ -128,31 +139,31 @@ public class MovieWindow {
         return subtitleLabel;
     }
 
-    // EFFECTS: creates a play button that when clicked will open the movie
-    // file using OS default app. Throws IO Exception if the file cannot be
-    // opened
-    private JButton createPlayButton() {
-        ImageIcon icon = new ImageIcon(PLAY_BUTTON_ICON);
-        playButton = new JButton("Play", icon);
-        playButton.setIconTextGap(10);
-        playButton.setFont(new Font(FONT, Font.BOLD, 12));
-        playButton.setFocusable(false);
-        playButton.addActionListener(new ActionListener() {
+    // // EFFECTS: creates a play button that when clicked will open the movie
+    // // file using OS default app. Throws IO Exception if the file cannot be
+    // // opened
+    // private JButton createPlayButton() {
+    //     ImageIcon icon = new ImageIcon(PLAY_BUTTON_ICON);
+    //     playButton = new JButton("Play", icon);
+    //     playButton.setIconTextGap(10);
+    //     playButton.setFont(new Font(FONT, Font.BOLD, 12));
+    //     playButton.setFocusable(false);
+    //     playButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    File file = new File(movie.getFilePath());
-                    Desktop.getDesktop().open(file);
-                } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(window, "Error:\n" + e,
-                            "Movie File Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-        return playButton;
-    }
+    //         @Override
+    //         public void actionPerformed(ActionEvent e) {
+    //             try {
+    //                 File file = new File(series.getFilePath());
+    //                 Desktop.getDesktop().open(file); // TOD
+    //             } catch (IOException exception) {
+    //                 JOptionPane.showMessageDialog(window, "Error:\n" + e,
+    //                         "Movie File Error",
+    //                         JOptionPane.ERROR_MESSAGE);
+    //             }
+    //         }
+    //     });
+    //     return playButton;
+    // } //TODO
 
     // EFFECTS: scales a given ImageIcon to the desired width and height
     private ImageIcon scaleImage(ImageIcon icon, int w, int h) {
