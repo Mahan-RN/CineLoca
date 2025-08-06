@@ -48,11 +48,12 @@ public class SeriesCard {
         mainPanel = new JPanel();
         MigLayout mgl = new MigLayout("wrap, insets 10",
                 "[]",
-                "[]5[]5[]10[]");
+                "[]5[]5[]5[]10[]");
         mainPanel.setLayout(mgl);
         mainPanel.setSize(PANEL_WIDTH, PANEL_HEIGHT);
         mainPanel.add(createPoster(), "center");
         mainPanel.add(createTitleAndDate(), "left");
+        mainPanel.add(createSeasonsNumberLabel());
         mainPanel.add(createLengthLabel(), "left");
         mainPanel.add(createViewButton(), "center, grow");
     }
@@ -94,6 +95,14 @@ public class SeriesCard {
         label.setMinimumSize(new Dimension(200, 10));
         label.setFont(new Font(FONT, Font.BOLD, 16));
         return label;
+    }
+
+    // EFFECTS: returns a JLabel displaying number of seasons this series has
+    private JLabel createSeasonsNumberLabel() {
+        int numSeasons = series.getTotalSeasonsIMDb();
+        JLabel seasonsLabel = new JLabel(numSeasons + " Seasons");
+        seasonsLabel.setFont(new Font(FONT, Font.BOLD, 12));
+        return seasonsLabel;
     }
 
     // EFFECTS: creates a JLabel to show the length of the series in hour-min
