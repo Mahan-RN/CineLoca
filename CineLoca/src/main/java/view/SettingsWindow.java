@@ -397,7 +397,6 @@ public class SettingsWindow {
                                         + "Refresh the main window.",
                                 "Success!",
                                 JOptionPane.INFORMATION_MESSAGE);
-                        window.dispose();
                     } catch (FileNotFoundException ex) {
                         errorPopUp("FileNotFound Exception",
                                 ex.getMessage());
@@ -453,7 +452,6 @@ public class SettingsWindow {
                                         + "Refresh the main window.",
                                 "Success!",
                                 JOptionPane.INFORMATION_MESSAGE);
-                        window.dispose();
                     } catch (FileNotFoundException ex) {
                         errorPopUp("FileNotFound Exception",
                                 ex.getMessage());
