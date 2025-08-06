@@ -24,6 +24,7 @@ import org.openide.awt.DropDownButtonFactory;
 
 import model.MediaCollection;
 import model.Movie;
+import model.Series;
 import net.miginfocom.swing.MigLayout;
 import view.util.WrapLayout;
 
@@ -42,12 +43,14 @@ public class MainWindow {
             + "\\view\\buttonIcons\\sortButton.png";
 
     private MediaCollection movieCollection;
+    private boolean movieView;
     private JFrame frame;
     private JPanel topPanel;
     private JPanel centerPanel;
     private JScrollPane scrollPane;
     private JButton settingsButton;
     private JButton loadMoviesButton;
+    private JButton loadSeriesButton;
     private JButton informationButton;
     private JButton searchButton;
     private JLabel totalMoviesCounter;
@@ -57,6 +60,7 @@ public class MainWindow {
     // EFFECTS: initializes the main window JFrame
     public MainWindow() {
         movieCollection = MediaCollection.getInstance();
+        movieView = true;
         initializeMainFrame();
     }
 
@@ -99,8 +103,10 @@ public class MainWindow {
         createInformationButton();
         createTotalMoviesCounterLabel();
         createLoadMoviesButton();
-        topPanel.add(settingsButton, "split 3, left, gapx 5");
+        createLoadSeriesButton();
+        topPanel.add(settingsButton, "split 4, left, gapx 5");
         topPanel.add(loadMoviesButton);
+        topPanel.add(loadSeriesButton);
         topPanel.add(createSortButton());
         topPanel.add(totalMoviesCounter, "center");
         topPanel.add(createSearchBar(), "split 2, right, gapx 10");
@@ -146,15 +152,15 @@ public class MainWindow {
     // the collection, sorted by title.
     // If collection is empty, shows a pop-up error message
     public void createLoadMoviesButton() {
-        loadMoviesButton = new JButton();
         ImageIcon icon = new ImageIcon(LOAD_BUTTON_ICON);
-        loadMoviesButton.setIcon(icon);
+        loadMoviesButton = new JButton("Refresh movies", icon);
         loadMoviesButton.setFocusable(false);
         loadMoviesButton.setToolTipText("Refresh window");
         loadMoviesButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                movieView = true;
                 if (movieCollection.getAllMediaIDs().isEmpty()) {
                     emptyCollectionPopUp();
                 } else {
@@ -167,6 +173,38 @@ public class MainWindow {
                     }
                     totalMoviesCounter.setText("Total Movies in Collection: "
                             + movieCollection.getAllMediaIDs().size());
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
+                }
+            }
+        });
+    }
+
+    // EFFECTS: creates a load series button. When clicked, loads series from
+    // the collection, sorted by title.
+    // If collection is empty, shows a pop-up error message
+    public void createLoadSeriesButton() {
+        ImageIcon icon = new ImageIcon(LOAD_BUTTON_ICON);
+        loadSeriesButton = new JButton("Refresh TV shows", icon);
+        loadSeriesButton.setFocusable(false);
+        loadSeriesButton.setToolTipText("Refresh window");
+        loadSeriesButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                movieView = false;
+                if (movieCollection.getSeries().isEmpty()) {
+                    emptyCollectionPopUp();
+                } else {
+                    centerPanel.removeAll();
+                    ArrayList<Series> seriesList = movieCollection.seriesSortedByTitleAscending();
+                    for (Series series : seriesList) {
+                        SeriesCard card = new SeriesCard(frame, series);
+                        JPanel cardPanel = card.getMainPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                    totalMoviesCounter.setText("Total TV shows in collection: "
+                            + movieCollection.getSeries().size());
                     centerPanel.revalidate();
                     centerPanel.repaint();
                 }

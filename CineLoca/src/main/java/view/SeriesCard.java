@@ -89,7 +89,7 @@ public class SeriesCard {
         if (endYear == 0) {
             label = new JLabel(title + " (" + releaseYear + "- Present)");
         } else {
-            label = new JLabel(title + " (" + releaseYear + "-" + endYear);
+            label = new JLabel(title + " (" + releaseYear + "-" + endYear + ")");
         }
         label.setMinimumSize(new Dimension(200, 10));
         label.setFont(new Font(FONT, Font.BOLD, 16));
