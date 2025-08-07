@@ -17,7 +17,7 @@ public class TestSeason {
     @Test
     void testConstructor() {
         assertEquals(1, season.getSeasonNumber());
-        assertTrue(season.getEpisodes().isEmpty());
+        assertTrue(season.getSortedEpisodes().isEmpty());
         assertEquals(0, season.getTotalEpisodes());
     }
 
@@ -26,9 +26,9 @@ public class TestSeason {
         season.addEpisode("One");
         season.addEpisode("Two");
         assertEquals(2, season.getTotalEpisodes());
-        assertEquals(2, season.getEpisodes().size());
-        assertEquals("One", season.getEpisodes().get(0));
-        assertEquals("Two", season.getEpisodes().get(1));
+        assertEquals(2, season.getSortedEpisodes().size());
+        assertEquals("One", season.getSortedEpisodes().get(0));
+        assertEquals("Two", season.getSortedEpisodes().get(1));
     }
 
 }

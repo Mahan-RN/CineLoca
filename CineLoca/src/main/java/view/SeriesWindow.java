@@ -115,7 +115,7 @@ public class SeriesWindow {
             seasonLabel.setBorder(blackline);
             seasonLabel.setBackground(Color.LIGHT_GRAY);
             panel.add(seasonLabel, "grow");
-            loadEpisodes(panel, season.getEpisodes());
+            loadEpisodes(panel, season.getSortedEpisodes());
         }
     }
 

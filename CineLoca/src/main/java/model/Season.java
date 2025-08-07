@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 // Represents one season of a TV show
 public class Season {
@@ -33,7 +34,19 @@ public class Season {
         return seasonNumber;
     }
 
-    public ArrayList<String> getEpisodes() {
+    // EFFECTS: returns list of episodes sorted by increasing episode number
+    public ArrayList<String> getSortedEpisodes() {
+        episodes.sort(episodeNumberComparator);
         return episodes;
-    }
+    } // TODO: add tests
+
+    // EFFECTS: comparator to compare episode numbers in increasing order
+    public static Comparator<String> episodeNumberComparator = new Comparator<String>() {
+        @Override
+        public int compare(String e1, String e2) {
+            int num1 = ParsingUtilities.fileNameToEpisodeNumber(e1);
+            int num2 = ParsingUtilities.fileNameToEpisodeNumber(e2);
+            return num1 - num2;
+        }
+    };
 }

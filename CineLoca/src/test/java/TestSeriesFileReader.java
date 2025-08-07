@@ -157,11 +157,11 @@ public class TestSeriesFileReader {
         private void testSeries1Season1(Season season) {
             assertEquals(1, season.getSeasonNumber());
             assertEquals(2, season.getTotalEpisodes());
-            assertEquals(2, season.getEpisodes().size());
-            String season1Episode1Path = season.getEpisodes().get(0);
+            assertEquals(2, season.getSortedEpisodes().size());
+            String season1Episode1Path = season.getSortedEpisodes().get(0);
             String expected = "src\\test\\resources\\series\\[tt0118475] Spawn\\S01\\[01] Episode1.mp4";
             assertEquals(expected, season1Episode1Path);
-            String season1Episode2Path = season.getEpisodes().get(1);
+            String season1Episode2Path = season.getSortedEpisodes().get(1);
             expected = "src\\test\\resources\\series\\[tt0118475] Spawn\\S01\\[02] Episode2.mp4";
             assertEquals(expected, season1Episode2Path);
         }
@@ -169,8 +169,8 @@ public class TestSeriesFileReader {
         private void testSeries1Season2(Season season) {
             assertEquals(2, season.getSeasonNumber());
             assertEquals(1, season.getTotalEpisodes());
-            assertEquals(1, season.getEpisodes().size());
-            String season2Episode1Path = season.getEpisodes().get(0);
+            assertEquals(1, season.getSortedEpisodes().size());
+            String season2Episode1Path = season.getSortedEpisodes().get(0);
             String expected = "src\\test\\resources\\series\\[tt0118475] Spawn\\S02\\[01] Episode1.mp4";
             assertEquals(expected, season2Episode1Path);
         }
@@ -178,18 +178,18 @@ public class TestSeriesFileReader {
         private void testSeries1Season3(Season season) {
             assertEquals(3, season.getSeasonNumber());
             assertEquals(0, season.getTotalEpisodes());
-            assertEquals(0, season.getEpisodes().size());
-            assertTrue(season.getEpisodes().isEmpty());
+            assertEquals(0, season.getSortedEpisodes().size());
+            assertTrue(season.getSortedEpisodes().isEmpty());
         }
 
         private void testSeries2Season1(Season season) {
             assertEquals(1, season.getSeasonNumber());
             assertEquals(2, season.getTotalEpisodes());
-            assertEquals(2, season.getEpisodes().size());
-            String season2Episode1Path = season.getEpisodes().get(0);
+            assertEquals(2, season.getSortedEpisodes().size());
+            String season2Episode1Path = season.getSortedEpisodes().get(0);
             String expected = "src\\test\\resources\\series\\[tt2356777] True Detective\\S01\\[01] Episode1.mp4";
             assertEquals(expected, season2Episode1Path);
-            String season2Episode2Path = season.getEpisodes().get(1);
+            String season2Episode2Path = season.getSortedEpisodes().get(1);
             expected = "src\\test\\resources\\series\\[tt2356777] True Detective\\S01\\[02] Episode2.mp4";
             assertEquals(expected, season2Episode2Path);
         }
