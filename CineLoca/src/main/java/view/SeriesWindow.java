@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -28,12 +29,12 @@ import net.miginfocom.swing.MigLayout;
 // Represents a detailed series window
 public class SeriesWindow {
 
-    private final int WINDOW_WIDTH = 750;
+    private final int WINDOW_WIDTH = 770;
     private final int WINDO_HEIGHT = 800;
     private final int POSTER_HEIGHT = 525;
     private final int POSTER_WIDTH = 350;
     private final String PLAY_BUTTON_ICON = "CineLoca\\src\\main\\resources"
-            + "\\view\\buttonIcons\\playButton.png";
+            + "\\view\\buttonIcons\\episodePlayButton.png";
     private final String FONT = "Montserrat";
 
     private Series series;
@@ -96,35 +97,51 @@ public class SeriesWindow {
         return scrollPane;
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds a label and buttons for each season in the series
+    // to the panel
     private void addSeriesMediaLinks(JPanel panel) {
         for (Season season : series.getSeaonsList()) {
             JLabel seasonLabel = new JLabel("Season "
-                    + season.getSeasonNumber() + " " + "(" + season.getTotalEpisodes()
+                    + season.getSeasonNumber() + " "
+                    + "(" + season.getTotalEpisodes()
                     + " episodes)");
+            seasonLabel.setFont(new Font(FONT, Font.BOLD, 14));
+            seasonLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
             Border blackline = BorderFactory.createLineBorder(Color.black);
             seasonLabel.setBorder(blackline);
             seasonLabel.setBackground(Color.LIGHT_GRAY);
             panel.add(seasonLabel, "grow");
-            int i = 1;
-            for (String episode : season.getEpisodes()) {
-                JButton episodeButton = new JButton("Episode " + i);
-                episodeButton.addActionListener(new ActionListener() {
+            loadEpisodes(panel, season.getEpisodes());
+        }
+    }
 
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        try {
-                            File file = new File(episode);
-                            Desktop.getDesktop().open(file);
-                        } catch (IOException exception) {
-                            JOptionPane.showMessageDialog(window, "Error:\n" + e,
-                                    "TV Show Episode File Error",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
+    // MODIFIES: this
+    // EFFECTS: adds a play button for each episode in the series to the panel
+    private void loadEpisodes(JPanel panel, ArrayList<String> episodes) {
+        int i = 1;
+        ImageIcon icon = new ImageIcon(PLAY_BUTTON_ICON);
+        for (String episode : episodes) {
+            JButton episodeButton = new JButton("Episode " + i, icon);
+            episodeButton.setFocusable(false);
+            episodeButton.setFont(new Font(FONT, Font.PLAIN, 13));
+            episodeButton.setAlignmentX(JButton.LEFT_ALIGNMENT);
+            episodeButton.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        File file = new File(episode);
+                        Desktop.getDesktop().open(file);
+                    } catch (IOException exception) {
+                        JOptionPane.showMessageDialog(window, "Error:\n" + e,
+                                "TV Show Episode File Error",
+                                JOptionPane.ERROR_MESSAGE);
                     }
-                });
-                panel.add(episodeButton, "grow");
-                i++;
-            }
+                }
+            });
+            panel.add(episodeButton, "grow");
+            i++;
         }
     }
 
