@@ -16,7 +16,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
+import model.Season;
 import model.Series;
 import net.miginfocom.swing.MigLayout;
 
@@ -34,7 +36,8 @@ public class SeriesWindow {
     private Series series;
     private JDialog window;
     private JPanel leftPanel;
-    private JButton playButton;
+    private JPanel rightPanel;
+    private JScrollPane scrollPane;
     private JLabel posterLabel;
     private JLabel directorLabel;
     private JLabel actorsLabel;
@@ -59,6 +62,7 @@ public class SeriesWindow {
                 "[]10[]");
         window.setLayout(mgl);
         window.add(createLeftPanel());
+        window.add(createRightPanel());
     }
 
     private JPanel createLeftPanel() {
@@ -75,6 +79,46 @@ public class SeriesWindow {
         leftPanel.add(craeateCountaryLabel(), "left");
         leftPanel.add(createsubLabel(), "left");
         return leftPanel;
+    }
+
+    private JScrollPane createRightPanel() {
+        rightPanel = new JPanel();
+        MigLayout mgl = new MigLayout("wrap, insets 10", "[]");
+        rightPanel.setLayout(mgl);
+        scrollPane = new JScrollPane(rightPanel,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        addSeriesMediaLinks(rightPanel);
+        return scrollPane;
+    }
+
+    private void addSeriesMediaLinks(JPanel panel) {
+        for (Season season : series.getSeaonsList()) {
+            JLabel seasonLabel = new JLabel("Season "
+                    + season.getSeasonNumber() + " " + "(" + season.getTotalEpisodes()
+                    + " episodes)");
+            panel.add(seasonLabel);
+            int i = 1;
+            for (String episode : season.getEpisodes()) {
+                JButton episodeButton = new JButton("Episode " + i);
+                episodeButton.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            File file = new File(episode);
+                            Desktop.getDesktop().open(file);
+                        } catch (IOException exception) {
+                            JOptionPane.showMessageDialog(window, "Error:\n" + e,
+                                    "TV Show Episode File Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
+                panel.add(episodeButton);
+                i++;
+            }
+        }
     }
 
     // EFFECTS: creates a JLabel containing scaled movie poster
@@ -138,32 +182,6 @@ public class SeriesWindow {
         subtitleLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return subtitleLabel;
     }
-
-    // // EFFECTS: creates a play button that when clicked will open the movie
-    // // file using OS default app. Throws IO Exception if the file cannot be
-    // // opened
-    // private JButton createPlayButton() {
-    //     ImageIcon icon = new ImageIcon(PLAY_BUTTON_ICON);
-    //     playButton = new JButton("Play", icon);
-    //     playButton.setIconTextGap(10);
-    //     playButton.setFont(new Font(FONT, Font.BOLD, 12));
-    //     playButton.setFocusable(false);
-    //     playButton.addActionListener(new ActionListener() {
-
-    //         @Override
-    //         public void actionPerformed(ActionEvent e) {
-    //             try {
-    //                 File file = new File(series.getFilePath());
-    //                 Desktop.getDesktop().open(file); // TOD
-    //             } catch (IOException exception) {
-    //                 JOptionPane.showMessageDialog(window, "Error:\n" + e,
-    //                         "Movie File Error",
-    //                         JOptionPane.ERROR_MESSAGE);
-    //             }
-    //         }
-    //     });
-    //     return playButton;
-    // } //TODO
 
     // EFFECTS: scales a given ImageIcon to the desired width and height
     private ImageIcon scaleImage(ImageIcon icon, int w, int h) {
