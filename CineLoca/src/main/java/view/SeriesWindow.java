@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 
 import model.Season;
 import model.Series;
@@ -111,8 +109,6 @@ public class SeriesWindow {
                     + " episodes)");
             seasonLabel.setFont(new Font(FONT, Font.BOLD, 14));
             seasonLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-            Border blackline = BorderFactory.createLineBorder(Color.black);
-            seasonLabel.setBorder(blackline);
             seasonLabel.setBackground(Color.LIGHT_GRAY);
             panel.add(seasonLabel, "grow");
             loadEpisodes(panel, season.getSortedEpisodes());
@@ -159,8 +155,14 @@ public class SeriesWindow {
     // EFFECTS: creates a JLabel with "Movie (Year)" text
     private JLabel createTitleAndDate() {
         String title = series.getTitle();
-        int year = series.getReleaseYear();
-        JLabel label = new JLabel(title + " (" + year + ")");
+        int releaseYear = series.getReleaseYear();
+        int endYear = series.getEndYear();
+        JLabel label;
+        if (endYear == 0) {
+            label = new JLabel(title + " (" + releaseYear + "- Present)");
+        } else {
+            label = new JLabel(title + " (" + releaseYear + "-" + endYear + ")");
+        }
         label.setMinimumSize(new Dimension(200, 10));
         label.setFont(new Font(FONT, Font.BOLD, 16));
         return label;
