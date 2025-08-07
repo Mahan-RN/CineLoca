@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.Border;
 
 import model.Season;
 import model.Series;
@@ -25,7 +28,7 @@ import net.miginfocom.swing.MigLayout;
 // Represents a detailed series window
 public class SeriesWindow {
 
-    private final int WINDOW_WIDTH = 450;
+    private final int WINDOW_WIDTH = 750;
     private final int WINDO_HEIGHT = 800;
     private final int POSTER_HEIGHT = 525;
     private final int POSTER_WIDTH = 350;
@@ -61,8 +64,8 @@ public class SeriesWindow {
         MigLayout mgl = new MigLayout("wrap, insets 10",
                 "[]10[]");
         window.setLayout(mgl);
-        window.add(createLeftPanel());
-        window.add(createRightPanel());
+        window.add(createLeftPanel(), "grow");
+        window.add(createRightPanel(), "grow, span");
     }
 
     private JPanel createLeftPanel() {
@@ -83,7 +86,8 @@ public class SeriesWindow {
 
     private JScrollPane createRightPanel() {
         rightPanel = new JPanel();
-        MigLayout mgl = new MigLayout("wrap, insets 10", "[]");
+        MigLayout mgl = new MigLayout("wrap, insets 10",
+                "[300]");
         rightPanel.setLayout(mgl);
         scrollPane = new JScrollPane(rightPanel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -97,7 +101,10 @@ public class SeriesWindow {
             JLabel seasonLabel = new JLabel("Season "
                     + season.getSeasonNumber() + " " + "(" + season.getTotalEpisodes()
                     + " episodes)");
-            panel.add(seasonLabel);
+            Border blackline = BorderFactory.createLineBorder(Color.black);
+            seasonLabel.setBorder(blackline);
+            seasonLabel.setBackground(Color.LIGHT_GRAY);
+            panel.add(seasonLabel, "grow");
             int i = 1;
             for (String episode : season.getEpisodes()) {
                 JButton episodeButton = new JButton("Episode " + i);
@@ -115,7 +122,7 @@ public class SeriesWindow {
                         }
                     }
                 });
-                panel.add(episodeButton);
+                panel.add(episodeButton, "grow");
                 i++;
             }
         }
