@@ -60,21 +60,6 @@ public class SeriesCard {
         mainPanel.add(createViewButton(), "center, grow");
     }
 
-    // // EFFECTS: creates a panel with series poster and metadata
-    // private JPanel createLeftPanel() {
-    // // leftPanel = new JPanel();
-    // // MigLayout mgl = new MigLayout("wrap, insets 10",
-    // // "[]",
-    // // "[]5[]5[]10[]");
-    // // leftPanel.setLayout(mgl);
-    // // mainPanel.setSize(LEFT_PANEL_WIDTH, LEFT_PANEL_HEIGHT);
-    // mainPanel.add(createPoster(), "center");
-    // mainPanel.add(createTitleAndDate(), "left");
-    // mainPanel.add(createLengthLabel(), "left");
-    // // mainPanel.add(createViewButton(), "center, grow");
-    // return leftPanel;
-    // }
-
     // EFFECTS: creates a JLabel containing scaled series poster
     private JLabel createPoster() {
         String path = series.getImagePath();

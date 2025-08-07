@@ -85,6 +85,9 @@ public class SeriesWindow {
         return leftPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a scrollable panel with season labels and buttons linked
+    // to each episode
     private JScrollPane createRightPanel() {
         rightPanel = new JPanel();
         MigLayout mgl = new MigLayout("wrap, insets 10",
@@ -169,15 +172,21 @@ public class SeriesWindow {
         int length = series.getLengthMinutes();
         int hours = length / 60;
         int minutes = length % 60;
-        lengthLabel = new JLabel("Run time: " + hours + " h " + minutes + " min");
+        String prefix = "Episode length: ≈ ";
+        lengthLabel = new JLabel();
         lengthLabel.setFont(new Font(FONT, Font.PLAIN, 14));
+        if (hours != 0) {
+            lengthLabel.setText(prefix + hours + " h " + minutes + " min");
+        } else {
+            lengthLabel.setText(prefix + minutes + " min");
+        }
         return lengthLabel;
     }
 
     // EFFECTS: creates label for movie director
     private JLabel createCreatorLabel() {
         String director = series.getCreator();
-        directorLabel = new JLabel("Directed by: " + director);
+        directorLabel = new JLabel("Created by: " + director);
         directorLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return directorLabel;
     }
