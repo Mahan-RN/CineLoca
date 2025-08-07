@@ -84,4 +84,24 @@ public class TestParsingUtilities {
         string = "helloooo[tt1234]My_Movie[1080P]_[2002]";
         assertEquals("tt1234", ParsingUtilities.fileNameToMediaID(string));
     }
+
+    @Test
+    void testFileNameToEpisodeNumberMatch() {
+        String input1 = "F:\\Series\\[tt3032476] Better Call Saul\\S01\\[03]_S01E03 Better Call Saul 1080p.Eng.mkv";
+        String input2 = "F:\\Series\\[tt3032476] Better Call Saul\\S01\\[09]_S01_E09_Better_Call_Saul_1080p_Eng.mkv";
+        String input3 = "E00";
+        String input4 = "e13";
+        assertEquals(3, ParsingUtilities.fileNameToEpisodeNumber(input1));
+        assertEquals(9, ParsingUtilities.fileNameToEpisodeNumber(input2));
+        assertEquals(0, ParsingUtilities.fileNameToEpisodeNumber(input3));
+        assertEquals(13, ParsingUtilities.fileNameToEpisodeNumber(input4));
+    }
+
+    @Test
+    void testFileNameToEpisodeNumberNoMatch() {
+        String input1 = "somethingE0E";
+        String input2 = "13";
+        assertEquals(0, ParsingUtilities.fileNameToEpisodeNumber(input1));
+        assertEquals(0, ParsingUtilities.fileNameToEpisodeNumber(input2));
+    }
 }

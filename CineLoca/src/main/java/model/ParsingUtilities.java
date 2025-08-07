@@ -42,6 +42,21 @@ public final class ParsingUtilities {
         }
     }
 
+    // EFFECTS: takes a file name and returns episode number if the regex match
+    // is found. Else, returns zero
+    public static int fileNameToEpisodeNumber(String s) {
+        Pattern pattern = Pattern.compile("E\\d\\d", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(s);
+        boolean found = matcher.find();
+        if (found) {
+            String matchNum = matcher.group().substring(1, 3);
+            int episodeNumer = Integer.parseInt(matchNum);
+            return episodeNumer;
+        } else {
+            return 0;
+        }
+    }
+
     // EFFECTS: gets the substring flanked by the first [] in the file name.
     // Example: given "[tt1234]My_Movie", should return "tt1234"
     public static String fileNameToMediaID(String fileName) {
