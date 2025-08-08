@@ -60,7 +60,7 @@ public class MovieWindow extends AbstractMediaWindow {
 
     // EFFECTS: creates a JLabel with "Movie (Year)" text
     @Override
-    protected JLabel createTitleAndDate() { // TODO
+    protected JLabel createTitleAndDate() {
         String title = movie.getTitle();
         int year = movie.getReleaseYear();
         JLabel label = new JLabel(title + " (" + year + ")");
@@ -72,7 +72,7 @@ public class MovieWindow extends AbstractMediaWindow {
     // EFFECTS: creates a JLabel to show the length of the movie in hour-min
     // format
     @Override
-    protected JLabel createLengthLabel() { // TODO
+    protected JLabel createLengthLabel() {
         int length = movie.getLengthMinutes();
         int hours = length / 60;
         int minutes = length % 60;

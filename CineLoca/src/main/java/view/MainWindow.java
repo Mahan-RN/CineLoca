@@ -53,7 +53,7 @@ public class MainWindow {
     private JButton loadSeriesButton;
     private JButton informationButton;
     private JButton searchButton;
-    private JLabel totalMoviesCounter;
+    private JLabel windowTitle;
     private JTextField textField;
     private MigLayout mgl;
 
@@ -108,7 +108,7 @@ public class MainWindow {
         topPanel.add(loadMoviesButton);
         topPanel.add(loadSeriesButton);
         topPanel.add(createSortButton());
-        topPanel.add(totalMoviesCounter, "center");
+        topPanel.add(windowTitle, "center");
         topPanel.add(createSearchBar(), "split 2, right, gapx 10");
         topPanel.add(informationButton);
     }
@@ -171,8 +171,7 @@ public class MainWindow {
                         JPanel cardPanel = card.getPanel();
                         centerPanel.add(cardPanel);
                     }
-                    totalMoviesCounter.setText("Total Movies in Collection: "
-                            + movieCollection.getAllMediaIDs().size());
+                    windowTitle.setText("Movies");
                     centerPanel.revalidate();
                     centerPanel.repaint();
                 }
@@ -203,8 +202,7 @@ public class MainWindow {
                         JPanel cardPanel = card.getMainPanel();
                         centerPanel.add(cardPanel);
                     }
-                    totalMoviesCounter.setText("Total TV shows in collection: "
-                            + movieCollection.getSeries().size());
+                    windowTitle.setText("TV shows");
                     centerPanel.revalidate();
                     centerPanel.repaint();
                 }
@@ -249,10 +247,9 @@ public class MainWindow {
     // EFFECTS: creates a label that shows total number of movies in the
     // collection
     private void createTotalMoviesCounterLabel() {
-        int moviesNum = movieCollection.getAllMediaIDs().size();
-        totalMoviesCounter = new JLabel("Total Movies in Collection: "
-                + moviesNum, JLabel.CENTER);
-        totalMoviesCounter.setFont(new Font("Arial", Font.PLAIN, 16));
+        windowTitle = new JLabel("Please load media to begin",
+                JLabel.CENTER);
+        windowTitle.setFont(new Font("Arial", Font.PLAIN, 18));
     }
 
     // Menu Items:
