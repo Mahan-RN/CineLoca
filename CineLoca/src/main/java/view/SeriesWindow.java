@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -20,43 +19,36 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import model.Media;
 import model.Season;
 import model.Series;
 import net.miginfocom.swing.MigLayout;
 
 // Represents a detailed series window
-public class SeriesWindow {
+public class SeriesWindow extends AbstractMediaWindow {
 
     private final int WINDOW_WIDTH = 770;
-    private final int WINDO_HEIGHT = 800;
-    private final int POSTER_HEIGHT = 525;
-    private final int POSTER_WIDTH = 350;
     private final String PLAY_BUTTON_ICON = "CineLoca\\src\\main\\resources"
             + "\\view\\buttonIcons\\episodePlayButton.png";
-    private final String FONT = "Montserrat";
 
     private Series series;
     private JDialog window;
     private JPanel leftPanel;
     private JPanel rightPanel;
     private JScrollPane scrollPane;
-    private JLabel posterLabel;
     private JLabel directorLabel;
-    private JLabel actorsLabel;
     private JLabel lengthLabel;
-    private JLabel countaryLabel;
-    private JLabel subtitleLabel;
-    private ImageIcon icon;
 
     // EFFECTS: creates a SeriesWindow for the given series
-    public SeriesWindow(JFrame frame, Series series) {
-        this.series = series;
-        initialize(frame);
+    public SeriesWindow(JFrame frame, Media media) {
+        super(frame, media);
         window.setVisible(true);
     }
 
     // EFFECTS: sets up the window
-    private void initialize(JFrame frame) {
+    @Override
+    protected void initialize(JFrame frame) {
+        this.series = (Series) media;
         window = new JDialog(frame, series.getTitle(), true);
         window.setSize(WINDOW_WIDTH, WINDO_HEIGHT);
         window.setLocationRelativeTo(frame);
@@ -74,7 +66,6 @@ public class SeriesWindow {
         leftPanel.setLayout(mgl);
         leftPanel.add(createPoster(), "center");
         leftPanel.add(createTitleAndDate(), "left");
-        // leftPanel.add(createPlayButton(), "center, grow");
         leftPanel.add(createLengthLabel(), "left");
         leftPanel.add(createCreatorLabel(), "left");
         leftPanel.add(createActorsLabel(), "left, grow");
@@ -144,16 +135,9 @@ public class SeriesWindow {
         }
     }
 
-    // EFFECTS: creates a JLabel containing scaled movie poster
-    private JLabel createPoster() {
-        String path = series.getImagePath();
-        icon = new ImageIcon(path);
-        posterLabel = new JLabel(scaleImage(icon, POSTER_WIDTH, POSTER_HEIGHT)); // 2:3 ratio
-        return posterLabel;
-    }
-
     // EFFECTS: creates a JLabel with "Movie (Year)" text
-    private JLabel createTitleAndDate() {
+    @Override
+    protected JLabel createTitleAndDate() { // TODO
         String title = series.getTitle();
         int releaseYear = series.getReleaseYear();
         int endYear = series.getEndYear();
@@ -170,7 +154,8 @@ public class SeriesWindow {
 
     // EFFECTS: creates a JLabel to show the length of the movie in hour-min
     // format
-    private JLabel createLengthLabel() {
+    @Override
+    protected JLabel createLengthLabel() { // TODO
         int length = series.getLengthMinutes();
         int hours = length / 60;
         int minutes = length % 60;
@@ -191,38 +176,5 @@ public class SeriesWindow {
         directorLabel = new JLabel("Created by: " + director);
         directorLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return directorLabel;
-    }
-
-    // EFFECTS: creates label for movie actors
-    private JLabel createActorsLabel() {
-        actorsLabel = new JLabel("Starring: " + series.actorsToString());
-        actorsLabel.setFont(new Font(FONT, Font.PLAIN, 14));
-        return actorsLabel;
-    }
-
-    // EFFECTS: creates label for movie countary
-    private JLabel craeateCountaryLabel() {
-        countaryLabel = new JLabel("Countary: " + series.getCountary());
-        countaryLabel.setFont(new Font(FONT, Font.PLAIN, 14));
-        return countaryLabel;
-    }
-
-    // EFFECTS: creates label for movie subtitle availability
-    private JLabel createsubLabel() {
-        String answer = "No";
-        if (series.hasEnglishSubtitle()) {
-            answer = "Yes";
-        }
-        subtitleLabel = new JLabel("Subtitle availability: " + answer);
-        subtitleLabel.setFont(new Font(FONT, Font.PLAIN, 14));
-        return subtitleLabel;
-    }
-
-    // EFFECTS: scales a given ImageIcon to the desired width and height
-    private ImageIcon scaleImage(ImageIcon icon, int w, int h) {
-        Image image = icon.getImage(); // transform it
-        // scale it the smooth way
-        Image newimg = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-        return new ImageIcon(newimg); // transform it back
     }
 }

@@ -38,7 +38,7 @@ public class Season {
     public ArrayList<String> getSortedEpisodes() {
         episodes.sort(episodeNumberComparator);
         return episodes;
-    } // TODO: add tests
+    }
 
     // EFFECTS: comparator to compare episode numbers in increasing order
     public static Comparator<String> episodeNumberComparator = new Comparator<String>() {
