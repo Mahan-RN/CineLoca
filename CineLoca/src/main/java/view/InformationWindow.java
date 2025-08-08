@@ -15,10 +15,12 @@ public class InformationWindow {
 
     private JDialog window;
     private MigLayout mgl;
+    private String license;
     private JLabel movieCountLabel;
     private JLabel seriesCountLabel;
     private JLabel duplicatesLabel;
     private JLabel creditsLabel;
+    private JLabel licenseLabel;
     private MediaCollection collection;
 
     // EFFECTS: initializes information window
@@ -32,15 +34,16 @@ public class InformationWindow {
     private void initialize(JFrame frame) {
         window = new JDialog(frame, "Information", true);
         mgl = new MigLayout("wrap, insets 10",
-                "[]",
+                "[580]",
                 "[]5[]");
         window.setLayout(mgl);
-        window.setSize(800, 300);
+        window.setSize(600, 200);
         window.setLocationRelativeTo(frame);
         window.add(createMovieCountLabel(), "left");
         window.add(createSeriesCountLabel(), "left");
         window.add(createDuplicatesLabel(), "left");
         window.add(createCreditsLabel(), "left, span");
+        window.add(createLicenseLabel(), "center, span");
     }
 
     // EFFECTS: returns a label that shows number of movies in the collection
@@ -75,5 +78,14 @@ public class InformationWindow {
         creditsLabel = new JLabel(str);
         creditsLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return creditsLabel;
+    }
+
+    // EFFECTS: returns a label showing the current license of CineLoca based
+    // on Git repo
+    private JLabel createLicenseLabel() {
+        license = "---- GNU General Public License v3.0 ----";
+        licenseLabel = new JLabel(license);
+        licenseLabel.setFont(new Font(FONT, Font.PLAIN, 14));
+        return licenseLabel;
     }
 }
