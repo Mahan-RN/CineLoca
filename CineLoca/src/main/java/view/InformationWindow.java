@@ -6,22 +6,26 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import model.MovieCollection;
+import model.MediaCollection;
 import net.miginfocom.swing.MigLayout;
 
 // Represents the information window
 public class InformationWindow {
     private final String FONT = "Montserrat";
-    
+
     private JDialog window;
     private MigLayout mgl;
+    private String license;
+    private JLabel movieCountLabel;
+    private JLabel seriesCountLabel;
     private JLabel duplicatesLabel;
     private JLabel creditsLabel;
-    private MovieCollection collection;
+    private JLabel licenseLabel;
+    private MediaCollection collection;
 
     // EFFECTS: initializes information window
     public InformationWindow(JFrame frame) {
-        this.collection = MovieCollection.getInstance();
+        this.collection = MediaCollection.getInstance();
         initialize(frame);
         window.setVisible(true);
     }
@@ -30,13 +34,32 @@ public class InformationWindow {
     private void initialize(JFrame frame) {
         window = new JDialog(frame, "Information", true);
         mgl = new MigLayout("wrap, insets 10",
-                "[]",
+                "[580]",
                 "[]5[]");
         window.setLayout(mgl);
-        window.setSize(800, 300);
+        window.setSize(600, 200);
         window.setLocationRelativeTo(frame);
+        window.add(createMovieCountLabel(), "left");
+        window.add(createSeriesCountLabel(), "left");
         window.add(createDuplicatesLabel(), "left");
         window.add(createCreditsLabel(), "left, span");
+        window.add(createLicenseLabel(), "center, span");
+    }
+
+    // EFFECTS: returns a label that shows number of movies in the collection
+    private JLabel createMovieCountLabel() {
+        movieCountLabel = new JLabel("Total number of movies: " +
+                collection.getMovies().size());
+        movieCountLabel.setFont(new Font(FONT, Font.PLAIN, 14));
+        return movieCountLabel;
+    }
+
+    // EFFECTS: returns a label that shows number of movies in the collection
+    private JLabel createSeriesCountLabel() {
+        seriesCountLabel = new JLabel("Total number of TV shows: " +
+                collection.getSeries().size());
+        seriesCountLabel.setFont(new Font(FONT, Font.PLAIN, 14));
+        return seriesCountLabel;
     }
 
     // EFFECTS: creates a label for duplicate movie IDs detected when loading
@@ -55,5 +78,14 @@ public class InformationWindow {
         creditsLabel = new JLabel(str);
         creditsLabel.setFont(new Font(FONT, Font.PLAIN, 14));
         return creditsLabel;
+    }
+
+    // EFFECTS: returns a label showing the current license of CineLoca based
+    // on Git repo
+    private JLabel createLicenseLabel() {
+        license = "---- GNU General Public License v3.0 ----";
+        licenseLabel = new JLabel(license);
+        licenseLabel.setFont(new Font(FONT, Font.PLAIN, 14));
+        return licenseLabel;
     }
 }

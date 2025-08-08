@@ -10,25 +10,25 @@ public class TestParsingUtilities {
     @Test
     void testTrimMovieData() {
         string = "";
-        assertEquals("", ParsingUtilities.trimMovieData(string));
+        assertEquals("", ParsingUtilities.trimMediaData(string));
         string = " Hello";
-        assertEquals("Hello", ParsingUtilities.trimMovieData(string));
+        assertEquals("Hello", ParsingUtilities.trimMediaData(string));
         string = "Hello ";
-        assertEquals("Hello", ParsingUtilities.trimMovieData(string));
+        assertEquals("Hello", ParsingUtilities.trimMediaData(string));
         string = " Hello ";
-        assertEquals("Hello", ParsingUtilities.trimMovieData(string));
+        assertEquals("Hello", ParsingUtilities.trimMediaData(string));
     }
 
     @Test
     void testTrimMovieID() {
         string = "";
-        assertEquals("", ParsingUtilities.trimMovieID(string));
+        assertEquals("", ParsingUtilities.trimMediaID(string));
         string = " Hello";
-        assertEquals("hello", ParsingUtilities.trimMovieID(string));
+        assertEquals("hello", ParsingUtilities.trimMediaID(string));
         string = "Hello ";
-        assertEquals("hello", ParsingUtilities.trimMovieID(string));
+        assertEquals("hello", ParsingUtilities.trimMediaID(string));
         string = " HELLO12345 ";
-        assertEquals("hello12345", ParsingUtilities.trimMovieID(string));
+        assertEquals("hello12345", ParsingUtilities.trimMediaID(string));
     }
 
     @Test
@@ -68,20 +68,40 @@ public class TestParsingUtilities {
     @Test
     void testfileNameToMovieID() {
         string = "";
-        assertEquals(null, ParsingUtilities.fileNameToMovieID(string));
+        assertEquals(null, ParsingUtilities.fileNameToMediaID(string));
         string = "[tt12345_myMovie";
-        assertEquals(null, ParsingUtilities.fileNameToMovieID(string));
+        assertEquals(null, ParsingUtilities.fileNameToMediaID(string));
         string = "tt12345]_myMovie";
-        assertEquals(null, ParsingUtilities.fileNameToMovieID(string));
+        assertEquals(null, ParsingUtilities.fileNameToMediaID(string));
         string = "[t]";
-        assertEquals(null, ParsingUtilities.fileNameToMovieID(string));
+        assertEquals(null, ParsingUtilities.fileNameToMediaID(string));
         string = "[]my_Movie";
-        assertEquals(null, ParsingUtilities.fileNameToMovieID(string));
+        assertEquals(null, ParsingUtilities.fileNameToMediaID(string));
         string = "[tt1234]My_Movie";
-        assertEquals("tt1234", ParsingUtilities.fileNameToMovieID(string));
+        assertEquals("tt1234", ParsingUtilities.fileNameToMediaID(string));
         string = "[tt1234]My_Movie[1080P]_[2002]";
-        assertEquals("tt1234", ParsingUtilities.fileNameToMovieID(string));
+        assertEquals("tt1234", ParsingUtilities.fileNameToMediaID(string));
         string = "helloooo[tt1234]My_Movie[1080P]_[2002]";
-        assertEquals("tt1234", ParsingUtilities.fileNameToMovieID(string));
+        assertEquals("tt1234", ParsingUtilities.fileNameToMediaID(string));
+    }
+
+    @Test
+    void testFileNameToEpisodeNumberMatch() {
+        String input1 = "F:\\Series\\[tt3032476] Better Call Saul\\S01\\[03]_S01E03 Better Call Saul 1080p.Eng.mkv";
+        String input2 = "F:\\Series\\[tt3032476] Better Call Saul\\S01\\[09]_S01_E09_Better_Call_Saul_1080p_Eng.mkv";
+        String input3 = "E00";
+        String input4 = "e13";
+        assertEquals(3, ParsingUtilities.fileNameToEpisodeNumber(input1));
+        assertEquals(9, ParsingUtilities.fileNameToEpisodeNumber(input2));
+        assertEquals(0, ParsingUtilities.fileNameToEpisodeNumber(input3));
+        assertEquals(13, ParsingUtilities.fileNameToEpisodeNumber(input4));
+    }
+
+    @Test
+    void testFileNameToEpisodeNumberNoMatch() {
+        String input1 = "somethingE0E";
+        String input2 = "13";
+        assertEquals(0, ParsingUtilities.fileNameToEpisodeNumber(input1));
+        assertEquals(0, ParsingUtilities.fileNameToEpisodeNumber(input2));
     }
 }

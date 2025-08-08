@@ -1,24 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-
-import org.openide.awt.DropDownButtonFactory;
-
-import model.Movie;
-import model.MovieCollection;
-import net.miginfocom.swing.MigLayout;
-import view.util.WrapLayout;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -26,6 +7,26 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
+import org.openide.awt.DropDownButtonFactory;
+
+import model.MediaCollection;
+import model.Movie;
+import model.Series;
+import net.miginfocom.swing.MigLayout;
+import view.util.WrapLayout;
 
 // Represents the main window of the program's UI
 public class MainWindow {
@@ -41,22 +42,25 @@ public class MainWindow {
     private final String SORT_BY_BUTTON_ICON = "CineLoca\\src\\main\\resources"
             + "\\view\\buttonIcons\\sortButton.png";
 
-    private MovieCollection movieCollection;
+    private MediaCollection movieCollection;
+    private boolean movieView;
     private JFrame frame;
     private JPanel topPanel;
     private JPanel centerPanel;
     private JScrollPane scrollPane;
     private JButton settingsButton;
     private JButton loadMoviesButton;
+    private JButton loadSeriesButton;
     private JButton informationButton;
     private JButton searchButton;
-    private JLabel totalMoviesCounter;
+    private JLabel windowTitle;
     private JTextField textField;
     private MigLayout mgl;
 
     // EFFECTS: initializes the main window JFrame
     public MainWindow() {
-        movieCollection = MovieCollection.getInstance();
+        movieCollection = MediaCollection.getInstance();
+        movieView = true;
         initializeMainFrame();
     }
 
@@ -99,10 +103,12 @@ public class MainWindow {
         createInformationButton();
         createTotalMoviesCounterLabel();
         createLoadMoviesButton();
-        topPanel.add(settingsButton, "split 3, left, gapx 5");
+        createLoadSeriesButton();
+        topPanel.add(settingsButton, "split 4, left, gapx 5");
         topPanel.add(loadMoviesButton);
+        topPanel.add(loadSeriesButton);
         topPanel.add(createSortButton());
-        topPanel.add(totalMoviesCounter, "center");
+        topPanel.add(windowTitle, "center");
         topPanel.add(createSearchBar(), "split 2, right, gapx 10");
         topPanel.add(informationButton);
     }
@@ -146,16 +152,16 @@ public class MainWindow {
     // the collection, sorted by title.
     // If collection is empty, shows a pop-up error message
     public void createLoadMoviesButton() {
-        loadMoviesButton = new JButton();
         ImageIcon icon = new ImageIcon(LOAD_BUTTON_ICON);
-        loadMoviesButton.setIcon(icon);
+        loadMoviesButton = new JButton("Refresh movies", icon);
         loadMoviesButton.setFocusable(false);
         loadMoviesButton.setToolTipText("Refresh window");
         loadMoviesButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
+                movieView = true;
+                if (movieCollection.getAllMediaIDs().isEmpty()) {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
@@ -165,8 +171,38 @@ public class MainWindow {
                         JPanel cardPanel = card.getPanel();
                         centerPanel.add(cardPanel);
                     }
-                    totalMoviesCounter.setText("Total Movies in Collection: "
-                            + movieCollection.getAllMovieIDs().size());
+                    windowTitle.setText("Movies");
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
+                }
+            }
+        });
+    }
+
+    // EFFECTS: creates a load series button. When clicked, loads series from
+    // the collection, sorted by title.
+    // If collection is empty, shows a pop-up error message
+    public void createLoadSeriesButton() {
+        ImageIcon icon = new ImageIcon(LOAD_BUTTON_ICON);
+        loadSeriesButton = new JButton("Refresh TV shows", icon);
+        loadSeriesButton.setFocusable(false);
+        loadSeriesButton.setToolTipText("Refresh window");
+        loadSeriesButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                movieView = false;
+                if (movieCollection.getSeries().isEmpty()) {
+                    emptyCollectionPopUp();
+                } else {
+                    centerPanel.removeAll();
+                    ArrayList<Series> seriesList = movieCollection.seriesSortedByTitleAscending();
+                    for (Series series : seriesList) {
+                        SeriesCard card = new SeriesCard(frame, series);
+                        JPanel cardPanel = card.getMainPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                    windowTitle.setText("TV shows");
                     centerPanel.revalidate();
                     centerPanel.repaint();
                 }
@@ -211,10 +247,9 @@ public class MainWindow {
     // EFFECTS: creates a label that shows total number of movies in the
     // collection
     private void createTotalMoviesCounterLabel() {
-        int moviesNum = movieCollection.getAllMovieIDs().size();
-        totalMoviesCounter = new JLabel("Total Movies in Collection: "
-                + moviesNum, JLabel.CENTER);
-        totalMoviesCounter.setFont(new Font("Arial", Font.PLAIN, 16));
+        windowTitle = new JLabel("Please load media to begin",
+                JLabel.CENTER);
+        windowTitle.setFont(new Font("Arial", Font.PLAIN, 18));
     }
 
     // Menu Items:
@@ -227,19 +262,36 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
-                    emptyCollectionPopUp();
-                } else {
-                    centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.moviesSortedByTitleAscending();
-                    for (Movie movie : movies) {
-                        MovieCard card = new MovieCard(frame, movie);
-                        JPanel cardPanel = card.getPanel();
-                        centerPanel.add(cardPanel);
+                if (movieView) {
+                    if (movieCollection.getAllMediaIDs().isEmpty()) {
+                        emptyCollectionPopUp();
+                    } else {
+                        centerPanel.removeAll();
+                        ArrayList<Movie> movies = movieCollection.moviesSortedByTitleAscending();
+                        for (Movie movie : movies) {
+                            MovieCard card = new MovieCard(frame, movie);
+                            JPanel cardPanel = card.getPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
                     }
-                    centerPanel.revalidate();
-                    centerPanel.repaint();
+                } else {
+                    if (movieCollection.getSeries().isEmpty()) {
+                        emptyCollectionPopUp();
+                    } else {
+                        centerPanel.removeAll();
+                        ArrayList<Series> seriesList = movieCollection.seriesSortedByTitleAscending();
+                        for (Series series : seriesList) {
+                            SeriesCard card = new SeriesCard(frame, series);
+                            JPanel cardPanel = card.getMainPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
+                    }
                 }
+
             }
         });
         return menuItemSortByTitle;
@@ -253,18 +305,34 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
-                    emptyCollectionPopUp();
-                } else {
-                    centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.moviesSortedByTitleDescending();
-                    for (Movie movie : movies) {
-                        MovieCard card = new MovieCard(frame, movie);
-                        JPanel cardPanel = card.getPanel();
-                        centerPanel.add(cardPanel);
+                if (movieView) {
+                    if (movieCollection.getMovies().isEmpty()) {
+                        emptyCollectionPopUp();
+                    } else {
+                        centerPanel.removeAll();
+                        ArrayList<Movie> movies = movieCollection.moviesSortedByTitleDescending();
+                        for (Movie movie : movies) {
+                            MovieCard card = new MovieCard(frame, movie);
+                            JPanel cardPanel = card.getPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
                     }
-                    centerPanel.revalidate();
-                    centerPanel.repaint();
+                } else {
+                    if (movieCollection.getSeries().isEmpty()) {
+                        emptyCollectionPopUp();
+                    } else {
+                        centerPanel.removeAll();
+                        ArrayList<Series> seriesList = movieCollection.seriesSortedByTitleDescending();
+                        for (Series series : seriesList) {
+                            SeriesCard card = new SeriesCard(frame, series);
+                            JPanel cardPanel = card.getMainPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
+                    }
                 }
             }
         });
@@ -279,19 +347,36 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
-                    emptyCollectionPopUp();
-                } else {
-                    centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.moviesSortedByYearAscending();
-                    for (Movie movie : movies) {
-                        MovieCard card = new MovieCard(frame, movie);
-                        JPanel cardPanel = card.getPanel();
-                        centerPanel.add(cardPanel);
+                if (movieView) {
+                    if (movieCollection.getMovies().isEmpty()) {
+                        emptyCollectionPopUp();
+                    } else {
+                        centerPanel.removeAll();
+                        ArrayList<Movie> movies = movieCollection.moviesSortedByYearAscending();
+                        for (Movie movie : movies) {
+                            MovieCard card = new MovieCard(frame, movie);
+                            JPanel cardPanel = card.getPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
                     }
-                    centerPanel.revalidate();
-                    centerPanel.repaint();
+                } else {
+                    if (movieCollection.getSeries().isEmpty()) {
+                        emptyCollectionPopUp();
+                    } else {
+                        centerPanel.removeAll();
+                        ArrayList<Series> seriesList = movieCollection.seriesSortedByYearAscending();
+                        for (Series series : seriesList) {
+                            SeriesCard card = new SeriesCard(frame, series);
+                            JPanel cardPanel = card.getMainPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
+                    }
                 }
+
             }
         });
         return menuItemSortByYear;
@@ -305,18 +390,34 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
-                    emptyCollectionPopUp();
-                } else {
-                    centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.moviesSortedByYearDescending();
-                    for (Movie movie : movies) {
-                        MovieCard card = new MovieCard(frame, movie);
-                        JPanel cardPanel = card.getPanel();
-                        centerPanel.add(cardPanel);
+                if (movieView) {
+                    if (movieCollection.getMovies().isEmpty()) {
+                        emptyCollectionPopUp();
+                    } else {
+                        centerPanel.removeAll();
+                        ArrayList<Movie> movies = movieCollection.moviesSortedByYearDescending();
+                        for (Movie movie : movies) {
+                            MovieCard card = new MovieCard(frame, movie);
+                            JPanel cardPanel = card.getPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
                     }
-                    centerPanel.revalidate();
-                    centerPanel.repaint();
+                } else {
+                    if (movieCollection.getSeries().isEmpty()) {
+                        emptyCollectionPopUp();
+                    } else {
+                        centerPanel.removeAll();
+                        ArrayList<Series> seriesList = movieCollection.seriesSortedByYearDescending();
+                        for (Series series : seriesList) {
+                            SeriesCard card = new SeriesCard(frame, series);
+                            JPanel cardPanel = card.getMainPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
+                    }
                 }
             }
         });
@@ -338,21 +439,40 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String input = textField.getText();
-                if (movieCollection.getAllMovieIDs().isEmpty()) {
-                    emptyCollectionPopUp();
-                } else if (input.isBlank()) {
-                    emptySearchStringPopUp();
-                } else {
-                    centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.searchTitle(input);
-                    for (Movie movie : movies) {
-                        MovieCard card = new MovieCard(frame, movie);
-                        JPanel cardPanel = card.getPanel();
-                        centerPanel.add(cardPanel);
+                if (movieView) {
+                    if (movieCollection.getMovies().isEmpty()) {
+                        emptyCollectionPopUp();
+                    } else if (input.isBlank()) {
+                        emptySearchStringPopUp();
+                    } else {
+                        centerPanel.removeAll();
+                        ArrayList<Movie> movies = movieCollection.searchMovieTitle(input);
+                        for (Movie movie : movies) {
+                            MovieCard card = new MovieCard(frame, movie);
+                            JPanel cardPanel = card.getPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
                     }
-                    centerPanel.revalidate();
-                    centerPanel.repaint();
+                } else {
+                    if (movieCollection.getSeries().isEmpty()) {
+                        emptyCollectionPopUp();
+                    } else if (input.isBlank()) {
+                        emptySearchStringPopUp();
+                    } else {
+                        centerPanel.removeAll();
+                        ArrayList<Series> seriesList = movieCollection.searchSeriesTitle(input);
+                        for (Series series : seriesList) {
+                            SeriesCard card = new SeriesCard(frame, series);
+                            JPanel cardPanel = card.getMainPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
+                    }
                 }
+
             }
 
         };
