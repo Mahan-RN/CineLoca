@@ -12,9 +12,11 @@ import net.miginfocom.swing.MigLayout;
 // Represents the information window
 public class InformationWindow {
     private final String FONT = "Montserrat";
-    
+
     private JDialog window;
     private MigLayout mgl;
+    private JLabel movieCountLabel;
+    private JLabel seriesCountLabel;
     private JLabel duplicatesLabel;
     private JLabel creditsLabel;
     private MediaCollection collection;
@@ -35,8 +37,26 @@ public class InformationWindow {
         window.setLayout(mgl);
         window.setSize(800, 300);
         window.setLocationRelativeTo(frame);
+        window.add(createMovieCountLabel(), "left");
+        window.add(createSeriesCountLabel(), "left");
         window.add(createDuplicatesLabel(), "left");
         window.add(createCreditsLabel(), "left, span");
+    }
+
+    // EFFECTS: returns a label that shows number of movies in the collection
+    private JLabel createMovieCountLabel() {
+        movieCountLabel = new JLabel("Total number of movies: " +
+                collection.getMovies().size());
+        movieCountLabel.setFont(new Font(FONT, Font.PLAIN, 14));
+        return movieCountLabel;
+    }
+
+    // EFFECTS: returns a label that shows number of movies in the collection
+    private JLabel createSeriesCountLabel() {
+        seriesCountLabel = new JLabel("Total number of TV shows: " +
+                collection.getSeries().size());
+        seriesCountLabel.setFont(new Font(FONT, Font.PLAIN, 14));
+        return seriesCountLabel;
     }
 
     // EFFECTS: creates a label for duplicate movie IDs detected when loading
