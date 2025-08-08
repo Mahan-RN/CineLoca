@@ -26,7 +26,7 @@ import net.miginfocom.swing.MigLayout;
 // Represents the settings menue of the UI
 public class SettingsWindow {
     private final int WINDOW_WIDTH = 850;
-    private final int WINDOW_HEIGHT = 700;
+    private final int WINDOW_HEIGHT = 740;
 
     private MovieCSVReader movieCSVReader;
     private SeriesCSVReader seriesCSVReader;

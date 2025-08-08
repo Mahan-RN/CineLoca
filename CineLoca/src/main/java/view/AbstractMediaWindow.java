@@ -11,14 +11,15 @@ import model.Media;
 
 public abstract class AbstractMediaWindow {
 
-    protected final int WINDO_HEIGHT = 800;
+    protected final int WINDO_HEIGHT = 820;
     protected final int POSTER_HEIGHT = 525;
     protected final int POSTER_WIDTH = 350;
     protected final String FONT = "Montserrat";
     protected Media media;
+    protected JLabel posterLabel;
+    protected JLabel titleDateLabel;
     protected JLabel actorsLabel;
     protected JLabel countaryLabel;
-    protected JLabel posterLabel;
     protected JLabel subtitleLabel;
     protected ImageIcon icon;
 

@@ -63,10 +63,10 @@ public class MovieWindow extends AbstractMediaWindow {
     protected JLabel createTitleAndDate() {
         String title = movie.getTitle();
         int year = movie.getReleaseYear();
-        JLabel label = new JLabel(title + " (" + year + ")");
-        label.setMinimumSize(new Dimension(200, 10));
-        label.setFont(new Font(FONT, Font.BOLD, 16));
-        return label;
+        titleDateLabel = new JLabel(title + " (" + year + ")");
+        titleDateLabel.setMinimumSize(new Dimension(200, 10));
+        titleDateLabel.setFont(new Font(FONT, Font.BOLD, 16));
+        return titleDateLabel;
     }
 
     // EFFECTS: creates a JLabel to show the length of the movie in hour-min

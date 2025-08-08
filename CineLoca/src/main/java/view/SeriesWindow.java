@@ -27,7 +27,7 @@ import net.miginfocom.swing.MigLayout;
 // Represents a detailed series window
 public class SeriesWindow extends AbstractMediaWindow {
 
-    private final int WINDOW_WIDTH = 770;
+    private final int WINDOW_WIDTH = 785;
     private final String PLAY_BUTTON_ICON = "CineLoca\\src\\main\\resources"
             + "\\view\\buttonIcons\\episodePlayButton.png";
 
@@ -36,7 +36,9 @@ public class SeriesWindow extends AbstractMediaWindow {
     private JPanel leftPanel;
     private JPanel rightPanel;
     private JScrollPane scrollPane;
-    private JLabel directorLabel;
+    private JLabel totalSeasonsLabel;
+    private JLabel totalSeasonsOnDiskLabel;
+    private JLabel creatorLabel;
     private JLabel lengthLabel;
 
     // EFFECTS: creates a SeriesWindow for the given series
@@ -66,6 +68,8 @@ public class SeriesWindow extends AbstractMediaWindow {
         leftPanel.setLayout(mgl);
         leftPanel.add(createPoster(), "center");
         leftPanel.add(createTitleAndDate(), "left");
+        leftPanel.add(createTotalSeasonsLabel(), "left");
+        leftPanel.add(createTotalSeasonsOnDiskLabel(), "left");
         leftPanel.add(createLengthLabel(), "left");
         leftPanel.add(createCreatorLabel(), "left");
         leftPanel.add(createActorsLabel(), "left, grow");
@@ -141,15 +145,33 @@ public class SeriesWindow extends AbstractMediaWindow {
         String title = series.getTitle();
         int releaseYear = series.getReleaseYear();
         int endYear = series.getEndYear();
-        JLabel label;
         if (endYear == 0) {
-            label = new JLabel(title + " (" + releaseYear + "- Present)");
+            titleDateLabel = new JLabel(title + " (" + releaseYear + "- Present)");
         } else {
-            label = new JLabel(title + " (" + releaseYear + "-" + endYear + ")");
+            titleDateLabel = new JLabel(title + " (" + releaseYear + "-" + endYear + ")");
         }
-        label.setMinimumSize(new Dimension(200, 10));
-        label.setFont(new Font(FONT, Font.BOLD, 16));
-        return label;
+        titleDateLabel.setMinimumSize(new Dimension(200, 10));
+        titleDateLabel.setFont(new Font(FONT, Font.BOLD, 16));
+        return titleDateLabel;
+    }
+
+    // EFFECTS: returns a label displaying the total number of seasons in this
+    // series based on IMDb metadata
+    private JLabel createTotalSeasonsLabel() {
+        int num = series.getTotalSeasonsIMDb();
+        totalSeasonsLabel = new JLabel("Total Seasons (IMDb): " + num);
+        totalSeasonsLabel.setFont(new Font(FONT, Font.PLAIN, 14));
+        return totalSeasonsLabel;
+    }
+
+    // EFFECTS: returns a label displaying the total number of seasons in this
+    // series based on number of seasons availabel on user's disk
+    private JLabel createTotalSeasonsOnDiskLabel() {
+        int num = series.getAvailableSeasons();
+        totalSeasonsOnDiskLabel = new JLabel("Total Seasons (your collection): "
+                + num);
+        totalSeasonsOnDiskLabel.setFont(new Font(FONT, Font.PLAIN, 14));
+        return totalSeasonsOnDiskLabel;
     }
 
     // EFFECTS: creates a JLabel to show the length of the movie in hour-min
@@ -173,8 +195,8 @@ public class SeriesWindow extends AbstractMediaWindow {
     // EFFECTS: creates label for movie director
     private JLabel createCreatorLabel() {
         String director = series.getCreator();
-        directorLabel = new JLabel("Created by: " + director);
-        directorLabel.setFont(new Font(FONT, Font.PLAIN, 14));
-        return directorLabel;
+        creatorLabel = new JLabel("Created by: " + director);
+        creatorLabel.setFont(new Font(FONT, Font.PLAIN, 14));
+        return creatorLabel;
     }
 }
