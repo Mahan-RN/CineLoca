@@ -159,10 +159,10 @@ public class TestSeriesFileReader {
             assertEquals(2, season.getTotalEpisodes());
             assertEquals(2, season.getSortedEpisodes().size());
             String season1Episode1Path = season.getSortedEpisodes().get(0);
-            String expected = "src\\test\\resources\\series\\[tt0118475] Spawn\\S01\\[01] Episode1.mp4";
+            String expected = "src\\test\\resources\\series\\[tt0118475] Spawn\\S01\\S01E01.mp4";
             assertEquals(expected, season1Episode1Path);
             String season1Episode2Path = season.getSortedEpisodes().get(1);
-            expected = "src\\test\\resources\\series\\[tt0118475] Spawn\\S01\\[02] Episode2.mp4";
+            expected = "src\\test\\resources\\series\\[tt0118475] Spawn\\S01\\S01E02.mp4";
             assertEquals(expected, season1Episode2Path);
         }
 
@@ -171,7 +171,7 @@ public class TestSeriesFileReader {
             assertEquals(1, season.getTotalEpisodes());
             assertEquals(1, season.getSortedEpisodes().size());
             String season2Episode1Path = season.getSortedEpisodes().get(0);
-            String expected = "src\\test\\resources\\series\\[tt0118475] Spawn\\S02\\[01] Episode1.mp4";
+            String expected = "src\\test\\resources\\series\\[tt0118475] Spawn\\S02\\S02E01.mp4";
             assertEquals(expected, season2Episode1Path);
         }
 
@@ -187,10 +187,10 @@ public class TestSeriesFileReader {
             assertEquals(2, season.getTotalEpisodes());
             assertEquals(2, season.getSortedEpisodes().size());
             String season2Episode1Path = season.getSortedEpisodes().get(0);
-            String expected = "src\\test\\resources\\series\\[tt2356777] True Detective\\S01\\[01] Episode1.mp4";
+            String expected = "src\\test\\resources\\series\\[tt2356777] True Detective\\S01\\S01E01.mp4";
             assertEquals(expected, season2Episode1Path);
             String season2Episode2Path = season.getSortedEpisodes().get(1);
-            expected = "src\\test\\resources\\series\\[tt2356777] True Detective\\S01\\[02] Episode2.mp4";
+            expected = "src\\test\\resources\\series\\[tt2356777] True Detective\\S01\\S01E02.mp4";
             assertEquals(expected, season2Episode2Path);
         }
 
