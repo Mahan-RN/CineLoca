@@ -28,8 +28,7 @@ import net.miginfocom.swing.MigLayout;
 public class SeriesWindow extends AbstractMediaWindow {
 
     private final int WINDOW_WIDTH = 785;
-    private final String PLAY_BUTTON_ICON = "CineLoca\\src\\main\\resources"
-            + "\\view\\buttonIcons\\episodePlayButton.png";
+    private final String PLAY_BUTTON_ICON = "/view/buttonIcons/episodePlayButton.png";
 
     private Series series;
     private JDialog window;
@@ -114,7 +113,7 @@ public class SeriesWindow extends AbstractMediaWindow {
     // EFFECTS: adds a play button for each episode in the series to the panel
     private void loadEpisodes(JPanel panel, ArrayList<String> episodes) {
         int i = 1;
-        ImageIcon icon = new ImageIcon(PLAY_BUTTON_ICON);
+        ImageIcon icon = new ImageIcon(getClass().getResource(PLAY_BUTTON_ICON));
         for (String episode : episodes) {
             JButton episodeButton = new JButton("Episode " + i, icon);
             episodeButton.setFocusable(false);

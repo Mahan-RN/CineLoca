@@ -1,0 +1,14 @@
+TestMovieFileReader$firstNestedClass.class
+TestMovieCSVReader$FirstNestedClass.class
+TestMovieFileReader.class
+TestMovieCSVReader$SecondNestedClass.class
+TestSeriesCSVReader$FirstNestedClass.class
+TestSeriesFileReader$firstNestedClass.class
+TestParsingUtilities.class
+TestMediaCollection.class
+TestMovieCSVReader.class
+TestMovie.class
+TestSeriesFileReader.class
+TestSeason.class
+TestSeries.class
+TestSeriesCSVReader.class

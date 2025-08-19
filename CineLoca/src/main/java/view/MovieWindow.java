@@ -22,8 +22,7 @@ import net.miginfocom.swing.MigLayout;
 // Represents a detailed movie window
 public class MovieWindow extends AbstractMediaWindow {
     private final int WINDOW_WIDTH = 450;
-    private final String PLAY_BUTTON_ICON = "CineLoca\\src\\main\\resources"
-            + "\\view\\buttonIcons\\playButton.png";
+    private final String PLAY_BUTTON_ICON = "/view/buttonIcons/playButton.png";
 
     private Movie movie;
     private JDialog window;
@@ -93,7 +92,7 @@ public class MovieWindow extends AbstractMediaWindow {
     // file using OS default app. Throws IO Exception if the file cannot be
     // opened
     private JButton createPlayButton() {
-        ImageIcon icon = new ImageIcon(PLAY_BUTTON_ICON);
+        ImageIcon icon = new ImageIcon(getClass().getResource(PLAY_BUTTON_ICON));
         playButton = new JButton("Play", icon);
         playButton.setIconTextGap(10);
         playButton.setFont(new Font(FONT, Font.BOLD, 12));

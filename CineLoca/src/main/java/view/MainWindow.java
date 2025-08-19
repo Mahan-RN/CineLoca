@@ -33,14 +33,10 @@ public class MainWindow {
 
     private final int FRAME_WIDTH = 800;
     private final int FRAME_HEIGHT = 500;
-    private final String LOAD_BUTTON_ICON = "CineLoca\\src\\main\\resources"
-            + "\\view\\buttonIcons\\refreshButton.png";
-    private final String SETTINGS_BUTTON_ICON = "CineLoca\\src\\main\\resources"
-            + "\\view\\buttonIcons\\settingsButton.png";
-    private final String INFORMATION_BUTTON_ICON = "CineLoca\\src\\main"
-            + "\\resources\\view\\buttonIcons\\informationButton.png";
-    private final String SORT_BY_BUTTON_ICON = "CineLoca\\src\\main\\resources"
-            + "\\view\\buttonIcons\\sortButton.png";
+    private final String LOAD_BUTTON_ICON = "/view/buttonIcons/refreshButton.png";
+    private final String SETTINGS_BUTTON_ICON = "/view/buttonIcons/settingsButton.png";
+    private final String INFORMATION_BUTTON_ICON = "/view/buttonIcons/informationButton.png";
+    private final String SORT_BY_BUTTON_ICON = "/view/buttonIcons/sortButton.png";
 
     private MediaCollection movieCollection;
     private boolean movieView;
@@ -134,7 +130,7 @@ public class MainWindow {
     // settings window
     private void createSettingsButton() {
         settingsButton = new JButton();
-        ImageIcon icon = new ImageIcon(SETTINGS_BUTTON_ICON);
+        ImageIcon icon = new ImageIcon(getClass().getResource(SETTINGS_BUTTON_ICON));
         settingsButton.setIcon(icon);
         settingsButton.setFocusable(false);
         settingsButton.setToolTipText("Settings: set path to application resources");
@@ -152,7 +148,7 @@ public class MainWindow {
     // the collection, sorted by title.
     // If collection is empty, shows a pop-up error message
     public void createLoadMoviesButton() {
-        ImageIcon icon = new ImageIcon(LOAD_BUTTON_ICON);
+        ImageIcon icon = new ImageIcon(getClass().getResource(LOAD_BUTTON_ICON));
         loadMoviesButton = new JButton("Refresh movies", icon);
         loadMoviesButton.setFocusable(false);
         loadMoviesButton.setToolTipText("Refresh window");
@@ -183,7 +179,7 @@ public class MainWindow {
     // the collection, sorted by title.
     // If collection is empty, shows a pop-up error message
     public void createLoadSeriesButton() {
-        ImageIcon icon = new ImageIcon(LOAD_BUTTON_ICON);
+        ImageIcon icon = new ImageIcon(getClass().getResource(LOAD_BUTTON_ICON));
         loadSeriesButton = new JButton("Refresh TV shows", icon);
         loadSeriesButton.setFocusable(false);
         loadSeriesButton.setToolTipText("Refresh window");
@@ -214,7 +210,7 @@ public class MainWindow {
     // window
     private void createInformationButton() {
         informationButton = new JButton();
-        ImageIcon icon = new ImageIcon(INFORMATION_BUTTON_ICON);
+        ImageIcon icon = new ImageIcon(getClass().getResource(INFORMATION_BUTTON_ICON));
         informationButton.setIcon(icon);
         informationButton.setFocusable(false);
         String text = "Information: current session information and about this app";
@@ -235,7 +231,7 @@ public class MainWindow {
         popupMenu.add(sortByTitleItemDescending());
         popupMenu.add(sortByYearItemAscending());
         popupMenu.add(sortByYearItemDescending());
-        ImageIcon icon = new ImageIcon(SORT_BY_BUTTON_ICON);
+        ImageIcon icon = new ImageIcon(getClass().getResource(SORT_BY_BUTTON_ICON));
         JButton dropDownButton = DropDownButtonFactory.createDropDownButton(icon,
                 popupMenu);
         dropDownButton.setToolTipText("Sort movies by:");
