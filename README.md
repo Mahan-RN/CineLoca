@@ -69,7 +69,7 @@ first set of square brackets in the file name
 We grab the IMDb ID from the IMDb page and rename the file to 
 `[tt1160419]_dune_part_one.mkv` (underscores are completely optional).
 
-![Image](readmeResources\imdb_url.png)
+![Image](CineLoca\readmeResources\imdb_url.png)
 
 ### b) TV Show Curation 
 **1-** Each TV show should be a directory containing the seasons of that show as its 
