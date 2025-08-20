@@ -33,6 +33,7 @@ public class MainWindow {
 
     private final int FRAME_WIDTH = 800;
     private final int FRAME_HEIGHT = 500;
+    private final int TOTAL_RESULTS_PER_PAGE = 100;
     private final String LOAD_BUTTON_ICON = "/view/buttonIcons/refreshButton.png";
     private final String SETTINGS_BUTTON_ICON = "/view/buttonIcons/settingsButton.png";
     private final String INFORMATION_BUTTON_ICON = "/view/buttonIcons/informationButton.png";
@@ -43,6 +44,7 @@ public class MainWindow {
     private MediaCollection movieCollection;
     private boolean movieView;
     private int pageNumber;
+    private int maxPageNumber;
     private JFrame frame;
     private JPanel topPanel;
     private JPanel centerPanel;
