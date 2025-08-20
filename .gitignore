@@ -1,6 +1,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,visualstudiocode,windows,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,visualstudiocode,windows,maven
 
+# Custome additions
+# JDeploy
+jdeploy-bundle
+jdeploy
+package.json
+
 ### Java ###
 # Compiled class file
 *.class
