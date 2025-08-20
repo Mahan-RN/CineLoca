@@ -5,6 +5,7 @@
 # JDeploy
 jdeploy-bundle
 jdeploy
+.jdeploy
 package.json
 
 ### Java ###
