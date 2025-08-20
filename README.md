@@ -1,17 +1,13 @@
-<p align="center">
-  <img width="240" height="240" src="CineLoca\icon.png">
-</p>
-
 # CineLoca
 A Java-based (Swing) desktop application for viewing the movies and TV shows on your hard drive.
 
 # 1-Intro
 Managing a large collection of movies and TV shows on your hard drive can be an 
-overwhelming task. CineLoca gives you a structured way to oraganize your collection
+overwhelming task. CineLoca gives you a structured way to organize your collection
 and view it in a user interface similar to the major streaming services.
 
 ## Features 
-- Friendly user intreface. No coding background required
+- Friendly user interface. No coding background required
 - No network connection required
 - Posters make it easy for you to view and scroll through your collection
 - Keep track of movies and TV shows separately
@@ -31,19 +27,19 @@ specific to your system [here](https://www.jdeploy.com/~cineloca).
 
 For CineLoca to properly recognize and view your collection, you need to:
 
-1- Organize your local files and folders (see below)
+**1-** Organize your local files and folders (see below)
 
-2- Provide metadata for your collection in `.csv` format (see below)
+**2-** Provide metadata for your collection in `.csv` format (see below)
 
-### Overview of Requirments:
+### Overview of Requirements:
 
 You will need to provide 3 files for your movies and 3 for series (so 6 total):
 
-1- A metadata file in `.csv` format
+**1-** A metadata file in `.csv` format
 
-2- A directory containing your movies/series
+**2-** A directory containing your movies/series
 
-3- A directory containing posters
+**3-** A directory containing posters
 
 ## I- Organizing Local Data
 Movies and TV shows should be organized slightly differently due to their nature.
@@ -64,10 +60,9 @@ matter, but let's call it `movie` for the rest of this guide
 ```
 **2-** Add the IMDb ID of each movie to its file name in square (`[]`) brackets
 
-- The IMDb ID of each movie/TV show can be found by going to the to the IMDb
-page of that show and looking at its URL. The ID is the part starting with `tt` 
-followed by numbers.
-- If the file name contains other square brackets, IMDb ID must it be in the 
+- The IMDb ID can be found by going to the relevant IMDb page and looking at its URL. 
+The ID is the part starting with `tt` followed by numbers.
+- If the file name contains other square brackets, IMDb ID must be in the 
 first set of square brackets in the file name
 
 **Example:** suppose we have a file named `dune_part_one.mkv` in our `movie` folder. 
@@ -77,7 +72,7 @@ We grab the IMDb ID from the IMDb page and rename the file to
 ![Image](readmeResources\imdb_url.png)
 
 ### b) TV Show Curation 
-**1-** Each TV show shoud be a directory containing the seasons of that show as its 
+**1-** Each TV show should be a directory containing the seasons of that show as its 
 sub-directories. Each season directory should contain all the episodes of that season.
 Store all TV show directories under a single parent directory. Let's call it `series`
 for the rest of this tutorial. 
@@ -110,11 +105,11 @@ should look like:
 **2-** Add the IMDb ID of each TV show to its parent directory in square brackets,
 just like how we did it for movies
 
-**3-** Directories corresponding to each season should be name like `S01`, `S02`, ...
+**3-** Directories corresponding to each season should be named like `S01`, `S02`, ...
 
 **4-** Each episode file should contain an episode number in `EXX` format, where `XX`
 is the episode number. The file for episode 1 should contain `E01` (this shouldn't be a 
-problem, as most files come with this format for episode naming anyways)
+problem, as most files come with this format for episode naming anyway)
 
 **Example:** here's a correctly formatted example (assuming it has only one season, with two episodes):
 ```
@@ -139,13 +134,15 @@ and then export it as a `.csv` file. The first 3 rows are filled out as an examp
 - **TV Shows:** Just like for movies, fill out the template spreadsheet [here](https://docs.google.com/spreadsheets/d/1_CEbRZe4NAjfFcWyuesBwpxv_OfKA2vcN9wEeGqNHV0/edit?gid=0#gid=0)
 and then export it as a `.csv` file. Again, the first 3 rows are filled out for your reference.
 
+**Notes:**
+- If a TV show doesn't have an end year (i.e., it's still running), enter `0` as its end year.
+The app will process this as `Present`
+- Actors' names can be separated via either comma `,` or semi-colon `;`. 
+I recommend entering no more than 3 names for proper display in the app
+
+# 4- License
+See [LICENSE.md](LICENSE).
 
 
-
-
-
-
-
-
-
+# 5- Misc
 Test video files are copyright free, obtained from https://free-stock.videos 
