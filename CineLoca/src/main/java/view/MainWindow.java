@@ -37,19 +37,28 @@ public class MainWindow {
     private final String SETTINGS_BUTTON_ICON = "/view/buttonIcons/settingsButton.png";
     private final String INFORMATION_BUTTON_ICON = "/view/buttonIcons/informationButton.png";
     private final String SORT_BY_BUTTON_ICON = "/view/buttonIcons/sortButton.png";
+    private final String PREVIOUS_PAGE_BUTTON_ICON = "/view/buttonIcons/previousPageButton.png";
+    private final String NEXT_PAGE_BUTTON_ICON = "/view/buttonIcons/nextPageButton.png";
 
     private MediaCollection movieCollection;
     private boolean movieView;
+    private int pageNumber;
     private JFrame frame;
     private JPanel topPanel;
     private JPanel centerPanel;
+    private JPanel bottomPanel;
     private JScrollPane scrollPane;
     private JButton settingsButton;
     private JButton loadMoviesButton;
     private JButton loadSeriesButton;
     private JButton informationButton;
     private JButton searchButton;
+    private JButton firstPage;
+    private JButton previousPage;
+    private JButton nextPage;
+    private JButton lastPage;
     private JLabel windowTitle;
+    private JLabel pageCount;
     private JTextField textField;
     private MigLayout mgl;
 
@@ -57,6 +66,7 @@ public class MainWindow {
     public MainWindow() {
         movieCollection = MediaCollection.getInstance();
         movieView = true;
+        pageNumber = 1;
         initializeMainFrame();
     }
 
@@ -75,14 +85,15 @@ public class MainWindow {
     // MODIFIES: this
     // EFFECTS: private set up method for main JFrame
     private void initializeMainFrame() {
-        this.frame = new JFrame("CineLoca");
-        this.frame.setLayout(new BorderLayout());
-        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        this.frame.setLocationRelativeTo(null);
+        frame = new JFrame("CineLoca");
+        frame.setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setLocationRelativeTo(null);
         setTopPanel();
         setCenterPanel();
+        setBottomPanel();
     }
 
     // MODIFIES: this
@@ -94,7 +105,7 @@ public class MainWindow {
                 "",
                 "[][grow][]");
         this.topPanel.setLayout(mgl);
-        this.frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(topPanel, BorderLayout.NORTH);
         createSettingsButton();
         createInformationButton();
         createTotalMoviesCounterLabel();
@@ -122,6 +133,19 @@ public class MainWindow {
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frame.add(scrollPane, BorderLayout.CENTER);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the bottom component of this frame for pagination
+    private void setBottomPanel() {
+        bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 10));
+        // TODO
+        frame.add(bottomPanel, BorderLayout.SOUTH);
+        bottomPanel.add(createFirstPageButton());
+        bottomPanel.add(createPreviousPageButton());
+        bottomPanel.add(createPageCountLabel());
+        bottomPanel.add(createNextPageButton());
+        bottomPanel.add(createLastPageButton());
     }
 
     // Buttons:
@@ -238,6 +262,49 @@ public class MainWindow {
         return dropDownButton;
     }
 
+    // EFFECTS: creates a button for going to the first page
+    private JButton createFirstPageButton() {
+        firstPage = new JButton("First");
+        firstPage.setFocusable(false);
+        firstPage.setFont(new Font("Arial", Font.PLAIN, 16));
+        // TODO: add action listener
+        return firstPage;
+    }
+
+    // EFFECTS: creates a button for going to the previous page
+    // If already on the first page, it will do nothing
+    private JButton createPreviousPageButton() {
+        ImageIcon icon = new ImageIcon(getClass().getResource(PREVIOUS_PAGE_BUTTON_ICON));
+        previousPage = new JButton("Prev", icon);
+        previousPage.setIconTextGap(8);
+        previousPage.setFont(new Font("Arial", Font.PLAIN, 16));
+        previousPage.setFocusable(false);
+        // TODO: add action listener
+        return previousPage;
+    }
+
+    // EFFECTS: creates a button for going to the next page
+    // If on the last page, it will do nothing
+    private JButton createNextPageButton() {
+        ImageIcon icon = new ImageIcon(getClass().getResource(NEXT_PAGE_BUTTON_ICON));
+        nextPage = new JButton("Next", icon);
+        nextPage.setHorizontalTextPosition(JButton.LEFT);
+        nextPage.setIconTextGap(8);
+        nextPage.setFocusable(false);
+        nextPage.setFont(new Font("Arial", Font.PLAIN, 16));
+        // TODO: add action listener
+        return nextPage;
+    }
+
+    // EFFECTS: creates a button for going to the last page
+    private JButton createLastPageButton() {
+        lastPage = new JButton("Last");
+        lastPage.setFont(new Font("Arial", Font.PLAIN, 16));
+        lastPage.setFocusable(false);
+        // TODO: add action listener
+        return lastPage;
+    }
+
     // Labels:
 
     // EFFECTS: creates a label that shows total number of movies in the
@@ -246,6 +313,13 @@ public class MainWindow {
         windowTitle = new JLabel("Please load media to begin",
                 JLabel.CENTER);
         windowTitle.setFont(new Font("Arial", Font.PLAIN, 18));
+    }
+
+    // EFFECTS: creates a label showing the page number "Page X"
+    private JLabel createPageCountLabel() {
+        pageCount = new JLabel("Page " + pageNumber, JLabel.CENTER);
+        pageCount.setFont(new Font("Arial", Font.PLAIN, 16));
+        return pageCount; // TODO: fine tune font size
     }
 
     // Menu Items:
