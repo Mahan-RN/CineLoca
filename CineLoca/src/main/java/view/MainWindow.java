@@ -23,7 +23,6 @@ import javax.swing.JTextField;
 
 import org.openide.awt.DropDownButtonFactory;
 
-import model.Media;
 import model.MediaCollection;
 import model.Movie;
 import model.Series;
@@ -393,25 +392,26 @@ public class MainWindow {
                         }
                         centerPanel.revalidate();
                         centerPanel.repaint();
-                    } else {
-                        if (pageNumber < maxSeriesPageNumber) {
-                            int totalResults = currentSeriesList.size();
-                            int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
-                            int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
-                            List<Series> batch = currentSeriesList.subList(startIndex, endIndex + 1);
-                            for (Series series : batch) {
-                                SeriesCard card = new SeriesCard(frame, series);
-                                JPanel cardPanel = card.getMainPanel();
-                                centerPanel.add(cardPanel);
-                            }
-                            centerPanel.revalidate();
-                            centerPanel.repaint();
-                        }
                     }
-                    updatePageCountLabel();
+                } else {
+                    if (pageNumber < maxSeriesPageNumber) {
+                        pageNumber++;
+                        centerPanel.removeAll();
+                        int totalResults = currentSeriesList.size();
+                        int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
+                        int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
+                        List<Series> batch = currentSeriesList.subList(startIndex, endIndex + 1);
+                        for (Series series : batch) {
+                            SeriesCard card = new SeriesCard(frame, series);
+                            JPanel cardPanel = card.getMainPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
+                    }
                 }
+                updatePageCountLabel();
             }
-
         });
         return nextPage;
     }
@@ -421,7 +421,39 @@ public class MainWindow {
         lastPage = new JButton("Last");
         lastPage.setFont(new Font("Arial", Font.PLAIN, 16));
         lastPage.setFocusable(false);
-        // TODO: add action listener
+        lastPage.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                centerPanel.removeAll();
+                if (movieView) {
+                    pageNumber = maxMoviesPageNumber;
+                    int totalResults = currentMovieList.size();
+                    int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
+                    int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
+                    List<Movie> batch = currentMovieList.subList(startIndex, endIndex + 1);
+                    for (Movie movie : batch) {
+                        MovieCard card = new MovieCard(frame, movie);
+                        JPanel cardPanel = card.getPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                } else {
+                    pageNumber = maxSeriesPageNumber;
+                    int totalResults = currentSeriesList.size();
+                    int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
+                    int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
+                    List<Series> batch = currentSeriesList.subList(startIndex, endIndex + 1);
+                    for (Series series : batch) {
+                        SeriesCard card = new SeriesCard(frame, series);
+                        JPanel cardPanel = card.getMainPanel();
+                        centerPanel.add(cardPanel);
+                    }
+                }
+                updatePageCountLabel();
+                centerPanel.revalidate();
+                centerPanel.repaint();
+            }
+        });
         return lastPage;
     }
 
@@ -439,7 +471,7 @@ public class MainWindow {
     private JLabel createPageCountLabel() {
         pageCount = new JLabel("Page " + pageNumber, JLabel.CENTER);
         pageCount.setFont(new Font("Arial", Font.PLAIN, 16));
-        return pageCount; // TODO: fine tune font size
+        return pageCount;
     }
 
     // Menu Items:
