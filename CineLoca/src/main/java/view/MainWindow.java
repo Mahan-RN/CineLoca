@@ -35,7 +35,7 @@ public class MainWindow {
 
     private final int FRAME_WIDTH = 800;
     private final int FRAME_HEIGHT = 500;
-    private final int TOTAL_RESULTS_PER_PAGE = 50;
+    private final int TOTAL_RESULTS_PER_PAGE = 30;
     private final String LOAD_BUTTON_ICON = "/view/buttonIcons/refreshButton.png";
     private final String SETTINGS_BUTTON_ICON = "/view/buttonIcons/settingsButton.png";
     private final String INFORMATION_BUTTON_ICON = "/view/buttonIcons/informationButton.png";
@@ -224,12 +224,18 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 movieView = false;
+                pageNumber = 1;
+                updatePageCountLabel();
                 if (movieCollection.getSeries().isEmpty()) {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
                     ArrayList<Series> seriesList = movieCollection.seriesSortedByTitleAscending();
-                    for (Series series : seriesList) {
+                    int totalResults = seriesList.size();
+                    int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
+                    int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
+                    List<Series> firstBatch = seriesList.subList(startIndex, endIndex + 1);
+                    for (Series series : firstBatch) {
                         SeriesCard card = new SeriesCard(frame, series);
                         JPanel cardPanel = card.getMainPanel();
                         centerPanel.add(cardPanel);
