@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -26,6 +27,7 @@ import model.MediaCollection;
 import model.Movie;
 import model.Series;
 import net.miginfocom.swing.MigLayout;
+import view.util.Pagination;
 import view.util.WrapLayout;
 
 // Represents the main window of the program's UI
@@ -33,7 +35,7 @@ public class MainWindow {
 
     private final int FRAME_WIDTH = 800;
     private final int FRAME_HEIGHT = 500;
-    private final int TOTAL_RESULTS_PER_PAGE = 100;
+    private final int TOTAL_RESULTS_PER_PAGE = 50;
     private final String LOAD_BUTTON_ICON = "/view/buttonIcons/refreshButton.png";
     private final String SETTINGS_BUTTON_ICON = "/view/buttonIcons/settingsButton.png";
     private final String INFORMATION_BUTTON_ICON = "/view/buttonIcons/informationButton.png";
@@ -183,16 +185,24 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 movieView = true;
+                pageNumber = 1;
+                updatePageCountLabel();
                 if (movieCollection.getAllMediaIDs().isEmpty()) {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
                     ArrayList<Movie> movies = movieCollection.moviesSortedByTitleAscending();
-                    for (Movie movie : movies) {
+                    int totalResults = movies.size();
+                    int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
+                    int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
+                    List<Movie> firstBatch = movies.subList(startIndex, endIndex + 1);
+                    for (Movie movie : firstBatch) {
                         MovieCard card = new MovieCard(frame, movie);
                         JPanel cardPanel = card.getPanel();
                         centerPanel.add(cardPanel);
                     }
+                    System.out.println(startIndex);
+                    System.out.println(endIndex);
                     windowTitle.setText("Movies");
                     centerPanel.revalidate();
                     centerPanel.repaint();
@@ -588,4 +598,10 @@ public class MainWindow {
                 JOptionPane.ERROR_MESSAGE);
     }
 
+    // Helpers for updating labels
+
+    // EFFECTS: updates page count label to the current page number
+    private void updatePageCountLabel() {
+        pageCount.setText("Page " + pageNumber);
+    }
 }

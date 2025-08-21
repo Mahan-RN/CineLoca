@@ -22,7 +22,7 @@ public final class Pagination {
     // results, returns the index of the last item to be displayed in the given
     // page
     public static int endIndex(int pageNumber, int itemsPerPage, int totalResults) {
-        int lastIndex = (pageNumber * 25) - 1;
+        int lastIndex = (pageNumber * itemsPerPage) - 1;
         if (lastIndex <= totalResults - 1) {
             return lastIndex;
         } else {
