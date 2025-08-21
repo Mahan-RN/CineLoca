@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 
 import org.openide.awt.DropDownButtonFactory;
 
+import model.Media;
 import model.MediaCollection;
 import model.Movie;
 import model.Series;
@@ -47,6 +48,8 @@ public class MainWindow {
     private boolean movieView;
     private int pageNumber;
     private int maxPageNumber;
+    private List<Movie> currentMovieList;
+    private List<Series> currentSeriesList;
     private JFrame frame;
     private JPanel topPanel;
     private JPanel centerPanel;
@@ -143,13 +146,16 @@ public class MainWindow {
     // EFFECTS: sets the bottom component of this frame for pagination
     private void setBottomPanel() {
         bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 10));
-        // TODO
         frame.add(bottomPanel, BorderLayout.SOUTH);
         bottomPanel.add(createFirstPageButton());
         bottomPanel.add(createPreviousPageButton());
         bottomPanel.add(createPageCountLabel());
         bottomPanel.add(createNextPageButton());
         bottomPanel.add(createLastPageButton());
+        firstPage.setEnabled(false);
+        previousPage.setEnabled(false);
+        nextPage.setEnabled(false);
+        lastPage.setEnabled(false);
     }
 
     // Buttons:
@@ -191,19 +197,21 @@ public class MainWindow {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
-                    ArrayList<Movie> movies = movieCollection.moviesSortedByTitleAscending();
-                    int totalResults = movies.size();
+                    currentMovieList = movieCollection.moviesSortedByTitleAscending();
+                    int totalResults = currentMovieList.size();
                     int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
                     int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
-                    List<Movie> firstBatch = movies.subList(startIndex, endIndex + 1);
+                    List<Movie> firstBatch = currentMovieList.subList(startIndex, endIndex + 1);
                     for (Movie movie : firstBatch) {
                         MovieCard card = new MovieCard(frame, movie);
                         JPanel cardPanel = card.getPanel();
                         centerPanel.add(cardPanel);
                     }
-                    System.out.println(startIndex);
-                    System.out.println(endIndex);
                     windowTitle.setText("Movies");
+                    firstPage.setEnabled(true);
+                    previousPage.setEnabled(true);
+                    nextPage.setEnabled(true);
+                    lastPage.setEnabled(true);
                     centerPanel.revalidate();
                     centerPanel.repaint();
                 }
@@ -230,17 +238,21 @@ public class MainWindow {
                     emptyCollectionPopUp();
                 } else {
                     centerPanel.removeAll();
-                    ArrayList<Series> seriesList = movieCollection.seriesSortedByTitleAscending();
-                    int totalResults = seriesList.size();
+                    currentSeriesList = movieCollection.seriesSortedByTitleAscending();
+                    int totalResults = currentSeriesList.size();
                     int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
                     int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
-                    List<Series> firstBatch = seriesList.subList(startIndex, endIndex + 1);
+                    List<Series> firstBatch = currentSeriesList.subList(startIndex, endIndex + 1);
                     for (Series series : firstBatch) {
                         SeriesCard card = new SeriesCard(frame, series);
                         JPanel cardPanel = card.getMainPanel();
                         centerPanel.add(cardPanel);
                     }
                     windowTitle.setText("TV shows");
+                    firstPage.setEnabled(true);
+                    previousPage.setEnabled(true);
+                    nextPage.setEnabled(true);
+                    lastPage.setEnabled(true);
                     centerPanel.revalidate();
                     centerPanel.repaint();
                 }
@@ -285,7 +297,17 @@ public class MainWindow {
         firstPage = new JButton("First");
         firstPage.setFocusable(false);
         firstPage.setFont(new Font("Arial", Font.PLAIN, 16));
-        // TODO: add action listener
+        firstPage.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (movieView) {
+                    loadMoviesButton.doClick();
+                } else {
+                    loadSeriesButton.doClick();
+                }
+            }
+        });
         return firstPage;
     }
 
