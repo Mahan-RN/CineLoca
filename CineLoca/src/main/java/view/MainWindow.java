@@ -47,7 +47,8 @@ public class MainWindow {
     private MediaCollection movieCollection;
     private boolean movieView;
     private int pageNumber;
-    private int maxPageNumber;
+    private int maxMoviesPageNumber;
+    private int maxSeriesPageNumber;
     private List<Movie> currentMovieList;
     private List<Series> currentSeriesList;
     private JFrame frame;
@@ -212,6 +213,8 @@ public class MainWindow {
                     previousPage.setEnabled(true);
                     nextPage.setEnabled(true);
                     lastPage.setEnabled(true);
+                    maxMoviesPageNumber = Pagination.totalPageNumber(totalResults,
+                            TOTAL_RESULTS_PER_PAGE);
                     centerPanel.revalidate();
                     centerPanel.repaint();
                 }
@@ -240,9 +243,13 @@ public class MainWindow {
                     centerPanel.removeAll();
                     currentSeriesList = movieCollection.seriesSortedByTitleAscending();
                     int totalResults = currentSeriesList.size();
-                    int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
-                    int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
-                    List<Series> firstBatch = currentSeriesList.subList(startIndex, endIndex + 1);
+                    int startIndex = Pagination.startIndex(pageNumber,
+                            TOTAL_RESULTS_PER_PAGE);
+                    int endIndex = Pagination.endIndex(pageNumber,
+                            TOTAL_RESULTS_PER_PAGE,
+                            totalResults);
+                    List<Series> firstBatch = currentSeriesList.subList(startIndex,
+                            endIndex + 1);
                     for (Series series : firstBatch) {
                         SeriesCard card = new SeriesCard(frame, series);
                         JPanel cardPanel = card.getMainPanel();
@@ -253,6 +260,8 @@ public class MainWindow {
                     previousPage.setEnabled(true);
                     nextPage.setEnabled(true);
                     lastPage.setEnabled(true);
+                    maxSeriesPageNumber = Pagination.totalPageNumber(totalResults,
+                            TOTAL_RESULTS_PER_PAGE);
                     centerPanel.revalidate();
                     centerPanel.repaint();
                 }
@@ -347,6 +356,7 @@ public class MainWindow {
                             centerPanel.add(cardPanel);
                         }
                     }
+                    updatePageCountLabel();
                     centerPanel.revalidate();
                     centerPanel.repaint();
                 }
@@ -364,7 +374,45 @@ public class MainWindow {
         nextPage.setIconTextGap(8);
         nextPage.setFocusable(false);
         nextPage.setFont(new Font("Arial", Font.PLAIN, 16));
-        // TODO: add action listener
+        nextPage.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (movieView) {
+                    if (pageNumber < maxMoviesPageNumber) {
+                        pageNumber++;
+                        centerPanel.removeAll();
+                        int totalResults = currentMovieList.size();
+                        int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
+                        int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
+                        List<Movie> batch = currentMovieList.subList(startIndex, endIndex + 1);
+                        for (Movie movie : batch) {
+                            MovieCard card = new MovieCard(frame, movie);
+                            JPanel cardPanel = card.getPanel();
+                            centerPanel.add(cardPanel);
+                        }
+                        centerPanel.revalidate();
+                        centerPanel.repaint();
+                    } else {
+                        if (pageNumber < maxSeriesPageNumber) {
+                            int totalResults = currentSeriesList.size();
+                            int startIndex = Pagination.startIndex(pageNumber, TOTAL_RESULTS_PER_PAGE);
+                            int endIndex = Pagination.endIndex(pageNumber, TOTAL_RESULTS_PER_PAGE, totalResults);
+                            List<Series> batch = currentSeriesList.subList(startIndex, endIndex + 1);
+                            for (Series series : batch) {
+                                SeriesCard card = new SeriesCard(frame, series);
+                                JPanel cardPanel = card.getMainPanel();
+                                centerPanel.add(cardPanel);
+                            }
+                            centerPanel.revalidate();
+                            centerPanel.repaint();
+                        }
+                    }
+                    updatePageCountLabel();
+                }
+            }
+
+        });
         return nextPage;
     }
 
