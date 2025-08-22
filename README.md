@@ -2,7 +2,9 @@
 A Java-based (Swing) desktop application for viewing the movies and TV shows on your hard drive.
 
 <p align="center">
-  <video width="600" src="readmeResources\CineLoca Demo.mp4" autoplay loop muted playsinline></video>
+  <a href="readmeResources/CineLoca Demo.mp4">
+    <img src="readmeResources/demo_thumbnail.jpg" width="600"/>
+  </a>
 </p>
 
 # 1- Intro
