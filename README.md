@@ -2,7 +2,7 @@
 A Java-based (Swing) desktop application for viewing the movies and TV shows on your hard drive.
 
 <p align="center">
-    <img src="readmeResources/demo_thumbnail.jpg" width="600"/>
+    <img src="readmeResources/demo_thumbnail.jpg" width="800"/>
 </p>
 
 # 1- Intro
