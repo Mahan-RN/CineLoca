@@ -1,6 +1,10 @@
 # CineLoca
 A Java-based (Swing) desktop application for viewing the movies and TV shows on your hard drive.
 
+<p align="center">
+  <img width= "500" height="281" src="readmeResources/CineLoca_Demo.gif" />
+</p>
+
 # 1- Intro
 Managing a large collection of movies and TV shows on your hard drive can be an 
 overwhelming task. CineLoca gives you a structured way to organize your collection
