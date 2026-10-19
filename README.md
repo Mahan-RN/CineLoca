@@ -1,4 +1,11 @@
-# CineLoca
+<h1 align="center">CineLoca</h1>
+<p align="center">
+    <img src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java logo"/>
+    <img src="https://img.shields.io/badge/JUnit5-%23f5f5f5.svg?style=for-the-badge&logo=junit5&logoColor=dc524a" alt="JUnit 5 logo"/>
+    <img src="https://img.shields.io/badge/MAVEN-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" alt="Maven logo"/>
+</p>
+
+
 A Java-based (Swing) desktop application for viewing the movies and TV shows on your hard drive.
 
 <p align="center">
