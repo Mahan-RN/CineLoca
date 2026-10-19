@@ -1,8 +1,14 @@
 <h1 align="center">CineLoca</h1>
 <p align="center">
+    <a href="https://www.java.com/en/">
     <img src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java logo"/>
+    </a>
+    <a href="https://junit.org/">
     <img src="https://img.shields.io/badge/JUnit5-%23f5f5f5.svg?style=for-the-badge&logo=junit5&logoColor=dc524a" alt="JUnit 5 logo"/>
+    </a>
+    <a href="https://maven.apache.org/">
     <img src="https://img.shields.io/badge/MAVEN-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" alt="Maven logo"/>
+    </a>
 </p>
 
 
